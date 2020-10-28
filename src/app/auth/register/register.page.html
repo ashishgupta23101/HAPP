@@ -1,0 +1,31 @@
+<ion-content class="lightGray">
+  
+  <div class="header-action-icon text-left">
+    <ion-icon side="start" name="arrow-undo"></ion-icon>  
+  </div>
+
+  <div class="main-container plr15 pb30">
+    <div>
+      <h3 class="text-center main-heading">Create an Account!</h3>
+    </div>
+
+    <div class="graphicBlock mt15">
+      <img src="../assets/images/Create-Account.svg">
+    </div> 
+
+  <form class="mt10" #form="ngForm"  [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)"> 
+    <div>
+      <ion-input name="email" type="email" formControlName="email" placeholder="Email" class="form-control" required></ion-input>
+    </div>
+    <div>
+      <ion-input name="password" type="password" formControlName="password" placeholder="Password" class="form-control"  required></ion-input>
+    </div>
+    <div>
+      <ion-input name="confirm" type="password" formControlName="confirm" placeholder="Confirm Password"  class="form-control" required></ion-input>
+    </div>
+    <div class="btnBlock mt20">
+      <ion-button    type="submit" [disabled]="form.invalid" expand="block" fill="solid" class="submitBtn">Submit</ion-button>
+    </div> 
+  </form> 
+</div>
+</ion-content>

@@ -1,0 +1,278 @@
+<ion-header [translucent]="true">
+
+  
+  <ion-segment  value="all" 
+  color="tertiary" 
+  scrollable="true"
+  mode="ios"
+  [(ngModel)]="segmentModel" 
+  (ionChange)="segmentChanged($event)">
+  <ion-row> 
+    <ion-col size="6">
+    <ion-segment-button value="friends" >
+      <ion-label>Active</ion-label>
+    </ion-segment-button>
+  </ion-col>
+  <ion-col size="6">
+    <ion-segment-button value="enemies">
+      <ion-label>History</ion-label>
+    </ion-segment-button>
+  </ion-col>
+  </ion-row>
+
+  </ion-segment>
+<div class="headerSelectFiled">
+  <ion-row>
+    <ion-col size="6">
+      <ion-select placeholder="Filter by" class="form-control selectFiled mb0">
+        <ion-select-option value="Retailer">Retailer</ion-select-option>
+        <ion-select-option value="Status">Status</ion-select-option> 
+        <ion-select-option value="Category">Category</ion-select-option> 
+      </ion-select>
+    </ion-col>
+    <ion-col size="6">
+      <ion-select placeholder="Sort by" class="form-control selectFiled mb0">
+        <ion-select-option value="All Time">All Time</ion-select-option>
+        <ion-select-option value="Today">Today</ion-select-option> 
+        <ion-select-option value="This Week">This Week</ion-select-option> 
+        <ion-select-option value="Last Week">Last Week</ion-select-option> 
+      </ion-select>
+    </ion-col>
+  </ion-row>
+</div>
+</ion-header>
+
+
+<ion-content   class="lightGray">
+<div class="main-container pt12 plr12 pb30">
+  <div *ngIf="segmentModel === 'friends'">  
+     <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="inTransit">In Transit</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="inTransit">In Transit</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="inTransit">In Transit</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+  </div>
+  
+  <div *ngIf="segmentModel === 'enemies'"> 
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="delivered">Delivered</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="delivered">Delivered</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox"> 
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="delivered">Delivered</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+    <div class="listingBlock">
+      <ion-item class="shadowBox">
+        <ion-avatar slot="start">
+          <img src="../assets/images/headphones.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Headphone</h2>
+          <p class="status">Status: <span class="exception">Exception</span></p>
+          <br>
+          <p class="Tracking">Tracking #: <span> </span></p>
+          <p class="ExDate">Expected: 07/21/2020 </p> 
+        </ion-label>
+      </ion-item> 
+      <a href="#" class="listAarrow"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+    </div>
+
+  </div> 
+</div>
+</ion-content>

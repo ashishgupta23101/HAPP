@@ -1,0 +1,8 @@
+{
+  "name": "HybridEasytrack",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}
