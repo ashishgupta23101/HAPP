@@ -23,18 +23,18 @@ import { Device } from '@ionic-native/device/ngx';
 export class TrackingService {
 // tslint:disable-next-line: variable-name
 
-  private config:any;
+  private config: any;
   // tslint:disable-next-line: max-line-length
   constructor(
-    @Inject(HttpClient) private http: HttpClient, 
-    private uniqueDeviceID: Device, 
-    public loadingController: LoaderService, 
-    private storage: Storage, 
-    private navCtrl: NavController) {
+    @Inject(HttpClient) private http: HttpClient,
+    @Inject(Device) private uniqueDeviceID: Device,
+    @Inject(LoaderService) public loadingController: LoaderService,
+    @Inject(Storage) private storage: Storage,
+    @Inject(NavController) private navCtrl: NavController) {
     }
-    filterItems(items: any ,searchTerm) {
+    filterItems(items: any , searchTerm) {
       return items.filter(item => {
-         if(item.TrackingNo !== null && item.TrackingNo !== '') {
+         if (item.TrackingNo !== null && item.TrackingNo !== '') {
           return item.TrackingNo.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
          }
       });
@@ -52,8 +52,8 @@ export class TrackingService {
     /// get week day
     getFirstLastDayOfWeek(curr: Date) {
       let result = {};
-      let first = curr.getDate() - curr.getDay();  // First day is the day of the month - the day of the week
-      let last = moment(curr).add((6 - curr.getDay()), 'days'); // last day is the first day + 6
+      const first = curr.getDate() - curr.getDay();  // First day is the day of the month - the day of the week
+      const last = moment(curr).add((6 - curr.getDay()), 'days'); // last day is the first day + 6
       result = {
             firstDate: new Date(curr.setDate(first)),
         lastDate: last.toDate()
@@ -64,7 +64,7 @@ export class TrackingService {
   getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
 
     this.storage.get('deviceID').then(id => {
-      if(id !== '' && id !== null && id !== undefined ){
+      if (id !== '' && id !== null && id !== undefined ){
             queryParam.DeviceNo = id;
             this.loadingController.present('Tracking package....');
             this.trackPackages(queryParam).subscribe(data => {
@@ -78,7 +78,7 @@ export class TrackingService {
             // Tracking Response
             this.storage.get('_activePackages').then(tData => {
                 if (tData == null) {tData = []; }
-                localStorage.setItem("SCAC","");
+                localStorage.setItem('SCAC','');
                 // tslint:disable-next-line: max-line-length
                 const index = tData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
                 if (index >= 0) {tData.splice(index, 1); }
@@ -89,12 +89,12 @@ export class TrackingService {
                 tData.push(record);
                 this.storage.set('_activePackages', tData);
                 this.loadingController.dismiss();
-                switch(nav) {
+                switch (nav) {
                   case 'pkgadded':
                     this.navCtrl.navigateForward(`/pkg-add-success`);
                     break;
                   case 'actpck':
-                      this.navCtrl.navigateForward(`/active-packages`);
+                      this.navCtrl.navigateForward(`/listing`);
                       break;
                       case 'det':
                         this.navCtrl.navigateForward(`/details/${record.trackingNo}`);
@@ -104,25 +104,25 @@ export class TrackingService {
           },
           error => {
             this.loadingController.dismiss();
-            this.loadingController.presentToast('error','Error while Tracking.');
+            this.loadingController.presentToast('error', 'Error while Tracking.');
             this.logError('Error - ' + JSON.stringify(error), 'Tracking');
           });
       } else {
-        this.loadingController.presentToast('alert','Invalid Request');
+        this.loadingController.presentToast('alert', 'Invalid Request');
       }
     });
-    
+
   }
 
 
      /// refresh for all package
    refreshTrackingDetails(arrayPackage: Array<ActivePackages>) {
     this.storage.get('deviceID').then(id => {
-      if(id !== '' && id !== null && id !== undefined ){
+      if (id !== '' && id !== null && id !== undefined ){
     this.loadingController.presentToast('alert', 'Retracking active packages.');
-    let isSuccess: number = 0;
-    let i: number = 1;
-    let isFailed: number = 0;
+    let isSuccess = 0;
+    let i = 1;
+    let isFailed = 0;
     arrayPackage.forEach(element => {
       try {
         const queryParam = new QueryParams();
@@ -135,8 +135,8 @@ export class TrackingService {
           // tslint:disable-next-line: no-debugger
           if (data.Error === true) {
             isFailed++;
-            if(arrayPackage.length === i) {
-              this.loadingController.presentToast('alert','Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
+            if (arrayPackage.length === i) {
+              this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
               this.navCtrl.navigateForward('/active-packages');
             } else { i++; }
           } else {
@@ -153,8 +153,8 @@ export class TrackingService {
               tData.push(record);
               this.storage.set('_activePackages', tData);
               isSuccess++;
-              if(arrayPackage.length === i) {
-                this.loadingController.presentToast('alert','Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
+              if (arrayPackage.length === i) {
+                this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
                 this.navCtrl.navigateForward('/active-packages');
               } else { i++; }
             });
@@ -162,39 +162,39 @@ export class TrackingService {
         },
         error => {
           isFailed++;
-          if(arrayPackage.length === i) {
-            this.loadingController.presentToast('alert','Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
+          if (arrayPackage.length === i) {
+            this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
             this.navCtrl.navigateForward('/active-packages');
-          }else{i++;}
+          }else{i++; }
         });
       } catch (exception) {
         isFailed++;
-        if(arrayPackage.length === i) {
-          this.loadingController.presentToast('alert','Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
+        if (arrayPackage.length === i) {
+          this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
           this.navCtrl.navigateForward(`/active-packages`);
-        }else{i++;}
+        }else{i++; }
       }
       });
     } else {
-      this.loadingController.presentToast('alert','Invalid Request');
+      this.loadingController.presentToast('alert', 'Invalid Request');
     }
   });
 }
 login(_email: string , _password: string): Observable<any> {
-  var request={email: _email , password: _password}
+  let request = {email: _email , password: _password};
   return this.http.put(SessionData.apiURL + environment.login, request, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')
   });
 }
-  /// Edit package 
+  /// Edit package
   editPackageDetails(packageDetails: EditPackage): Observable<any> {
     return this.http.put(SessionData.apiURL + environment.savePreferances, packageDetails, {
       headers: new HttpHeaders()
       .set('Content-Type', 'application/json')
     });
   }
-    /// save Error 
+    /// save Error
     logError(errormsg: string, errorLoc: string) {
       debugger;
       const errorData = new ErrorDetails();
@@ -206,12 +206,12 @@ login(_email: string , _password: string): Observable<any> {
         }
         errorData.ErrorMessage = errormsg;
         errorData.ErrorLocation = errorLoc;
-        this.saveError(errorData).subscribe(data =>{},error=>{});
+        this.saveError(errorData).subscribe(data => {}, error => {});
       }).catch(err => {
       errorData.DeviceId = 'NA';
       errorData.ErrorMessage = errormsg;
       errorData.ErrorLocation = errorLoc;
-      this.saveError(errorData).subscribe(data =>{},error=>{});
+      this.saveError(errorData).subscribe(data => {}, error => {});
       }
 
       );
@@ -223,7 +223,7 @@ login(_email: string , _password: string): Observable<any> {
     }
     saveToken(){
       this.storage.get('deviceToken').then(devToken => {
-         
+
         if (devToken !== null && devToken !== undefined && devToken !== ''){
          // alert('DeviceToken = ' + devToken);
           this.storage.get('deviceID').then(devID => {
@@ -237,7 +237,7 @@ login(_email: string , _password: string): Observable<any> {
                         RegistrationId: uuid()
                       };
                       this.saveDeviceID(gsmDetails).subscribe(data => {
-                        if(data.Error){
+                        if (data.Error){
                           this.logError('Error - ' + JSON.stringify(data.Message), 'saveDeviceID');
                         }
                       },
@@ -247,23 +247,23 @@ login(_email: string , _password: string): Observable<any> {
                     } else {
                       this.logError('Error - No device ID', 'saveDeviceID');
                       return;
-                    }  
+                    }
                 });
         } else {
           this.logError('Error - No device token', 'saveDeviceID');
           return;
-        }  
+        }
     });
     }
-    saveError(errorData:ErrorDetails): Observable<any> {
+    saveError(errorData: ErrorDetails): Observable<any> {
       return this.http.put(SessionData.apiURL + environment.logErrorMessage , errorData, {
         headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
       });
     }
     // Get TNC API
-    TNCapi(trackingNo:string): Observable<any> {
-      let request = {"TrackingNo":trackingNo};
+    TNCapi(trackingNo: string): Observable<any> {
+      const request = {'TrackingNo': trackingNo};
       return this.http.post(SessionData.apiURL + environment.tncApi , request, {
         headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -287,47 +287,49 @@ login(_email: string , _password: string): Observable<any> {
   private trackPackages(_queryParam: QueryParams): Observable<any> {
     try {
     let trackingAPI = environment.trackingAPI;
-    let SCAC = localStorage.getItem("SCAC");
+    let SCAC = localStorage.getItem('SCAC');
     if ( SCAC === null || SCAC === 'null' || SCAC === '' || SCAC === undefined ) {
-      switch(_queryParam.Carrier)
+      switch (_queryParam.Carrier)
       {
-        case "C":
-        SCAC = "CNPR";
-        _queryParam.Carrier = "X";
+        case 'C':
+        SCAC = 'CNPR';
+        _queryParam.Carrier = 'X';
         break;
-        case "L":
-        SCAC = "LSOM";
-        _queryParam.Carrier = "X";
+        case 'L':
+        SCAC = 'LSOM';
+        _queryParam.Carrier = 'X';
         break;
-        case "U":
-          SCAC = "UPSN";
+        case 'U':
+          SCAC = 'UPSN';
           break;
-        case "S":
-          SCAC = "USPS";
+        case 'S':
+          SCAC = 'USPS';
           break;
-        case "F":
-          SCAC = "FDE";
+        case 'F':
+          SCAC = 'FDE';
           break;
-        case "D":
-          SCAC = "DHL";
+        case 'D':
+          SCAC = 'DHL';
           break;
-        case "P":
-        SCAC = "PLTR";
+        case 'P':
+        SCAC = 'PLTR';
         break;
-        case "O":
-        SCAC = "ONTR";
+        case 'O':
+        SCAC = 'ONTR';
         break;
       }
     }
-   
-  trackingAPI = trackingAPI.replace("@TrackingNo", _queryParam.TrackingNo);
-    trackingAPI = trackingAPI.replace("@SCAC", SCAC);
-  trackingAPI = trackingAPI.replace("@Carrier", _queryParam.Carrier);
-  trackingAPI = trackingAPI.replace("@Residential", _queryParam.Residential === null || _queryParam.Residential === '' || _queryParam.Residential === undefined ? 'false' : _queryParam.Residential );
-  trackingAPI = trackingAPI.replace("@Description", _queryParam.Description === null || _queryParam.Description === undefined ? '' : _queryParam.Description );
-  trackingAPI = trackingAPI.replace("@DeviceNo", _queryParam.DeviceNo);
-  trackingAPI = trackingAPI.replace("@RegistrationId", uuid());
-  return this.http.post(SessionData.apiURL + trackingAPI, null, {
+
+    trackingAPI = trackingAPI.replace('@TrackingNo', _queryParam.TrackingNo);
+    trackingAPI = trackingAPI.replace('@SCAC', SCAC);
+    trackingAPI = trackingAPI.replace('@Carrier', _queryParam.Carrier);
+    // tslint:disable-next-line: max-line-length
+    trackingAPI = trackingAPI.replace('@Residential', _queryParam.Residential === null || _queryParam.Residential === '' || _queryParam.Residential === undefined ? 'false' : _queryParam.Residential );
+    // tslint:disable-next-line: max-line-length
+    trackingAPI = trackingAPI.replace('@Description', _queryParam.Description === null || _queryParam.Description === undefined ? '' : _queryParam.Description );
+    trackingAPI = trackingAPI.replace('@DeviceNo', _queryParam.DeviceNo);
+    trackingAPI = trackingAPI.replace('@RegistrationId', uuid());
+    return this.http.post(SessionData.apiURL + trackingAPI, null, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')
   });
@@ -344,6 +346,8 @@ login(_email: string , _password: string): Observable<any> {
     tData.forEach(element => {
       pack = new ActivePackages();
       pack.TrackingNo = element.Trackingheader.TrackingNo;
+      pack.ProductName = element.Trackingheader.TrackingNo;
+      pack.ProductUrl = '../../../assets/images/default-product-image.png';
       pack.Status = element.Trackingheader.Status === '' || element.Trackingheader.Status === null ? 'NA' : element.Trackingheader.Status;
       pack.Carrier = element.Trackingheader.CarrierCode;
       pack.DateCreated = element.ResultData.Created === '' || element.ResultData.Created === null ? 'NA' : element.ResultData.Created;
@@ -369,6 +373,8 @@ setarchivePackagestoSession(tData: any) {
   tData.forEach(element => {
     pack = new ActivePackages();
     pack.TrackingNo = element.Trackingheader.TrackingNo;
+    pack.ProductName = element.Trackingheader.TrackingNo;
+    pack.ProductUrl = '../../../assets/images/default-product-image.png';
     pack.Status = element.Trackingheader.Status === '' || element.Trackingheader.Status === null ? 'NA' : element.Trackingheader.Status;
     pack.Carrier = element.Trackingheader.CarrierCode;
     pack.DateCreated = element.ResultData.Created === '' || element.ResultData.Created === null ? 'NA' : element.ResultData.Created;

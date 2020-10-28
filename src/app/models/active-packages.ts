@@ -4,6 +4,8 @@ export class ActivePackages {
     TrackingNo: string;
     Status: string;
     Carrier: string;
+    ProductName: string;
+    ProductUrl: string;
     DateCreated: string;
     ExpectedDate: string;
     LastUpdated: string;

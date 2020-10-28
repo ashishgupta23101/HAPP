@@ -10,9 +10,9 @@
     <div class="graphicBlock mt20 graphicLength0">
       <img src="../assets/images/OopsMoreInfo.svg">
     </div> 
-    <form class="mt70"  (submit)="doTrack()"> 
+    <form class="mt70" *ngIf="track_Form" [formGroup]="track_Form"  (submit)="doTrack(track_Form.value)"> 
       <div class="trackNumFiled"> 
-        <ion-select [value]="carrierCode" placeholder="Choose Carrier" class="form-control"  #carrierList okText="Okay" cancelText="Dismiss">
+        <ion-select [value]="carrierCode" placeholder="Carrier" required formControlName="Carrier" class="form-control selectFiled mb0"  #carrierList okText="Okay" cancelText="Dismiss">
           <ion-select-option value="U">UPS</ion-select-option>
      <ion-select-option value="S">USPS</ion-select-option>
      <ion-select-option value="F">FedEx </ion-select-option>
@@ -22,12 +22,12 @@
      <ion-select-option value="C">Canpar</ion-select-option>
      <ion-select-option value="L">LSO</ion-select-option>
        </ion-select>
-       <!-- <ion-select placeholder="Optional" class="form-control"  #carrierList okText="Okay" cancelText="Dismiss">
-        <ion-select-option value="C">Canpar</ion-select-option>
-      </ion-select> -->
+       <ion-select placeholder="Optional" class="form-control selectFiled mb0" formControlName="Optional"  #carrierList okText="Okay" cancelText="Dismiss">
+        <ion-select-option value="C">A</ion-select-option>
+      </ion-select>
       </div>
       <div class="btnBlock mt30">
-        <ion-button type="submit"  expand="block" fill="solid" class="submitBtn">Submit</ion-button>
+        <ion-button type="submit" [disabled]="track_Form.invalid"  expand="block" fill="solid" class="submitBtn">Submit</ion-button>
       </div>
     </form> 
 

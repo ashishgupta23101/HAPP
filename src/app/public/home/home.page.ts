@@ -195,7 +195,6 @@ export class HomePage implements OnInit {
               this.doTrack(this.track_Form.value , this.carrierCode);
             }
             this.loadingController.dismiss();
-           
         }, error => {
           this.carrierCode = '';
           this.track_Form = this.formBuilder.group({
@@ -203,11 +202,9 @@ export class HomePage implements OnInit {
           });
           this.loadingController.dismiss();
           this.open_modal(TrackingNo);
-          this.loadingController.presentToast('Error', 'Unable to verify carrier.');
           this.trackService.logError(JSON.stringify(error), 'fillCarrierCode');
 
         });
-      
     }else{
       this.carrierCode = '';
       this.track_Form = this.formBuilder.group({
