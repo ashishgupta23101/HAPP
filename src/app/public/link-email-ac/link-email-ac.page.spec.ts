@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LinkEmailACPage } from './link-email-ac.page';
+import { LinkEmailAcPage } from './link-email-ac.page';
 
-describe('LinkEmailACPage', () => {
-  let component: LinkEmailACPage;
-  let fixture: ComponentFixture<LinkEmailACPage>;
+describe('LinkEmailAcPage', () => {
+  let component: LinkEmailAcPage;
+  let fixture: ComponentFixture<LinkEmailAcPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LinkEmailACPage ],
+      declarations: [ LinkEmailAcPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LinkEmailACPage);
+    fixture = TestBed.createComponent(LinkEmailAcPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

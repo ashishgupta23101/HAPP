@@ -18,7 +18,6 @@ export class Packages {
     Yesterday: Array<ActivePackages> = [];
     ThisWeek: Array<ActivePackages> = [];
     LastWeek: Array<ActivePackages> = [];
-    Archive: Array<ActivePackages> = [];
 }
 export class FilteringDates {
     Today: Date;

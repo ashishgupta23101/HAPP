@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { ProductActivityPageRoutingModule } from './product-activity-routing.module';
+
+import { ProductActivityPage } from './product-activity.page';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ProductActivityPageRoutingModule
+  ],
+  declarations: [ProductActivityPage]
+})
+export class ProductActivityPageModule {}

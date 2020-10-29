@@ -21,7 +21,7 @@
   </ion-row>
 
   </ion-segment>
-<div *ngIf="segmentModel === 'active'" class="headerSelectFiled">
+<div class="headerSelectFiled">
   <ion-row>
     <ion-col size="6">
       <ion-select placeholder="Filter by" (ionChange)="filterBy()" class="form-control selectFiled mb0">
@@ -46,38 +46,26 @@
 
 <ion-content   class="lightGray">
 <div class="main-container pt12 plr12 pb30">
-  <ion-card *ngIf="activeItems.length === 0 ">
-    <ion-card-content  >
-      <ion-grid><ion-row><ion-col>No Record Available</ion-col></ion-row></ion-grid> 
-  </ion-card-content>
-</ion-card>
-  <div >  
-    <ion-item-sliding *ngFor="let item of activeItems">
-     <div  class="listingBlock">
-      <ion-item class="shadowBox">
-        <ion-avatar slot="start">
-          <img [src]="item.ProductUrl">
-        </ion-avatar>
-        <ion-label>
-          <h2>{{item.ProductName}} </h2>
-          <p class="status">Status: <span class="inTransit">{{item.Status}}</span></p>
-          <br>
-          <p class="Tracking">Tracking #: <span>{{item.TrackingNo}} </span></p>
-          <p class="ExDate">Expected: {{item.ExpectedDate}} </p> 
-        </ion-label>
-      </ion-item> 
-      <a href="#" class="listAarrow" (click)="showDetail(item.Key)"><ion-icon name="chevron-forward-outline"></ion-icon></a> 
-    </div>
-    <ion-item-options side="end">
-      <ion-item-option color="tertiary" (click)="archive(item.Key)"><ion-icon title="Archive" name="archive"></ion-icon></ion-item-option>
-      <ion-item-option color="tertiary" (click)="MarkasDelievered(item.Key)"><ion-icon title="Mark Delivered" name="checkmark-circle-outline"></ion-icon></ion-item-option>
-      <ion-item-option color="tertiary" (click)="share()" ><app-social-sharing [Key]="item"></app-social-sharing></ion-item-option>
-    <ion-item-option color="tertiary" (click)="editPackages(item.Key)"><ion-icon  title="Edit"  name="create"></ion-icon></ion-item-option>
-    <ion-item-option color="tertiary" (click)="delete(item.Key)"><ion-icon title="Remove"  name="trash"></ion-icon></ion-item-option>
-    <ion-item-option color="tertiary" (click)="locate(item.Key)"><ion-icon title="Locate" name="locate"></ion-icon></ion-item-option>
-    <ion-item-option color="tertiary" (click)="retrack(item.Key)"><ion-icon ios="ios-repeat" md="md-repeat"></ion-icon></ion-item-option>
-  </ion-item-options>
-</ion-item-sliding>
-  </div>
+<img style="align-items: center;width: 180px;
+margin-left: auto;
+margin-right: auto;
+display: block;" *ngIf="activeItems.length === 0 " src="../../../assets/images/no-record-found.png">
+
+ <div *ngFor="let item of activeItems" (click)="showDetail(item.Key)" class="listingBlock">
+  <ion-item class="shadowBox">
+    <ion-avatar slot="start">
+      <img [src]="item.ProductUrl">
+    </ion-avatar>
+    <ion-label>
+      <h2>{{item.ProductName}} </h2>
+      <p class="status">Status: <span class="inTransit">{{item.Status}}</span></p>
+      <br>
+      <p class="Tracking">Tracking #: <span>{{item.TrackingNo}} </span></p>
+      <p class="ExDate">Expected: {{item.ExpectedDate}} </p> 
+    </ion-label>
+  </ion-item> 
+  <a href="#" class="listAarrow" ><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+</div>
+
 </div>
 </ion-content>

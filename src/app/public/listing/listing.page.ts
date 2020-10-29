@@ -7,7 +7,6 @@ import { ActivePackages, SessionData } from 'src/app/models/active-packages';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { QueryParams } from 'src/app/models/QueryParams';
-import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
 import { TrackingService } from 'src/app/providers/tracking.service';
 @Component({
   selector: 'app-listing',
@@ -32,13 +31,14 @@ public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 public sortBy = '1';
 public activeItems: Array<ActivePackages> = [];
 readyToLoad = false;
-@ViewChild(SocialSharingComponent) social: SocialSharingComponent;
-
 ngOnInit() {
+    // tslint:disable-next-line: no-debugger
+    debugger;
+    
+    this.segmentChanged();
 }
 ionViewWillEnter(){
-  this.loading.present('Loading Records...');
-  this.segmentChanged();
+
 }
 retrackAll(){
   if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){
@@ -82,20 +82,18 @@ refreshList(showLoader: boolean = false) {
  }, 800);
 }
 segmentChanged() {
-  
+  // tslint:disable-next-line: no-debugger
+  debugger;
+  this.activeItems = [];
   switch (this.segmentModel) {
     case 'active':
-      this.activeItems = [];
       this.storage.get('_activePackages').then((value) => {
         if (value !== '' && value !== undefined && value !== null){
         this.trackService.setPackagestoSession(value);
         this.sessionData = SessionData;
         this.activeItems = SessionData.packages.All;
-        this.segmentChanged();
-       // this.sortByDates();
         }
         this.readyToLoad = true;
-        this.loading.dismiss();
      });
       break;
     case 'history':
@@ -103,11 +101,9 @@ segmentChanged() {
         if (value !== '' && value !== undefined && value !== null){
         this.trackService.setarchivePackagestoSession(value);
         this.sessionData = SessionData;
-        this.activeItems = SessionData.packages.Archive;
-      //  this.sortByDates();
+        this.activeItems = SessionData.packages.All;
         }
         this.readyToLoad = true;
-        this.loading.dismiss();
      });
       break;
   }
@@ -151,7 +147,7 @@ filterBy() {
   }
 }
 showDetail(key: any){
-  this.navCtrl.navigateForward(`/details/${key}`);
+  this.navCtrl.navigateForward(`/list-detail/${key}`);
 }
 sortByDates() {
   switch (this.sortBy) {
@@ -183,9 +179,6 @@ retrack(key: string) {
   this.presentConfirm(key, 'Re-Track', 'Do you want to Re-Track the package?', 'rtrck');
 }
 
-share() {
-  this.social.presentActionSheet();
-}
 
 delete(key: string) {
 this.presentConfirm(key, 'Delete', 'Do you want to delete the package?', 'del');

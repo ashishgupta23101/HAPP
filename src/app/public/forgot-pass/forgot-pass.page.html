@@ -1,9 +1,28 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>ForgotPass</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="lightGray">
+  
+  <div class="header-action-icon text-left">
+    <ion-icon side="start" name="arrow-undo"></ion-icon>  
+  </div>
 
-<ion-content>
+  <div class="main-container plr15 pb30">
+    <div>
+      <h3 class="text-center main-heading">Forgot Password</h3>
+    </div>
 
+    <div class="graphicBlock mt30">
+      <img src="../assets/images/forgotPass.svg">
+    </div> 
+
+  <form class="mt30" #form="ngForm" (ngSubmit)="register(form)"> 
+    <p class="GraphicInfo text-center">Enter the registered email address and <br>we will send you a reset link.</p>
+
+    <div>
+      <ion-input name="email" type="email" placeholder="Email" class="form-control" required></ion-input>
+    </div>
+     
+    <div class="btnBlock mt30">
+      <ion-button    type="submit" [disabled]="form.invalid" expand="block" fill="solid" class="submitBtn">Submit</ion-button>
+    </div> 
+  </form> 
+</div>
 </ion-content>

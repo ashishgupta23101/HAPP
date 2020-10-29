@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { LoaderService } from './loader.service';
 import { Platform } from '@ionic/angular';
@@ -9,17 +9,18 @@ import { Platform } from '@ionic/angular';
 export class SocialSharingService {
 
   constructor(
-    private platform: Platform,
-    private loadService: LoaderService,private socialSharing: SocialSharing) {
+    @Inject(Platform) private platform: Platform,
+    @Inject(LoaderService) private loadService: LoaderService,
+    @Inject(SocialSharing) private socialSharing: SocialSharing) {
   }
 
   share(packageName: string,
-    appName: string,
-    social: string,
-    message: string,
-    subject: string,
-    image: string,
-    url: string) {
+        appName: string,
+        social: string,
+        message: string,
+        subject: string,
+        image: string,
+        url: string) {
     try {
       this.platform.ready().then(() => {
         if (social === 'facebook') {
@@ -162,16 +163,16 @@ export class SocialSharingService {
   }
 
   share2(message: string,
-    subject: string,
-    image: string,
-    url: string) {
+         subject: string,
+         image: string,
+         url: string) {
     try {
       this.socialSharing.share(
         message,
         subject,
         image,
         url
-      )
+      );
     } catch (error) {
       this.loadService.presentToast('error', 'Something went wrong!');
     }

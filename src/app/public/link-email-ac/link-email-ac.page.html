@@ -1,9 +1,35 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>LinkEmailAC</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="lightGray">
+  
+  <div class="header-action-icon text-left">
+    <ion-icon side="start" name="arrow-undo"></ion-icon>  
+  </div>
 
-<ion-content>
+  <div class="main-container plr15 pb30">
+    <div>
+      <h3 class="text-center main-heading">Link Email Account</h3>
+    </div>
 
+    <div class="graphicBlock mt10">
+      <img src="../assets/images/linkEmail.svg">
+    </div> 
+
+  <form class="mt10" #form="ngForm" (ngSubmit)="register(form)"> 
+     
+      <div>
+        <ion-select placeholder="Email Provider" class="form-control selectFiled">
+          <ion-select-option value="A">A</ion-select-option>
+          <ion-select-option value="B">B</ion-select-option> 
+        </ion-select>
+      </div> 
+      <div>
+        <ion-input name="email" type="email" placeholder="Email Username" class="form-control" required></ion-input>
+      </div>
+      <div>
+        <ion-input name="password" type="password" placeholder="Email Password" class="form-control"  required></ion-input>
+      </div> 
+      <div class="btnBlock mt30">
+        <ion-button    type="submit" [disabled]="form.invalid" expand="block" fill="solid" class="submitBtn">Link Account</ion-button>
+      </div>  
+  </form> 
+</div>
 </ion-content>

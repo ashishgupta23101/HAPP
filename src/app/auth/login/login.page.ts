@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, Inject, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
@@ -14,12 +14,12 @@ import { TrackingService } from 'src/app/providers/tracking.service';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   constructor(
-    private router: Router,
-    public fb: FormBuilder,
-    private platform: Platform,
-    public fun: FunctionsService,
-    public trackService: TrackingService,
-    private zone: NgZone) {
+    @Inject(Router) private router: Router,
+    @Inject(FormBuilder) public fb: FormBuilder,
+    @Inject(Platform) private platform: Platform,
+    @Inject(FunctionsService) public fun: FunctionsService,
+    @Inject(TrackingService) public trackService: TrackingService,
+    @Inject(NgZone) private zone: NgZone) {
       this.loginForm = this.fb.group({
         email: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required)

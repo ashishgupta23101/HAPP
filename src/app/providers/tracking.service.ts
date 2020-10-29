@@ -97,7 +97,7 @@ export class TrackingService {
                       this.navCtrl.navigateForward(`/listing`);
                       break;
                       case 'det':
-                        this.navCtrl.navigateForward(`/details/${record.trackingNo}`);
+                        this.navCtrl.navigateForward(`/list-detail/${record.trackingNo}`);
                         break;
                 }
               });
@@ -368,7 +368,7 @@ login(_email: string , _password: string): Observable<any> {
 }
 /// set archive package data in sessions
 setarchivePackagestoSession(tData: any) {
-  SessionData.packages.Archive = new  Array<ActivePackages>();
+  SessionData.packages = new  Packages();
   let pack: ActivePackages;
   tData.forEach(element => {
     pack = new ActivePackages();
@@ -386,8 +386,13 @@ setarchivePackagestoSession(tData: any) {
     (pack.Status.toLowerCase().includes('transit') ? '../../../assets/slicing/intransit.png' :
     (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
     '../../../assets/slicing/deliveredlate.png'));
-    SessionData.packages.Archive.push(pack);
+    SessionData.packages.All.push(pack);
   });
+  SessionData.packages.Today = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Today);
+  SessionData.packages.Yesterday = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Yesterday);
+  SessionData.packages.ThisWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisWeek);
+  SessionData.packages.LastWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastWeek);
+
 }
 
 }

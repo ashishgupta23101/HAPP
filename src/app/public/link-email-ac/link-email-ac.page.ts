@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './link-email-ac.page.html',
   styleUrls: ['./link-email-ac.page.scss'],
 })
-export class LinkEmailACPage implements OnInit {
+export class LinkEmailAcPage implements OnInit {
 
   constructor() { }
 

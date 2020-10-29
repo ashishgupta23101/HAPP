@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LinkEmailACPageRoutingModule } from './link-email-ac-routing.module';
+import { LinkEmailAcPageRoutingModule } from './link-email-ac-routing.module';
 
-import { LinkEmailACPage } from './link-email-ac.page';
+import { LinkEmailAcPage } from './link-email-ac.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LinkEmailACPageRoutingModule
+    LinkEmailAcPageRoutingModule
   ],
-  declarations: [LinkEmailACPage]
+  declarations: [LinkEmailAcPage]
 })
-export class LinkEmailACPageModule {}
+export class LinkEmailAcPageModule {}

@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('../auth/login/login.module').then( m => m.LoginPageModule)
       },
       {
+        path: 'product-activity',
+        loadChildren: () => import('../public/product-activity/product-activity.module').then( m => m.ProductActivityPageModule)
+      },
+      {
         path: '',
         loadChildren: () => import('../public/home/home.module').then( m => m.HomePageModule)
       },
@@ -29,10 +33,9 @@ const routes: Routes = [
         loadChildren: () => import('../public/welcome/welcome.module').then( m => m.WelcomePageModule)
       },
       {
-        path: 'splash',
-        loadChildren: () => import('../public/splash/splash.module').then( m => m.SplashPageModule)
+        path: 'listing',
+        loadChildren: () => import('../public/listing/listing.module').then( m => m.ListingPageModule)
       },
-     
       {
         path: '',
         redirectTo: '../public/home',
