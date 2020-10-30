@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonSelect, ModalController, NavController, Platform } from '@ionic/angular';
 import { QueryParams } from 'src/app/models/QueryParams';
 import {
@@ -14,9 +14,6 @@ import { LoaderService } from 'src/app/providers/loader.service';
 import { Storage } from '@ionic/storage';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import { FcmService } from 'src/app/providers/fcm.service';
-import { PkgAddSuccessPage } from '../pkg-add-success/pkg-add-success.page';
-import { NoCarrierPage } from '../no-carrier/no-carrier.page';
-import { ChooseCarrierPage } from '../choose-carrier/choose-carrier.page';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +21,7 @@ import { ChooseCarrierPage } from '../choose-carrier/choose-carrier.page';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  // tslint:disable-next-line: variable-name
   track_Form: FormGroup;
   loaderToShow: any;
   carrierCode: any = '';
@@ -33,21 +31,15 @@ export class HomePage implements OnInit {
   scannedData: {};
   isCarrier = true;
   barcodeScannerOptions: BarcodeScannerOptions;
-  trackNo: string = '';
+  trackNo = '';
   @ViewChild('carrierList') carrierSelectRef: IonSelect;
 
   // tslint:disable-next-line: max-line-length
-  constructor(@Inject(ActivatedRoute) private route: ActivatedRoute, 
-              @Inject(ModalController) private modalController: ModalController,
-              @Inject(NavController) private nav: NavController,
-              @Inject(Platform) private platform: Platform, 
-              @Inject(SplashScreen) private splashScreen: SplashScreen,
-              @Inject(BarcodeScanner) private barcodeScanner: BarcodeScanner, 
-              @Inject(Storage) private storage: Storage, 
-              @Inject(FcmService) private fcm: FcmService,
-              @Inject(FormBuilder) public formBuilder: FormBuilder, 
+  constructor(@Inject(BarcodeScanner) private barcodeScanner: BarcodeScanner,
+              @Inject(Router) private router: Router,
+              @Inject(FormBuilder) public formBuilder: FormBuilder,
               @Inject(LoaderService) public loadingController: LoaderService,
-              @Inject(TrackingService) private trackService: TrackingService, 
+              @Inject(TrackingService) private trackService: TrackingService,
               @Inject(NavController) private navCtrl: NavController) {
       // this.storage.get('deviceID').then(id => {
       //   if (id === null || id === undefined || id === '') {
@@ -86,13 +78,13 @@ export class HomePage implements OnInit {
       .scan(this.barcodeScannerOptions)
       .then(barcodeData => {
         if (barcodeData !== null) {
-          //alert(JSON.stringify(barcodeData));
+          // alert(JSON.stringify(barcodeData));
 
           this.trackNo = barcodeData.text.replace('\u001d', '');
 
           this.GetCarrierByTNC(this.trackNo, true);
-          //this.trackService.logError(JSON.stringify(barcodeData), 'Tracking No');
-          // 
+          // this.trackService.logError(JSON.stringify(barcodeData), 'Tracking No');
+          //
         } else {
           this.loadingController.presentToast('Warning', 'No Data Available');
         }
@@ -122,7 +114,7 @@ export class HomePage implements OnInit {
       this.loadingController.presentToast('Warning', 'Please track via amazon.');
       return false;
     }
-   
+
     return true;
   }
    help() {
@@ -133,14 +125,14 @@ export class HomePage implements OnInit {
     this.fillIntentValue();
   }
   fillIntentValue() {
-    this.trackNo = localStorage.getItem("intent");
+    this.trackNo = localStorage.getItem('intent');
    // alert(this.trackNo);
     if (this.trackNo !== null && this.trackNo !== undefined && this.trackNo !== '') {
-      //alert(this.trackNo);
+      // alert(this.trackNo);
 
       this.trackNo = this.trackNo.replace('\u001d', '');
       this.GetCarrierByTNC(this.trackNo);
-      localStorage.setItem("intent", '');
+      localStorage.setItem('intent', '');
       // alert('end' + this.trackNo);
     }
     else {
@@ -148,9 +140,9 @@ export class HomePage implements OnInit {
     }
   }
   ionViewWillEnter() {
-    //this.fillIntentValue();
+    // this.fillIntentValue();
     this.clearTrack();
-    const isLastScanned = localStorage.getItem("isScanned");
+    const isLastScanned = localStorage.getItem('isScanned');
     if ( isLastScanned === 'true'){
       this.scanPGCode();
     }
@@ -158,13 +150,12 @@ export class HomePage implements OnInit {
       this.fillIntentValue();
     }
     this.setfilteringDatestoSession();
-    localStorage.setItem("isScanned", 'false');
+    localStorage.setItem('isScanned', 'false');
   }
   fillCarrierCode(formVal) {
     this.GetCarrierByTNC(formVal.TrackingNo );
   }
   GetCarrierByTNC(TrackingNo, isScanned = false){
-    debugger;
     if (TrackingNo === 'SHIPMATRIX') {
       this.navCtrl.navigateForward(`/url-changer`);
     } else {
@@ -176,21 +167,21 @@ export class HomePage implements OnInit {
           data => {
            // console.log('CarrierDetails' + JSON.stringify(data))
             this.carrierCode = data.ResponseData.Carrier;
-            //this.carrierSelectRef.value = this.carrierCode;
+            // this.carrierSelectRef.value = this.carrierCode;
             this.track_Form = this.formBuilder.group({
               TrackingNo: new FormControl(TrackingNo)
             });
             this.SCAC = data.ResponseData.SCAC;
-            localStorage.setItem("SCAC", this.SCAC);
+            localStorage.setItem('SCAC', this.SCAC);
             if ( this.carrierCode === null || this.carrierCode === 'null' || this.carrierCode === '' || this.carrierCode === undefined ) {
-              localStorage.setItem("SCAC", '');
-              this.open_modal(TrackingNo);
+              localStorage.setItem('SCAC', '');
+              this.open_modal();
             }
             else{
               if (isScanned === true){
-                localStorage.setItem("isScanned", 'true');
+                localStorage.setItem('isScanned', 'true');
               }else{
-                localStorage.setItem("isScanned", 'false');
+                localStorage.setItem('isScanned', 'false');
               }
               this.doTrack(this.track_Form.value , this.carrierCode);
             }
@@ -201,7 +192,7 @@ export class HomePage implements OnInit {
             TrackingNo: new FormControl(TrackingNo)
           });
           this.loadingController.dismiss();
-          this.open_modal(TrackingNo);
+          this.open_modal();
           this.trackService.logError(JSON.stringify(error), 'fillCarrierCode');
 
         });
@@ -213,19 +204,20 @@ export class HomePage implements OnInit {
     }
     }
   }
-  async open_modal(trackNo: string , alerto: boolean = true) {
-    let modal;
-    modal = await this.modalController.create({
-      component: ChooseCarrierPage,
-      componentProps: { carrier: '', trackingNo: trackNo }
-    });
-    return await modal.present();
+  open_modal( ) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          TrackingNo: JSON.stringify(this.trackNo),
+          Carrier: JSON.stringify(this.carrierCode)
+      }
+      };
+    this.router.navigate(['choose-carrier'], navigationExtras);
   }
-  doTrack(value, ccode = "NA") {
+  doTrack(value, ccode = 'NA') {
     try {
       debugger;
-      localStorage.setItem("intent", '');
-      this.carrierCode = ccode == "NA" ? this.carrierSelectRef.value : ccode;
+      localStorage.setItem('intent', '');
+      this.carrierCode = ccode == 'NA' ? this.carrierSelectRef.value : ccode;
       this.queryParam = new QueryParams();
       this.queryParam.TrackingNo = value.TrackingNo;
       this.queryParam.Carrier = this.carrierCode;
@@ -238,9 +230,9 @@ export class HomePage implements OnInit {
       this.loadingController.presentToast('Error', JSON.stringify(Exception));
     }
   }
-  clearTrack() { 
+  clearTrack() {
     this.carrierCode = '';
-    localStorage.setItem("SCAC", '');
+    localStorage.setItem('SCAC', '');
     this.track_Form = this.formBuilder.group({
       TrackingNo: new FormControl('')
     });

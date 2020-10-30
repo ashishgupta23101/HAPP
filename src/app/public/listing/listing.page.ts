@@ -25,8 +25,9 @@ constructor(
 public searchTerm = '';
 public sortbyDate = 'Date Created';
 public sessionData: any;
+public filtBy: string;
 public segmentModel = 'active';
-public daySelect = 'All';
+public daySelect: string;
 public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 public sortBy = '1';
 public activeItems: Array<ActivePackages> = [];
@@ -34,7 +35,6 @@ readyToLoad = false;
 ngOnInit() {
     // tslint:disable-next-line: no-debugger
     debugger;
-    
     this.segmentChanged();
 }
 ionViewWillEnter(){
@@ -77,7 +77,7 @@ refreshList(showLoader: boolean = false) {
   // tslint:disable-next-line: only-arrow-functions
   this.searchTerm = '';
   this.dateSelected = formatDate(new Date(), 'MM/dd/yyyy', 'en');
-  setTimeout(()=>{
+  setTimeout(() => {
     this.segmentChanged();
  }, 800);
 }
@@ -131,7 +131,7 @@ sortedBy() {
   }
 }
 filterBy() {
-  switch (this.daySelect) {
+  switch (this.filtBy) {
     case 'Retailer':
         this.activeItems = SessionData.packages.All;
         break;
@@ -166,7 +166,7 @@ sortByDates() {
   }
 }
 searchByDate() {
-  if(this.sessionData !== undefined && this.sessionData !== null){
+  if (this.sessionData !== undefined && this.sessionData !== null){
     this.activeItems = this.trackService.filterDatewise(SessionData.packages.All, this.dateSelected);
   }
 }
@@ -179,13 +179,12 @@ retrack(key: string) {
   this.presentConfirm(key, 'Re-Track', 'Do you want to Re-Track the package?', 'rtrck');
 }
 
-
 delete(key: string) {
 this.presentConfirm(key, 'Delete', 'Do you want to delete the package?', 'del');
 }
 locate(key: string) {
 this.storage.get('_activePackages').then(aData => {
-  let val1 = aData.find(item => item.trackingNo === key);
+  const val1 = aData.find(item => item.trackingNo === key);
   if (val1 !== undefined && val1 !== '' && val1 !== null && val1.scans.length > 0) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -206,7 +205,7 @@ editPackages(key: string) {
 this.navCtrl.navigateForward(`/edit-package/${key}`);
 }
 // tslint:disable-next-line: variable-name
-async presentConfirm(key: string ,_header: string, _message: string, _opration: string) {
+async presentConfirm(key: string , _header: string, _message: string, _opration: string) {
 try {
 const alert = await this.alertController.create({
   header: _header,
@@ -289,7 +288,7 @@ const alert = await this.alertController.create({
                           const queryParam = new QueryParams();
                           const record = key.split('-');
                           console.log(record);
-                          if(record.length === 2){
+                          if (record.length === 2){
                             queryParam.TrackingNo = record[0];
                             queryParam.Carrier = record[1];
                             queryParam.Description = '';
@@ -307,7 +306,7 @@ const alert = await this.alertController.create({
 });
 await alert.present();
 } catch (error) {
-this.trackService.logError(error,'presentConfirm-activePackage');
+this.trackService.logError(error, 'presentConfirm-activePackage');
 this.loading.presentToast('Error', 'Something went wrong!');
 }
 }

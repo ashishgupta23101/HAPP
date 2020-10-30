@@ -54,7 +54,11 @@ export class ProductActivityPage implements OnInit {
     $(document).ready(function(){
       // tslint:disable-next-line: only-arrow-functions
       $('#openActivity').click(function(){
+        if ($('#actdiv').hasClass('toggleactive')){
+          $('#actdiv').removeClass('toggleactive');
+        }else{
           $('#actdiv').addClass('toggleactive');
+        }
       });
   });
    // this.getLocations();

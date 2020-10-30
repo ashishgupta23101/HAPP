@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { ModalController, NavController, NavParams } from '@ionic/angular';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
@@ -21,10 +22,13 @@ export class ChooseCarrierPage implements OnInit {
     @Inject(ModalController) private modalController: ModalController,
     @Inject(LoaderService) public loadingController: LoaderService,
     @Inject(FormBuilder) public formBuilder: FormBuilder, 
+    @Inject(NavController) private navCtrl: NavController,
     @Inject(TrackingService) private trackService: TrackingService,
-    @Inject(NavParams) private params: NavParams) {
-    this.carrier = params.get('carrier');
-    this.trackingNo = params.get('trackingNo');
+    @Inject(ActivatedRoute) private route: ActivatedRoute) {
+      this.route.queryParams.subscribe(params => {
+        this.trackingNo = JSON.parse(params.TrackingNo);
+        this.carrier = JSON.parse(params.Carrier);
+      });
   }
   doTrack(value) {
     try {
@@ -49,7 +53,7 @@ export class ChooseCarrierPage implements OnInit {
 
   dismiss() {
     debugger;
-    this.modalController.dismiss();
+    this.navCtrl.back();
   }
 
 }
