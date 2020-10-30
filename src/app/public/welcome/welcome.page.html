@@ -1,6 +1,6 @@
 <ion-content class="lightGray">
   <div class="header-action-icon text-right">
-    <ion-icon name="log-out-outline"></ion-icon>
+    <ion-icon name="log-out-outline" [routerLink]="['/logout']" routerDirection="backward"></ion-icon>
    </div>
 
   <div class="main-container plr15 pb30">
@@ -14,31 +14,31 @@
       </div>
 
       <div class="user-info-buttons">
-        <button  class="WShadowBtn mb15 text-left">Linked Retail
+        <button  class="WShadowBtn mb15 text-left" [routerLink]="['/retail-account']" routerDirection="backward">Linked Retail
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </button> 
 
-        <button  class="WShadowBtn mb15 text-left">Linked Email
+        <button  class="WShadowBtn mb15 text-left" [routerLink]="['/link-email-ac']" routerDirection="backward">Linked Email
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </button> 
 
-        <button  class="WShadowBtn mb15 text-left">Notfications
+        <button  class="WShadowBtn mb15 text-left" [routerLink]="['/notifications']" routerDirection="backward">Notfications
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </button> 
 
-        <button  class="WShadowBtn mb15 text-left">Customise Homepage
+        <button  class="WShadowBtn mb15 text-left" [routerLink]="['/cus-home']" routerDirection="backward">Customise Homepage
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </button> 
 
         <div class="mb15">
           <ion-row>
             <ion-col size="6">
-              <button  class="WShadowBtn text-center"> 
+              <button  class="WShadowBtn text-center" [routerLink]="['/aboutus']" routerDirection="backward"> 
                 <ion-icon name="information-circle-outline" class="infoIcons"></ion-icon>
               </button> 
             </ion-col>
             <ion-col size="6">
-              <button  class="WShadowBtn text-center"> 
+              <button  class="WShadowBtn text-center" [routerLink]="['/have-question']" routerDirection="backward"> 
                 <ion-icon name="help-circle-outline" class="infoIcons"></ion-icon>
               </button>
             </ion-col> 

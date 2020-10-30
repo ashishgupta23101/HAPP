@@ -30,6 +30,8 @@ export class AppComponent implements OnInit{
   ) {
     this.initializeApp();
   }
+
+  tabreg: string = localStorage.getItem('IsLogin') === 'false' ? 'not-register' : 'welcome';
   ngOnInit() {
   }
   initializeApp() {
@@ -67,7 +69,7 @@ export class AppComponent implements OnInit{
       this.storage.set('deviceID', 'browser');
     }
       this.trackService.saveToken();
-       this.splashScreen.hide();
+      this.splashScreen.hide();
     }).catch(() => {
        this.splashScreen.hide();
     });

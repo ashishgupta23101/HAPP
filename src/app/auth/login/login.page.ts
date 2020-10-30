@@ -31,38 +31,37 @@ export class LoginPage implements OnInit {
   signin(){
 
   }
-  
-  login(form :any){
+
+  login(form: any){
     if (!this.loginForm.valid) {
       return false;
     } else {
-      let usr = new User();
+      const usr = new User();
       usr.email = form.email;
       usr.password = form.password;
       this.platform.ready().then(() => {
-        this.fun.showloader("Verifying User...");
+        this.fun.showloader('Verifying User...');
         if (this.platform.is('cordova')) {
           if (this.fun.validateEmail(usr.email)) {
              this.trackService.login(usr.email , usr.password).subscribe(data => {
               // tslint:disable-next-line: no-debugger
-              this.zone.run(()=>{
-              if(data.Error === true)
-              { localStorage.setItem('IsLogin', "false");
+              this.zone.run(() => {
+              if (data.Error === true)
+              { localStorage.setItem('IsLogin', 'false');
                 this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
                 this.fun.dismissLoader();
                 return;
               }
               this.fun.dismissLoader();
-              localStorage.setItem('IsLogin', "false");
+              localStorage.setItem('IsLogin', 'false');
               this.fun.navigate('home', false);
             });
             },
             error => {
-             localStorage.setItem('IsLogin', "false");
-              this.fun.dismissLoader();
-              this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
+             localStorage.setItem('IsLogin', 'false');
+             this.fun.dismissLoader();
+             this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
             });
-            
           } else {
             this.fun.dismissLoader();
             this.fun.presentToast('Wrong Input!', true, 'bottom', 2100);

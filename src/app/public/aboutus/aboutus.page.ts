@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-aboutus',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutusPage implements OnInit {
 
-  constructor() { }
-
+  constructor(@Inject(NavController) private navCtrl: NavController,) { }
+  goBack() {
+    this.navCtrl.back();
+  }
   ngOnInit() {
   }
 

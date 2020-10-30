@@ -7,6 +7,7 @@ import { MapLocations } from 'src/app/models/MapLocations';
 import { ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { TrackingService } from 'src/app/providers/tracking.service';
+import * as $ from 'jquery';
 import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
 declare var google;
 @Component({
@@ -46,6 +47,13 @@ export class ProductActivityPage implements OnInit {
   @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
 
   ngOnInit()    {
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function(){ 
+      // tslint:disable-next-line: only-arrow-functions
+      $("#openActivity").click(function(){ 
+          $("#actdiv").addClass("toggleactive");
+      });
+  });
    // this.getLocations();
   }
   displayGoogleMap(loc: any) {
@@ -73,7 +81,7 @@ export class ProductActivityPage implements OnInit {
   }
 
   goBack() {
-    this.navCtrl.pop();
+    this.navCtrl.back();
   }
 
   reloadMap(){

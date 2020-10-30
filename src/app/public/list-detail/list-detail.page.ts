@@ -126,7 +126,7 @@ share() {
 this.social.presentActionSheet2();
 }
 goBack() {
-this.navCtrl.pop();
+this.navCtrl.back();
 }
 gotoActivePackages() {
 this.loading.dismiss();

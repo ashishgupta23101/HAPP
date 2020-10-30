@@ -40,6 +40,7 @@
     "cordova-plugin-statusbar": "^2.4.3",
     "es6-promise-plugin": "^4.2.2",
     "firebase": "^7.23.0",
+    "jquery": "^3.5.1",
     "moment": "^2.29.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

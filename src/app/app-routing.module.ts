@@ -133,6 +133,10 @@ const routes: Routes = [
   {
     path: 'activity',
     loadChildren: () => import('./public/activity/activity.module').then( m => m.ActivityPageModule)
+  },
+  {
+    path: 'splash',
+    loadChildren: () => import('./public/splash/splash.module').then( m => m.SplashPageModule)
   }
 ];
 @NgModule({

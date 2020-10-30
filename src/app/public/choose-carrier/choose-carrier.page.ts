@@ -25,7 +25,6 @@ export class ChooseCarrierPage implements OnInit {
     @Inject(NavParams) private params: NavParams) {
     this.carrier = params.get('carrier');
     this.trackingNo = params.get('trackingNo');
-   
   }
   doTrack(value) {
     try {

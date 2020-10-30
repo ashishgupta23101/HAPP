@@ -284,6 +284,7 @@ login(_email: string , _password: string): Observable<any> {
     });
   }
   /// track package
+  // tslint:disable-next-line: variable-name
   private trackPackages(_queryParam: QueryParams): Observable<any> {
     try {
     let trackingAPI = environment.trackingAPI;
