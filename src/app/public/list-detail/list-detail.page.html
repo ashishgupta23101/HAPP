@@ -2,7 +2,7 @@
   
   <div class="header-action-icon text-left">
     <ion-icon class=" " side="start" name="arrow-undo" (click)="goBack()"></ion-icon>  
-    <ion-icon class="fRight" name="log-out-outline" (click)="share()"></ion-icon>
+    <ion-icon class="fRight" name="share" (click)="share()"> <app-social-sharing *ngIf="hasData" [Key]="item"></app-social-sharing></ion-icon>
   </div> 
 
   <div class="main-container pt12 plr12 pb30">
@@ -21,10 +21,10 @@
         <div class="partnerLogo">
           <ion-row>
             <ion-col size="6" class="text-left">
-              <a href="#"><img src="../assets/images/FedEx_Express_logo.png"></a>
+              <a href="javaScript:void(0)" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../assets/images/FedEx_Express_logo.png"></a>
             </ion-col>
             <ion-col size="6" class="text-left">
-              <a href="#"><img src="../assets/images/amazonLogo.png"></a>
+              <a href="javaScript:void(0)" [routerLink]="['/pkgshipinfo']" routerDirection="backward"><img src="../assets/images/amazonLogo.png"></a>
             </ion-col>
           </ion-row>
         </div>

@@ -75,8 +75,7 @@ ngOnInit() {
   this.trackNo = this.route.snapshot.paramMap.get('any');
 }
 ionViewWillEnter(){
-  debugger;
-  this.loading.present('Loading Details.');
+  // this.loading.present('Loading Details.');
   this.item = new ActivePackages();
   this.trackingheader = new TrackingHeader();
   this.trackingResult = new TrackingResult();
@@ -93,7 +92,7 @@ this.item.TrackingNo = val.Trackingheader.TrackingNo;
 this.item.Carrier = val.Trackingheader.CarrierCode;
 this.item.Status = val.Trackingheader.Status;
 this.hasData = true;
-this.loading.dismiss();
+// this.loading.dismiss();
 } else {
 this.storage.get('_archivePackages').then(aData => {
 const val1 = aData.find(item => item.trackingNo === this.trackNo);
@@ -107,10 +106,10 @@ this.item.TrackingNo = val1.Trackingheader.TrackingNo;
 this.item.Carrier = val1.Trackingheader.CarrierCode;
 this.item.Status = val1.Trackingheader.Status;
 this.hasData = true;
-this.loading.dismiss();
+// this.loading.dismiss();
 } else{
 this.hasData = false;
-this.loading.dismiss();
+// this.loading.dismiss();
 }
 if (this.isActive){
 this.packType = '_activePackages';
@@ -129,7 +128,7 @@ goBack() {
 this.navCtrl.back();
 }
 gotoActivePackages() {
-this.loading.dismiss();
+// this.loading.dismiss();
 if (this.isActive){
 this.navCtrl.navigateForward('/listing');
 }
@@ -151,7 +150,8 @@ locate() {
 if (this.trackingScans !== undefined  && this.trackingScans !== null && this.trackingScans.length > 0) {
 const navigationExtras: NavigationExtras = {
 queryParams: {
-    scans: JSON.stringify(this.trackingScans)
+    scans: JSON.stringify(this.trackingScans),
+    item: JSON.stringify(this.item)
 }
 };
 this.router.navigate(['product-activity'], navigationExtras);
@@ -167,7 +167,6 @@ this.presentConfirm(this.trackNo, 'Mark as Delivered', 'Do you want to mark the 
 editPackages() {
 this.navCtrl.navigateForward(`/edit-package/${this.trackNo}`);
 }
-
 
 gotoSettings() {
 this.navCtrl.navigateForward('/settings');

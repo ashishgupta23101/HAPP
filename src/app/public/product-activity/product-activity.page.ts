@@ -9,6 +9,7 @@ import { Platform } from '@ionic/angular';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import * as $ from 'jquery';
 import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
+import { ActivePackages } from 'src/app/models/active-packages';
 declare var google;
 @Component({
   selector: 'app-product-activity',
@@ -17,6 +18,7 @@ declare var google;
 })
 export class ProductActivityPage implements OnInit {
 
+  @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
   constructor(
     @Inject(ActivatedRoute) private route: ActivatedRoute,
     @Inject(NavController) private navCtrl: NavController,
@@ -27,12 +29,14 @@ export class ProductActivityPage implements OnInit {
 
         this.route.queryParams.subscribe(params => {
         this.trackingScans = JSON.parse(params.scans);
+        this.item = JSON.parse(params.item);
         this.height = platform.height() - 56;
         this.getLocations();
       });
     }
 
   @ViewChild('map')
+  item: ActivePackages;
   mapContainer: ElementRef;
   map: any;
   trackingScans: Array<TrackingScans> = [];
@@ -44,14 +48,13 @@ export class ProductActivityPage implements OnInit {
   locations: Array<MapLocations> = [];
 
   markersArray = [];
-  @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
 
   ngOnInit()    {
     // tslint:disable-next-line: only-arrow-functions
-    $(document).ready(function(){ 
+    $(document).ready(function(){
       // tslint:disable-next-line: only-arrow-functions
-      $("#openActivity").click(function(){ 
-          $("#actdiv").addClass("toggleactive");
+      $('#openActivity').click(function(){
+          $('#actdiv').addClass('toggleactive');
       });
   });
    // this.getLocations();
@@ -98,9 +101,9 @@ export class ProductActivityPage implements OnInit {
     try{
       this.locations = new Array<MapLocations>();
       // tslint:disable-next-line: only-arrow-functions
-      const min = new Date(Math.min.apply(null, this.trackingScans.map(function(e){return new Date(e.scanDateTime);})));
+      const min = new Date(Math.min.apply(null, this.trackingScans.map(function(e){return new Date(e.scanDateTime); })));
       // tslint:disable-next-line: only-arrow-functions
-      const max = new Date(Math.max.apply(null, this.trackingScans.map(function(e){return new Date(e.scanDateTime);})));
+      const max = new Date(Math.max.apply(null, this.trackingScans.map(function(e){return new Date(e.scanDateTime); })));
       // alert(min +'-'+max);
       for (const scan of this.trackingScans){
         if (scan.location !== undefined && scan.location !== null && scan.location !== '')
@@ -111,7 +114,7 @@ export class ProductActivityPage implements OnInit {
               locs.longitude = coordinates[0].longitude;
               locs.location = scan.location;
               if (scan.scanDateTime !== undefined && scan.scanDateTime !== null && scan.scanDateTime !== ''){
-              let scantime = new Date(scan.scanDateTime);
+              const scantime = new Date(scan.scanDateTime);
               if ( scantime.getTime() === max.getTime()){
                         locs.url = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
                         // .getalert(JSON.stringify(locs));

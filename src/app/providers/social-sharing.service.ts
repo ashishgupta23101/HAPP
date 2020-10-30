@@ -177,7 +177,4 @@ export class SocialSharingService {
       this.loadService.presentToast('error', 'Something went wrong!');
     }
   }
-
-
-
 }
