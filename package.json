@@ -38,6 +38,7 @@
     "@ionic/storage": "^2.3.1",
     "angularfire2": "^5.4.2",
     "capacitor-barcode-scanner-plugin": "0.0.1",
+    "cocoapods": "0.0.0",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-fcm-with-dependecy-updated": "^7.3.1",
     "cordova-plugin-firebase": "^2.0.5",
@@ -53,6 +54,7 @@
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
     "phonegap-plugin-barcodescanner": "^8.1.0",
+    "phonegap-plugin-push": "^2.3.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
@@ -70,6 +72,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "cordova-ios": "^6.1.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
