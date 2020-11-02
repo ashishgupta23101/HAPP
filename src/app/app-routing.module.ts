@@ -137,6 +137,10 @@ const routes: Routes = [
   {
     path: 'splash',
     loadChildren: () => import('./public/splash/splash.module').then( m => m.SplashPageModule)
+  },
+  {
+    path: 'url-changer',
+    loadChildren: () => import('./public/url-changer/url-changer.module').then( m => m.UrlChangerPageModule)
   }
 ];
 @NgModule({
