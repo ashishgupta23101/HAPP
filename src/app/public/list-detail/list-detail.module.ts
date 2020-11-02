@@ -8,16 +8,15 @@ import { ListDetailPageRoutingModule } from './list-detail-routing.module';
 
 import { ListDetailPage } from './list-detail.page';
 import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule,SharedModule,
     ListDetailPageRoutingModule
   ],
-  entryComponents:[SocialSharingComponent],
-  exports:[SocialSharingComponent],
-  declarations: [ListDetailPage, SocialSharingComponent]
+  declarations: [ListDetailPage]
 })
 export class ListDetailPageModule {}

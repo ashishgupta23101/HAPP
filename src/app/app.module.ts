@@ -27,6 +27,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { TabsPageModule } from './tabs/tabs.module';
+import { SharedModule } from './public/shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +36,7 @@ import { TabsPageModule } from './tabs/tabs.module';
     HttpClientModule,
     BrowserModule,
     FormsModule,
-    TabsPageModule,
+    TabsPageModule,SharedModule,
     IonicStorageModule.forRoot({
     name: '__mydb',
     driverOrder: ['indexeddb', 'sqlite', 'websql']
