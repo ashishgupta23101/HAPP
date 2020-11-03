@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>874399430634-12bf7rc0svco7sifrj9v4nch8lcqf1vl.apps.googleusercontent.com</string>
+	<string>619491163084-e2gc4lrhvdm0psjtjmfdsim5mrmo7vpf.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.874399430634-12bf7rc0svco7sifrj9v4nch8lcqf1vl</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>874399430634-20ejr2ri25g67rvdbqfl4kubso2mgg57.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.619491163084-e2gc4lrhvdm0psjtjmfdsim5mrmo7vpf</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBANb1Wp2bBADBy8VwHbe3Rvy0-EkM2TdU</string>
+	<string>AIzaSyASE0qjAjD2k87EuQNiKcRJ2OvqelKF4xY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>874399430634</string>
+	<string>619491163084</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.shipmatrix.easytrack</string>
+	<string>com.shipmatrix.ezttrack</string>
 	<key>PROJECT_ID</key>
-	<string>easytrack-9ff9c</string>
+	<string>eztrack-50025</string>
 	<key>STORAGE_BUCKET</key>
-	<string>easytrack-9ff9c.appspot.com</string>
+	<string>eztrack-50025.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:874399430634:ios:5099bcfa4d3fb5df2da493</string>
+	<string>1:619491163084:ios:6889ae55f18bacd093fb69</string>
 	<key>DATABASE_URL</key>
-	<string>https://easytrack-9ff9c.firebaseio.com</string>
+	<string>https://eztrack-50025.firebaseio.com</string>
 </dict>
 </plist>
