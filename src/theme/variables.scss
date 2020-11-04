@@ -271,8 +271,25 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
  .plr12{padding-left:12px; padding-right:12px;}
  .plr15{padding-left:15px; padding-right:15px;}
 
- .pt12{padding-top:12px;}
+ .pt12{padding-top:12px !important;}
  .pt65{padding-top:65px;}
+
+ .main-container{
+  padding-top: 30px; 
+  padding-bottom: 43px !important;
+ }
+
+  ion-tab-bar{border-top-color: #fff;
+    ion-tab-button{color: #452092;
+      &.tab-selected{color: #21d19f;}
+      &:hover{color: #21d19f;}
+      .button-native{
+        &:hover{color: #21d19f;}
+      }
+    }
+    
+    ion-icon{    font-size: 34px; }
+  }
 
 .form-control{
   display: block;
@@ -338,9 +355,11 @@ ion-header ion-toolbar{--background: #f8f7f9;}
   height: auto;
   bottom: 0;}
 
-.header-action-icon{padding-left:15px; padding-right:15px; margin-top: 15px;}
+.header-action-icon{padding-top:40px; padding-left: 12px; padding-right: 12px;}
 .header-action-icon ion-icon{font-size: 30px;
   color: #452092;}
+  
+.header-action-icon ~ .main-container{padding-top:0px !important;}
 
 
   .user-links{padding: 4px 0;
@@ -567,7 +586,7 @@ ion-header ion-toolbar{--background: #f8f7f9;}
     &:hover{background: #999;}
   }
   
-  ion-header{background-color: #f8f7f9; padding-top:5px; 
+  ion-header{background-color: #f8f7f9; padding-top:35px; z-index: 999; 
     ion-segment{background-color:transparent; padding:0 6px;
       ion-row{width:100%;}
     }
@@ -586,11 +605,14 @@ ion-header ion-toolbar{--background: #f8f7f9;}
 
 
 
-  .listDeatilB{position: relative; 
-      z-index: 9;
-      position: relative;
-      padding: 15px 15px 0px 15px; 
-      min-height:500px; 
+  .listDeatilB{
+    z-index: 999;
+    position: absolute;
+    padding: 15px 15px 145px 15px;
+    top: 84px;
+    bottom: 10px;
+    right: 12px;
+    left: 12px;
       h2{font-size: 24px;
         font-weight: bold;
         color: #000;
@@ -613,14 +635,21 @@ ion-header ion-toolbar{--background: #f8f7f9;}
         }
   }
 
-  .partnerLogo{margin-top:100px; padding:0 10px;
+  .partnerLogo{position: absolute;
+      bottom: 80px;
+      left: 12px;
+      right: 12px;
     ion-col{padding:0px;}
     img{max-width: 130px;}
   }
 
- 
+  .activityBtnS{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
   .activityBtn{
-    width: 100%;
     font-size: 22px;
     color: #fff;
     background-color: #78659f;
@@ -631,7 +660,9 @@ ion-header ion-toolbar{--background: #f8f7f9;}
     padding: 10px 20px;
     min-height: 51px;
     outline: none;
-    line-height: 1.5;
+    display: block;
+    width: 100%;
+    line-height: 31px;
     span{display: inline-block;}
     ion-icon{    
       font-size: 26px;
@@ -644,9 +675,11 @@ ion-header ion-toolbar{--background: #f8f7f9;}
   }
 
 
-  .MapBlock{position: relative; min-height: 550px; 
+  .MapBlock{ padding:0 0 60px 0;
     box-shadow: 0px 0px 4px rgba(163, 163, 167, 0.6);
-    iframe{width:100%; height:490px; border-radius:15px 15px 15px 15px;}
+    iframe{width: 100%;
+      height: 100%;
+      border-radius: 15px;}
     .productActivityS{position: absolute; bottom:0; left:0px; right:0px;}
   }
 
@@ -658,9 +691,9 @@ ion-header ion-toolbar{--background: #f8f7f9;}
     border: 1px solid #eae9ea;
     border-radius: 15px;
     box-shadow: 0px 0px 5px rgba(164, 164, 164, 0.6);
-    padding: 10px 20px;
-    min-height: 51px;
-    height:auto;
+    padding: 10px 20px; 
+    height:275px;
+    overflow:hidden;
     outline: none;
     -webkit-transition: all 1s ease-in-out;
     -moz-transition: all 1s ease-in-out;
@@ -804,7 +837,8 @@ ion-header ion-toolbar{--background: #f8f7f9;}
 
 
 .MSMlogo {
-  img{max-width: 200px;}
+  img{max-width: 190px;
+      width: 190px;}
 }
 
 .discriptionCon{
@@ -825,4 +859,23 @@ ion-header ion-toolbar{--background: #f8f7f9;}
         font-size: 55px;}
     }
   }
+}
+
+ion-content{
+  &:after{content: "";
+    width: 100%;
+    height: 28px;
+    position: absolute;
+    bottom: 9px;
+    background: #f8f7f9;
+    border-radius: 0px 0px 30px 30px;
+    box-shadow: 0 6px 6px -3px rgba(0, 0, 0, 0.15);
+    z-index: 99;}
+  &:before{content: "";
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    background: #fff;
+    z-index: 9;}
 }
