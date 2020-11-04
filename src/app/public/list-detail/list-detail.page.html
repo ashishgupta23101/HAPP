@@ -5,8 +5,6 @@
     <ion-icon class="fRight" name="share" (click)="share()"> <app-social-sharing *ngIf="hasData" [Key]="item"></app-social-sharing></ion-icon>
   </div> 
 
-  <div class="main-container pt12 plr12 pb30">
-
     <div class="listDeatilB shadowBox"> 
         <ion-avatar class="listDImg">
           <img src="../../../assets/images/default-product-image.png">
@@ -29,12 +27,12 @@
           </ion-row>
         </div>
 
-         <div class="activityBtnS mmlr15 mt30">
-        <button  class="activityBtn  text-center" (click)="locate()"><span>Activity
+         <div class="activityBtnS">
+        <button href="javascript:void(0)" class="activityBtn  text-center" (click)="locate()"><span>Activity
           <ion-icon name="chevron-up-outline"></ion-icon></span>
         </button>  
       </div>
        
     </div>
-</div>
+
 </ion-content>
