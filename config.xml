@@ -84,11 +84,9 @@
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="~2.4.2" />
-    <plugin name="cordova-plugin-device" spec="~2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="cordova-sqlite-storage" spec="~3.2.0" />
     <plugin name="phonegap-plugin-barcodescanner" spec="~8.0.1" />
     <plugin name="cordova-android-support-gradle-release" spec="^3.0.1" />
     <plugin name="cordova-plugin-compat" spec="1.2" />
@@ -99,10 +97,9 @@
     <plugin name="cordova-plugin-firebase" spec="2.0.5" />
     <plugin name="cordova-plugin-network-information" spec="2.0.2" />
     <plugin name="cordova-plugin-inappbrowser" spec="3.1.0" />
-    <plugin name="cordova-plugin-openwith-ios" spec="^2.0.0">
-        <variable name="IOS_URL_SCHEME" value="oaisheasytrack" />
-    </plugin>
     <plugin name="cordova-plugin-fcm-with-dependecy-updated" spec="7.0.2" />
+    <plugin name="cordova-plugin-device" spec="^2.0.3" />
+    <plugin name="cordova-sqlite-storage" spec="^3.4.1" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="8.1.0" />
 </widget>
