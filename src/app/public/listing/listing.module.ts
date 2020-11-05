@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ListingPageRoutingModule } from './listing-routing.module';
 
 import { ListingPage } from './listing.page';
+import { OrderByPipe } from '../../pipe/order-by.pipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ListingPage } from './listing.page';
     IonicModule,
     ListingPageRoutingModule
   ],
-  declarations: [ListingPage]
+  declarations: [ListingPage, OrderByPipe]
 })
 export class ListingPageModule {}
