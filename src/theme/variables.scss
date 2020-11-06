@@ -282,7 +282,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   box-shadow: 0 6px 6px -3px rgba(0, 0, 0, 0.15);
   position: absolute;
   bottom: 10px;
-  top: 74px;
+  top: 30px;
   overflow-y: auto;
   z-index: 99;
   left: 0;
@@ -291,7 +291,8 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   padding-bottom: 15px !important;
  }
 
- ion-header ~ ion-content .main-container{top:0px !important;}
+ .header-action-icon ~ .main-container{top:64px;}
+ ion-header ~ ion-content .main-container{top:0px;}
 
   ion-tab-bar{border-top-color: #fff;
     ion-tab-button{color: #452092;
@@ -366,7 +367,7 @@ ion-header ion-toolbar{--background: #f8f7f9;}
   height: auto;
   bottom: 0;}
 
-.header-action-icon{padding-top:40px; padding-left: 12px; padding-right: 12px;}
+.header-action-icon{padding-top:30px; padding-left: 12px; padding-right: 12px;}
 .header-action-icon ion-icon{font-size: 30px;
   color: #452092;}
   
@@ -599,7 +600,7 @@ ion-header ion-toolbar{--background: #f8f7f9;}
     &:hover{background: #999;}
   }
   
-  ion-header{background-color: #f8f7f9; padding-top:35px; z-index: 999; 
+  ion-header{background-color: #f8f7f9; padding-top:30px; z-index: 999; 
     ion-segment{background-color:transparent; padding:0 6px;
       ion-row{width:100%;}
     }
@@ -631,22 +632,11 @@ ion-header ion-toolbar{--background: #f8f7f9;}
   .listDeatilB{
     z-index: 999;
     position: absolute;
-    padding: 15px 15px 145px 15px;
-    top: 84px;
+    padding: 15px 15px 0px 15px;
+    top: 12px;
     bottom: 10px;
     right: 12px;
-    left: 12px;
-      h2{font-size: 24px;
-        font-weight: bold;
-        color: #000;
-        margin: 0;}
-      p{    font-size: 17px;
-        color: #b2b1b1;
-        margin: 6px 0 0 0;}
-      span.inTransit{color:#cb9a46; font-weight:bold;}
-      span.exception{color:#cc612a; font-weight:bold;}
-      span.delivered{color:#6ae247; font-weight:bold;}
-        p.ExDate{color: #000;     font-weight: 600;}
+    left: 12px; 
 
         ion-avatar{width: 100%;
           text-align: center;
@@ -656,14 +646,29 @@ ion-header ion-toolbar{--background: #f8f7f9;}
         img{       border-radius: 0px;
           max-width: 150px;} 
         }
+
+       .listDContent{
+          h2{font-size:24px;
+            font-weight: bold;
+            color: #000;
+            margin: 0;}
+          p{font-size: 17px;
+            color: #b2b1b1;
+            margin: 6px 0 0 0;}
+          span.inTransit{color:#cb9a46; font-weight:bold;}
+          span.exception{color:#cc612a; font-weight:bold;}
+          span.delivered{color:#6ae247; font-weight:bold;}
+            p.ExDate{color: #000;     font-weight: 600;}
+       } 
   }
 
   .partnerLogo{position: absolute;
       bottom: 80px;
       left: 12px;
       right: 12px;
-    ion-col{padding:0px;}
+    ion-col{padding:0px 10px;}
     img{max-width: 130px;}
+    img.LDAmzon_icon{top:7px; position:relative;}
   }
 
   .activityBtnS{
@@ -902,3 +907,51 @@ ion-content{
     background: #fff;
     z-index: 9;}
 }
+
+@media only screen and (max-height: 668px) { 
+
+  .graphicBlock{ 
+    img{max-height: 240px;}
+  }
+  
+  .graphicLength0{
+    img{max-height: 265px;}
+  }
+  
+  .graphicLength{
+    img{max-height: 325px;}
+  } 
+
+  form.mt70{margin-top:60px !important;}
+   
+}
+
+@media only screen and (max-height: 569px) { 
+
+  .main-heading{font-size:20px;}
+
+  .graphicBlock{margin-top:30px;} 
+
+  .graphicBlock{ 
+    img{max-height: 220px;}
+  }
+  
+  .graphicLength0{
+    img{max-height: 245px;}
+  }
+  
+  .graphicLength{
+    img{max-height: 305px;}
+  } 
+
+  form.mt70{margin-top:30px !important;}
+
+  .btnBlock.mt30{margin-top:18px !important;}
+
+  .listDeatilB ion-avatar img{ max-width: 130px;}
+  .listDeatilB .listDContent h2{ font-size: 21px;}
+  .listDeatilB .listDContent p{font-size: 15px;}
+  .partnerLogo{bottom: 75px;}
+  .partnerLogo img{max-width: 100px;}
+
+} 
