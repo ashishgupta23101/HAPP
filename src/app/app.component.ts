@@ -35,7 +35,9 @@ export class AppComponent implements OnInit{
   ngOnInit() {
   }
   initializeApp() {
-
+    this.statusBar.overlaysWebView(false);
+    // set status bar to white
+    this.statusBar.styleDefault();
     this.platform.ready().then(() => {
       this.platform.resume.subscribe(async () => {
         const trackNo = localStorage.getItem('intent');
@@ -61,7 +63,7 @@ export class AppComponent implements OnInit{
           this.loadingController.presentToast('dark', 'Internet is Now Connected');
         }, 2000);
       });
-      this.statusBar.backgroundColorByHexString('#7606a7');
+      this.statusBar.styleDefault();
       this.fcm.notificationSetup();
       this.trackService.GenerateDeviceID();
 
