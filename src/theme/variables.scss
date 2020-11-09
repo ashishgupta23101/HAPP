@@ -594,12 +594,12 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
       border: 1px solid #a0dbcc; 
       padding: 9px 10px;
       border-radius: 12px; 
-      &.segment-button-checked{background: #6995a4 !important; color:#fff !important;}
+      &.segment-button-checked{color:#fff !important;}
     } 
     ion-segment-button::before{border:none;} 
   } 
 
-  ion-segment-button{
+  /*ion-segment-button{
     --indicator-box-shadow: transparent!important;
     border-radius: 2.5rem !important;
     padding: 0.7rem;
@@ -611,7 +611,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     --indicator-color : transparent !important;  
     --background-checked:transparent !important;  
     --opacity:0 !important; 
-    }
+    }*/
 
    
 
@@ -889,12 +889,12 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 
 ion-content{
   &:after{ 
-    content: "";
+    /*content: "";
     width: 100%;
     height: 30px;
     position: absolute;
     bottom: 0;
-    background: #fff;} 
+    background: #fff;*/} 
 }
 
 @media only screen and (max-height: 668px) { 

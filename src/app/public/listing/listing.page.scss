@@ -1,9 +1,8 @@
-ion-header ion-segment-button {
-    font-size: 20px;
-    font-weight: bold;
-    color: #4b2a8e;
-    background: #76b3ad;
-    border: 1px solid #a0dbcc;
-    padding: 9px 10px;
-    border-radius: 12px;
+
+
+ion-segment-button.segment-button-checked::part(indicator){
+    padding: 0 !important; 
+}
+ion-segment-button.segment-button-checked::part(indicator-background){
+    background: #6995a4 !important; 
 }
