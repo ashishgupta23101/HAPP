@@ -26,7 +26,7 @@ public searchTerm = '';
 public sortbyDate = 'Date Created';
 public sessionData: any;
 public filtBy: string;
-public segmentModel = 'active';
+public segmentModel: string;
 public daySelect: string;
 public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 public sortBy = '1';
@@ -35,6 +35,7 @@ readyToLoad = false;
 ngOnInit() {
     // tslint:disable-next-line: no-debugger
     debugger;
+    this.segmentModel = 'active';
     this.segmentChanged();
 }
 ionViewWillEnter(){

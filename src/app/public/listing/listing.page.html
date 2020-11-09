@@ -5,6 +5,7 @@
   color="tertiary" 
   scrollable="true"
   mode="ios"
+
   [(ngModel)]="segmentModel" 
   (ionChange)="segmentChanged()">
   <ion-row> 
@@ -47,8 +48,8 @@
 <ion-content class="lightGray">
 <div class="main-container pt12 plr12 pb30">
 <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
-*ngIf="activeItems.length === 0 " src="../../../assets/images/no-record-found.png">
-
+*ngIf="activeItems.length === 0" src="../../../assets/images/no-record-found.png">
+<ng-container *ngIf="activeItems.length > 0">
  <div *ngFor="let item of activeItems" (click)="showDetail(item.Key)" class="listingBlock">
   <ion-item class="shadowBox">
     <ion-avatar slot="start">
@@ -64,6 +65,6 @@
   </ion-item> 
   <a href="javascript:void(0)" (click)="showDetail(item.Key)" class="listAarrow" ><ion-icon name="chevron-forward-outline"></ion-icon></a> 
 </div>
-
+</ng-container>
 </div>
 </ion-content>
