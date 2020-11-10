@@ -8,6 +8,7 @@ import { LoaderService } from 'src/app/providers/loader.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { TrackingService } from 'src/app/providers/tracking.service';
+import * as $ from 'jquery';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.page.html',
@@ -34,9 +35,13 @@ public activeItems: Array<ActivePackages> = [];
 readyToLoad = false;
 ngOnInit() {
     // tslint:disable-next-line: no-debugger
-    debugger;
-    this.segmentModel = 'active';
-    this.segmentChanged();
+     // tslint:disable-next-line: only-arrow-functions
+     $(document).ready(function(){
+      // tslint:disable-next-line: only-arrow-functions
+      $(':host(.segment-button-checked) .segment-button-indicator').css('opacity', '0 ');
+     });
+     this.segmentModel = 'active';
+     this.segmentChanged();
 }
 ionViewWillEnter(){
 
