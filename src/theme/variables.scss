@@ -291,7 +291,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   right: 0;
   z-index:9;}
 
-  .header-action-icon ~ .main-container{top:64px;}
+  .header-action-icon ~ .main-container{top:65px;}
   ion-header ~ ion-content .main-container{top:0px;}
 
   ion-tab-bar{border-top-color: #fff;
@@ -584,22 +584,37 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     &:hover{background: #999;}
   }
   
-  ion-header{background-color: #f8f7f9; padding-top:30px; z-index: 999; 
-    ion-segment{height: 58px; background-color:transparent; padding:0 4px;
+  ion-header{background-color: #f8f7f9; padding-top:35px; z-index: 999; 
+    ion-segment{background-color:transparent; padding:0 4px; margin-bottom: 4px;
       ion-row{width:100%;}
     }
 
     ion-segment-button{
-      height: 45px;
+      height: 50px;
       font-size: 18px;
       font-weight: bold;
       color: #452092;
       background: #f9f9fa;
-      border: 1px solid #a0dbcc; 
+      border: 2px solid rgb(160 219 204 / 52%);
       padding: 0;
-      border-radius: 10px 10px 2px 2px; 
-      &.segment-button-checked{color:#fff !important;background-color: #6995a4;}
-        } 
+      border-radius: 10px;
+      min-width: 100%;
+      text-transform: capitalize;
+      --indicator-height:0px; overflow: hidden;
+      --indicator-color:#6995a4;
+        &:hover{
+          background: rgb(111 153 168 / 08%);
+          --color:#452092 !important; 
+        }
+        &.segment-button-checked{ 
+        color: #fff !important;
+        background-color: #6995a4;
+        border-color: #51d9b3;
+          &:hover{ 
+            --color-checked: #fff !important; 
+          } 
+        }        
+      } 
     ion-segment-button::before{border:none;} 
   } 
 
