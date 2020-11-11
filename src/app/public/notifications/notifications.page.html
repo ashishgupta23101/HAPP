@@ -8,31 +8,31 @@
     <div>
       <h3 class="text-center main-heading">Notifications</h3>
     </div>
- 
+    <form *ngIf="setting_Form" [formGroup]="setting_Form" (submit)="saveSettings(setting_Form.value)">
     <div class="notifyPage mt30">
        <div class="notifiBlock mb15">
           <label>Pick up type scan</label>
-          <ion-toggle color="success"></ion-toggle>
+          <ion-toggle color="success" formControlName="PickUp"></ion-toggle>
        </div>
        <div class="notifiBlock mb15">
         <label>Out for Delivery</label>
-        <ion-toggle color="success"></ion-toggle>
+        <ion-toggle color="success" formControlName="OutforDelivery"></ion-toggle>
      </div>
      <div class="notifiBlock mb15">
       <label>Delivered</label>
-      <ion-toggle color="success"></ion-toggle>
+      <ion-toggle color="success" formControlName="Delivered"></ion-toggle>
    </div>
    <div class="notifiBlock mb15">
     <label>No Final Delivery Status</label>
-    <ion-toggle color="success"></ion-toggle>
+    <ion-toggle color="success" formControlName="NFDeliveryStaus"></ion-toggle>
  </div>
  <div class="notifiBlock mb15">
   <label>Damages</label>
-  <ion-toggle color="success"></ion-toggle>
+  <ion-toggle color="success" formControlName="Damages"></ion-toggle>
 </div>
 <div class="notifiBlock mb15">
   <label>Weather Delay</label>
-  <ion-toggle color="success"></ion-toggle>
+  <ion-toggle color="success" formControlName="Weather"></ion-toggle>
 </div>
 <div class="notifiBlock mb15">
   <label>Email</label>
@@ -40,8 +40,9 @@
 </div>
 
 <div class="btnBlock mt30">
-  <ion-button expand="block" fill="solid" class="submitBtn">Save</ion-button>
+  <ion-button expand="block"  class="submitBtn"  type="submit" [disabled]="!setting_Form.valid">Save</ion-button>
 </div>
     </div> 
+    </form>
   </div>
 </ion-content>

@@ -22,7 +22,13 @@ constructor(
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(AlertController) public alertController: AlertController,
   @Inject(NavController) private navCtrl: NavController ,
-  @Inject(Storage) private storage: Storage) {}
+  @Inject(Storage) private storage: Storage) {
+        // tslint:disable-next-line: no-debugger
+     // tslint:disable-next-line: only-arrow-functions
+
+     this.segmentModel = 'active';
+     this.segmentChanged();
+  }
 public searchTerm = '';
 public sortbyDate = 'Date Created';
 public sessionData: any;
@@ -31,17 +37,10 @@ public segmentModel: string;
 public daySelect: string;
 public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 public sortBy = '1';
-public activeItems: Array<ActivePackages> = [];
+public activeItems: Array<ActivePackages>;
 readyToLoad = false;
 ngOnInit() {
-    // tslint:disable-next-line: no-debugger
-     // tslint:disable-next-line: only-arrow-functions
-     $(document).ready(function(){
-      // tslint:disable-next-line: only-arrow-functions
-      $(':host(.segment-button-checked) .segment-button-indicator').css('opacity', '0 ');
-     });
-     this.segmentModel = 'active';
-     this.segmentChanged();
+
 }
 ionViewWillEnter(){
 
@@ -88,8 +87,6 @@ refreshList(showLoader: boolean = false) {
  }, 800);
 }
 segmentChanged() {
-  // tslint:disable-next-line: no-debugger
-  debugger;
   this.activeItems = [];
   switch (this.segmentModel) {
     case 'active':
@@ -98,6 +95,8 @@ segmentChanged() {
         this.trackService.setPackagestoSession(value);
         this.sessionData = SessionData;
         this.activeItems = SessionData.packages.All;
+        this.sortedBy();
+        this.filterBy();
         }
         this.readyToLoad = true;
      });
@@ -108,11 +107,14 @@ segmentChanged() {
         this.trackService.setarchivePackagestoSession(value);
         this.sessionData = SessionData;
         this.activeItems = SessionData.packages.All;
+        this.sortedBy();
+        this.filterBy();
         }
         this.readyToLoad = true;
      });
       break;
   }
+
 }
 sortedBy() {
   switch (this.daySelect) {
