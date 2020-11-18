@@ -9,6 +9,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import * as $ from 'jquery';
+import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.page.html',
@@ -39,11 +40,18 @@ public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 public sortBy = '1';
 public activeItems: Array<ActivePackages>;
 readyToLoad = false;
+@ViewChild(SocialSharingComponent) social: SocialSharingComponent;
 ngOnInit() {
 
 }
 ionViewWillEnter(){
-
+  this.segmentChanged() ;
+}
+doRefresh(event) {
+  if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){
+    this.trackService.refreshTrackingDetails(this.sessionData.packages.All);
+    event.target.complete();
+  }
 }
 retrackAll(){
   if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){
@@ -78,12 +86,14 @@ searchPackages() {
 }
 
 refreshList(showLoader: boolean = false) {
+  this.loading.dismiss();
   if (showLoader) { this.loading.present('Refreshing...'); }
   // tslint:disable-next-line: only-arrow-functions
   this.searchTerm = '';
   this.dateSelected = formatDate(new Date(), 'MM/dd/yyyy', 'en');
   setTimeout(() => {
     this.segmentChanged();
+    this.loading.dismiss();
  }, 800);
 }
 segmentChanged() {
@@ -182,7 +192,9 @@ searchByDate() {
 archive(key: string) {
 this.presentConfirm(key, 'Archive', 'Do you want to archive the package?', 'arc');
 }
-
+share() {
+  this.social.presentActionSheet2();
+  }
 retrack(key: string) {
   this.presentConfirm(key, 'Re-Track', 'Do you want to Re-Track the package?', 'rtrck');
 }
@@ -199,7 +211,7 @@ this.storage.get('_activePackages').then(aData => {
           scans: JSON.stringify(val1.scans)
       }
   };
-    this.router.navigate(['show-map'], navigationExtras);
+    this.router.navigate(['product-activity'], navigationExtras);
   } else {
     this.loading.presentToast('Warning', 'No Scans to Locate.');
   }

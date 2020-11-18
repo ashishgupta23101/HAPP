@@ -8,12 +8,13 @@ import { ListingPageRoutingModule } from './listing-routing.module';
 
 import { ListingPage } from './listing.page';
 import { OrderByPipe } from '../../pipe/order-by.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule,SharedModule,
     ListingPageRoutingModule
   ],
   declarations: [ListingPage, OrderByPipe]

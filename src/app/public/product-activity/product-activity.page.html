@@ -25,10 +25,11 @@
                 <div class="ion-avatar OFD_img">
                   <!-- {{scan?.activity.toLowerCase().includes('out for') ? OFD_img :
                 (scan?.activity.toLowerCase().includes('exception') ? SE_img : LFF_img)}}
-              scan?.activity.toLowerCase().includes('out for') ? '../assets/images/boxIcon.png' :
-                  (scan?.activity.toLowerCase().includes('exception') ? '../assets/images/barcodeIcon.png' :
-                  '../assets/images/truckIcon.png') -->
-                  <img src="../../../assets/images/truckIcon.png">
+               
+                  <img src="../../../assets/images/truckIcon.png">-->
+                  <img [src]="scan?.activity?.toLowerCase().includes('out for') ? '../../../assets/images/boxIcon.png' :
+                  (scan?.activity?.toLowerCase().includes('exception') ? '../../../assets/images/barcodeIcon.png' :
+                  '../../../assets/images/truckIcon.png')"/>
                 </div>
                 <div class="ion-label">
                   <h2>{{scan?.activity}}</h2> 

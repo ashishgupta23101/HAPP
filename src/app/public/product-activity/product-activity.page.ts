@@ -67,7 +67,14 @@ export class ProductActivityPage implements OnInit {
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: parseFloat(loc.latitude), lng: parseFloat(loc.longitude)},
       disableDefaultUI: true,
-        zoom: 8,
+        zoom: 15,
+        panControl: true,
+        zoomControl: true,
+       mapTypeControl: true,
+       scaleControl: true,
+       streetViewControl: true,
+       overviewMapControl: true,
+       rotateControl: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 

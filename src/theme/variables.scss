@@ -191,7 +191,39 @@
     --ion-card-background: #1c1c1d;
   }
 
+  body.dark {
+    --ion-background-color: #000000;
+    --ion-background-color-rgb: 0,0,0;
 
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255,255,255;
+
+    --ion-color-step-50: #0d0d0d;
+    --ion-color-step-100: #1a1a1a;
+    --ion-color-step-150: #262626;
+    --ion-color-step-200: #333333;
+    --ion-color-step-250: #404040;
+    --ion-color-step-300: #4d4d4d;
+    --ion-color-step-350: #595959;
+    --ion-color-step-400: #666666;
+    --ion-color-step-450: #737373;
+    --ion-color-step-500: #808080;
+    --ion-color-step-550: #8c8c8c;
+    --ion-color-step-600: #999999;
+    --ion-color-step-650: #a6a6a6;
+    --ion-color-step-700: #b3b3b3;
+    --ion-color-step-750: #bfbfbf;
+    --ion-color-step-800: #cccccc;
+    --ion-color-step-850: #d9d9d9;
+    --ion-color-step-900: #e6e6e6;
+    --ion-color-step-950: #f2f2f2;
+
+    --ion-toolbar-background: #0d0d0d;
+
+    --ion-item-background: #000000;
+
+    --ion-card-background: #1c1c1d;
+  }
   /*
    * Material Design Dark Theme
    * -------------------------------------------
@@ -272,7 +304,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 
 .top0{top:0px !important;}
 
-  .lightGray{--background :#f8f7f9; --padding:15px 15px 30px 15px;}
+  .lightGray{background:#f8f7f9; --background :#f8f7f9; --padding:15px 15px 30px 15px;}
   .main-heading{color:#452092; font-weight:700;}
   .main-title{color: #452092; margin:4px 0 0 0; font-size:13px;}
 
@@ -286,7 +318,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   overflow-x: hidden; 
   position: absolute;
   top: 30px;
-  bottom: 6px; 
+  bottom: 8px; 
   left: 0;
   right: 0;
   z-index:9;}
@@ -294,8 +326,13 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   .header-action-icon ~ .main-container{top:65px;}
   ion-header ~ ion-content .main-container{top:0px;}
 
-  ion-tab-bar{border-top-color: #fff;
-    ion-tab-button{color: #452092;
+  ion-tab-bar{
+    background: #fff;
+    border-top-color: #fff;
+    ion-tab-button{
+    --background: #fff;
+      background: #fff; 
+      color: #452092;
       &.tab-selected{color: #21d19f;}
       &:hover{color: #21d19f;}
     }  
@@ -340,8 +377,9 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     color: #bbbaba !important; opacity: 1;
   }
  
-  .submitBtn{ max-width:170px; margin: 0 auto; text-transform: capitalize; font-size: 21px; min-height: 50px;} 
-  .submitBtn{--border-radius: 15px; --background:#62bccc;  }  
+  .submitBtn{ max-width:170px; margin: 0 auto; text-transform: capitalize;
+  font-size: 21px; min-height: 50px; color:#fff;} 
+  .submitBtn{--border-radius: 15px; --background:#62bccc; --color:#fff;  }  
 
   .cusBorderBtn{ max-width:170px; margin: 0 auto; text-transform: capitalize; font-size: 21px; min-height: 50px; } 
   .cusBorderBtn{--border-radius: 15px; --color:#452092;}
@@ -532,9 +570,10 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     }
 
   .shadowBox{
-    background: #fff; 
+    background: #fff;  
     box-shadow: 0px 1px 6px rgba(163, 163, 167, 0.9);
     border-radius: 15px;
+    --background: #fff; 
     --border-color: #fff !important;}
 
 
@@ -938,9 +977,9 @@ ion-content{
 
   .main-heading{font-size:20px;}
 
-  .graphicBlock{margin-top:30px;} 
+  .graphicBlock.mt50{margin-top:30px;} 
 
-  .graphicBlock{ 
+  .graphicBlock.mt50{ 
     img{max-height: 220px;}
   }
   
@@ -987,4 +1026,41 @@ ion-content{
     height: 50px;}
 
   ion-tab-bar ion-icon{font-size:32px;}
+
+  .RLogoBlock{
+    width: 124px;
+    height: 130px;
+    margin-bottom:0px !important;}
+
+  .RLogoBlock a{
+    display: block;
+    width: 124px;
+    height: 130px;}
+ 
+
+  #amazon_logo{ 
+    img{ max-width:80px;}
+  }
+
+  #walmart_logo{ 
+    img{max-width:72px;}
+  }
+
+
+  #wyfair_logo{ 
+    img{ max-width: 88px;}
+  }
+
+  #overstock_logo{ 
+    img{ max-width: 70px;}
+  }
+
+  #target_logo{ 
+    img{ max-width: 68px;}
+  }
+
+  #Etsy_logo{background-color: #e26700;
+    img{max-width: 100px;}
+  }
+    
 }

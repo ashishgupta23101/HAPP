@@ -155,7 +155,7 @@ export class TrackingService {
               isSuccess++;
               if (arrayPackage.length === i) {
                 this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
-                this.navCtrl.navigateForward('/active-packages');
+                this.navCtrl.navigateForward('/listing');
               } else { i++; }
             });
           }
@@ -164,14 +164,14 @@ export class TrackingService {
           isFailed++;
           if (arrayPackage.length === i) {
             this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
-            this.navCtrl.navigateForward('/active-packages');
+            this.navCtrl.navigateForward('/listing');
           }else{i++; }
         });
       } catch (exception) {
         isFailed++;
         if (arrayPackage.length === i) {
           this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
-          this.navCtrl.navigateForward(`/active-packages`);
+          this.navCtrl.navigateForward(`/listing`);
         }else{i++; }
       }
       });

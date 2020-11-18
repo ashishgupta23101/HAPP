@@ -11,7 +11,11 @@
         </ion-avatar>
         <div class="listDContent text-center">
           <h2>Headphone</h2>
-          <p class="status">Status: <span class="inTransit">{{trackingheader?.Status}}</span></p> 
+          <p class="status">Status: <span [ngClass]="{
+            'delivered': trackingheader?.Status.toLowerCase().includes('deliver'),
+            'exception': trackingheader?.Status.toLowerCase().includes('exception') ,
+            'inTransit' : trackingheader?.Status.toLowerCase().includes('transit') 
+        }">{{trackingheader?.Status}}</span></p> 
           <p class="Tracking">Tracking #: <span>{{trackingResult?.TrackingNo}} </span></p>
           <p class="ExDate">Expected: {{trackingheader?.DeliveredDateTime}} </p> 
         </div> 
