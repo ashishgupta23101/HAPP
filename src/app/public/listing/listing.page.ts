@@ -42,7 +42,6 @@ public activeItems: Array<ActivePackages>;
 readyToLoad = false;
 @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
 ngOnInit() {
-
 }
 ionViewWillEnter(){
   this.segmentChanged() ;
