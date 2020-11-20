@@ -17,7 +17,7 @@ declare var google;
   styleUrls: ['./product-activity.page.scss'],
 })
 export class ProductActivityPage implements OnInit {
-
+  latlngbounds: any ;
   @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
   constructor(
     @Inject(ActivatedRoute) private route: ActivatedRoute,
@@ -77,7 +77,6 @@ export class ProductActivityPage implements OnInit {
        rotateControl: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-
   }
 
   addMarkersToMap(loc: any) {
@@ -92,6 +91,7 @@ export class ProductActivityPage implements OnInit {
 
     // store the marker object drawn in global array
     this.markersArray.push(marker);
+    this.map.fitBounds(this.latlngbounds);
   }
 
   goBack() {
@@ -111,6 +111,7 @@ export class ProductActivityPage implements OnInit {
 
     try{
       this.locations = new Array<MapLocations>();
+      this.latlngbounds = new google.maps.LatLngBounds();
       // tslint:disable-next-line: only-arrow-functions
       const min = new Date(Math.min.apply(null, this.trackingScans.map(function(e){return new Date(e.scanDateTime); })));
       // tslint:disable-next-line: only-arrow-functions
@@ -145,6 +146,7 @@ export class ProductActivityPage implements OnInit {
               }
               // this.trackService.logError(JSON.stringify(locs),'Location');
               this.locations.push(locs);
+              this.latlngbounds.extend(new google.maps.LatLng(locs.latitude, locs.longitude));
               if (this.locations.length === 1){
                this.displayGoogleMap(locs);
               }

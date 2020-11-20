@@ -45,12 +45,12 @@
 
 
 <ion-content class="lightGray">
-  <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="chevron-down-circle-outline"
       pullingText="Pull to refresh"
       refreshingSpinner="circles"
-      refreshingText="Refreshing..."> -->
+      refreshingText="Refreshing..."> 
 <div class="main-container pt12 plr12 pb30">
 <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
 *ngIf="activeItems.length === 0" src="../../../assets/images/no-record-found.png">
@@ -73,22 +73,23 @@
             <p class="ExDate">Expected: {{item.ExpectedDate}} </p> 
           </ion-label>
         </ion-item> 
+
+      
+        <a href="javascript:void(0)" (click)="showDetail(item.Key)" class="listAarrow" ><ion-icon name="chevron-forward-outline"></ion-icon></a> 
         <ion-item-options side="end">
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="archive(item.Key)"><ion-icon title="Archive" name="archive"></ion-icon></ion-item-option>
           <!-- <ion-item-option color="tertiary" *ngIf="segmentModel === 'active'" (click)="MarkasDelievered(item.Key)"><ion-icon title="Mark Delivered" name="checkmark-circle-outline"></ion-icon></ion-item-option> -->
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="share()" ><app-social-sharing [Key]="item"></app-social-sharing></ion-item-option>
           <!-- <ion-item-option color="tertiary" *ngIf="segmentModel === 'active'" (click)="editPackages(item.Key)"><ion-icon  title="Edit"  name="create"></ion-icon></ion-item-option> -->
           <ion-item-option color="light" (click)="delete(item.Key)"><ion-icon title="Remove"  name="trash"></ion-icon></ion-item-option>
-          <ion-item-option color="light" (click)="locate(item.Key)"><ion-icon title="Locate" name="locate"></ion-icon></ion-item-option>
+          <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="locate(item.Key)"><ion-icon title="Locate" name="locate"></ion-icon></ion-item-option>
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="retrack(item.Key)"><ion-icon name="repeat"></ion-icon></ion-item-option>
         </ion-item-options>
-      
-        <a href="javascript:void(0)" class="listAarrow" ><ion-icon name="chevron-forward-outline"></ion-icon></a> 
       </ion-item-sliding>
 
 
 </ng-container>
 </div>
-<!-- </ion-refresher-content>
-</ion-refresher>  -->
+ </ion-refresher-content>
+</ion-refresher>  
 </ion-content>

@@ -2,14 +2,14 @@
   <br><br> 
   <div class="main-container plr15 pb30">
     <div>
-      <h3 class="text-center main-heading">Start Tracking your Packages</h3>
+      <h3 class="text-center main-heading mt30">Start Tracking your Packages</h3>
     </div>
 
-    <div class="graphicBlock mt50">
+    <div class="graphicBlock mt110">
       <img src="../assets/images/Tracking.svg">
     </div> 
 
-  <form class="mt70" *ngIf="track_Form" [formGroup]="track_Form" (submit)="fillCarrierCode(track_Form.value)"> 
+  <form class="mt100" *ngIf="track_Form" [formGroup]="track_Form" (submit)="fillCarrierCode(track_Form.value)"> 
     <div class="trackNumFiled"> 
       <ion-input name="text" type="text" placeholder="Tracking #" class="form-control" (input)="onSearchChange($event.target.value)" formControlName="TrackingNo" required></ion-input>
       <div class="tracking"><ion-icon name="barcode-outline" (click)="scanPGCode()"></ion-icon></div>
@@ -19,4 +19,5 @@
     </div>
   </form> 
 </div>
+<div class="WhiteSpce"></div>					 
 </ion-content>

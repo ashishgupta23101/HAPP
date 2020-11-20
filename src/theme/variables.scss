@@ -191,39 +191,7 @@
     --ion-card-background: #1c1c1d;
   }
 
-  body.dark {
-    --ion-background-color: #000000;
-    --ion-background-color-rgb: 0,0,0;
 
-    --ion-text-color: #ffffff;
-    --ion-text-color-rgb: 255,255,255;
-
-    --ion-color-step-50: #0d0d0d;
-    --ion-color-step-100: #1a1a1a;
-    --ion-color-step-150: #262626;
-    --ion-color-step-200: #333333;
-    --ion-color-step-250: #404040;
-    --ion-color-step-300: #4d4d4d;
-    --ion-color-step-350: #595959;
-    --ion-color-step-400: #666666;
-    --ion-color-step-450: #737373;
-    --ion-color-step-500: #808080;
-    --ion-color-step-550: #8c8c8c;
-    --ion-color-step-600: #999999;
-    --ion-color-step-650: #a6a6a6;
-    --ion-color-step-700: #b3b3b3;
-    --ion-color-step-750: #bfbfbf;
-    --ion-color-step-800: #cccccc;
-    --ion-color-step-850: #d9d9d9;
-    --ion-color-step-900: #e6e6e6;
-    --ion-color-step-950: #f2f2f2;
-
-    --ion-toolbar-background: #0d0d0d;
-
-    --ion-item-background: #000000;
-
-    --ion-card-background: #1c1c1d;
-  }
   /*
    * Material Design Dark Theme
    * -------------------------------------------
@@ -286,6 +254,8 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 .mt50{margin-top:50px;}
 .mt70{margin-top:70px;}
 .mt75{margin-top:75px;}
+.mt100{margin-top:100px;}
+.mt110{margin-top:110px;}
 
 .mb0{margin-bottom:0px !important;}
 .mb10{margin-bottom:10px;}
@@ -305,7 +275,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 .top0{top:0px !important;}
 
   .lightGray{background:#f8f7f9; --background :#f8f7f9; --padding:15px 15px 30px 15px;}
-  .main-heading{color:#452092; font-weight:700;}
+  .main-heading{color:#452092; font-weight:700; font-size:24px;}
   .main-title{color: #452092; margin:4px 0 0 0; font-size:13px;}
 
   .main-container{
@@ -385,7 +355,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   .cusBorderBtn{--border-radius: 15px; --color:#452092;}
 
   .graphicBlock{ 
-    img{max-height: 265px;}
+    img{max-height: 272px;}
   }
 
   .graphicLength0{
@@ -830,7 +800,13 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     --background-color: transparent;
 
     ul{padding:0px;margin:0px;
-      li{list-style: none; position: relative; padding-left:72px;}
+      li{list-style: none; position: relative; padding-left:72px;
+        &:last-child{
+          .ion-avatar{
+            &:after{display:none;}
+          } 
+        }
+      }
     }
 
     .ion-avatar{width: 48px;
@@ -955,10 +931,16 @@ ion-content{
     background: #fff;*/} 
 }
 
+@media only screen and (max-height: 737px) { 
+  .main-heading{ margin-top: 16px !important;}
+  .graphicBlock.mt110{margin-top:90px;}
+  form.mt100{margin-top:55px;}
+}
+
 @media only screen and (max-height: 668px) { 
 
   .graphicBlock{ 
-    img{max-height: 240px;}
+    img{max-height: 250px;}
   }
   
   .graphicLength0{
@@ -969,7 +951,8 @@ ion-content{
     img{max-height: 325px;}
   } 
 
-  form.mt70{margin-top:60px !important;}
+  .graphicBlock.mt110{margin-top:60px;}
+  form.mt100{margin-top:40px;}
    
 }
 
@@ -977,9 +960,9 @@ ion-content{
 
   .main-heading{font-size:20px;}
 
-  .graphicBlock.mt50{margin-top:30px;} 
+  .graphicBlock.mt110{margin-top:35px;} 
 
-  .graphicBlock.mt50{ 
+  .graphicBlock.mt110{ 
     img{max-height: 220px;}
   }
   
@@ -991,8 +974,7 @@ ion-content{
     img{max-height: 305px;}
   } 
 
-  form.mt70{margin-top:30px !important;}
-
+  form.mt100{margin-top:30px !important;}
   .btnBlock.mt30{margin-top:18px !important;}
 
   .listDeatilB ion-avatar img{ max-width: 130px;}
