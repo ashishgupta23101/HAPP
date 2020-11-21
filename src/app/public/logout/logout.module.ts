@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { LogoutPageRoutingModule } from './logout-routing.module';
 
 import { LogoutPage } from './logout.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     LogoutPageRoutingModule
   ],
   declarations: [LogoutPage]

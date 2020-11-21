@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { AccountcreatedPageRoutingModule } from './accountcreated-routing.module';
 
 import { AccountcreatedPage } from './accountcreated.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     AccountcreatedPageRoutingModule
   ],
   declarations: [AccountcreatedPage]

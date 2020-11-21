@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { NoCarrierPageRoutingModule } from './no-carrier-routing.module';
 
 import { NoCarrierPage } from './no-carrier.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     NoCarrierPageRoutingModule
   ],
   declarations: [NoCarrierPage]

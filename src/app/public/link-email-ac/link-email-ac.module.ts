@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { LinkEmailAcPageRoutingModule } from './link-email-ac-routing.module';
 
 import { LinkEmailAcPage } from './link-email-ac.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     LinkEmailAcPageRoutingModule
   ],
   declarations: [LinkEmailAcPage]

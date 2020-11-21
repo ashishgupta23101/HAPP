@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { PkgshipinfoPageRoutingModule } from './pkgshipinfo-routing.module';
 
 import { PkgshipinfoPage } from './pkgshipinfo.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     PkgshipinfoPageRoutingModule
   ],
   declarations: [PkgshipinfoPage]

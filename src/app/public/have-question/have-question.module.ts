@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { HaveQuestionPageRoutingModule } from './have-question-routing.module';
 
 import { HaveQuestionPage } from './have-question.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     HaveQuestionPageRoutingModule
   ],
   declarations: [HaveQuestionPage]

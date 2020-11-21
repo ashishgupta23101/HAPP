@@ -7,11 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { LinkEmailFailPageRoutingModule } from './link-email-fail-routing.module';
 
 import { LinkEmailFailPage } from './link-email-fail.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormsModule, SharedModule,
     IonicModule,
     LinkEmailFailPageRoutingModule
   ],

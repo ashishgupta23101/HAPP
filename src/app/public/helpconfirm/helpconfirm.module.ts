@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { HelpconfirmPageRoutingModule } from './helpconfirm-routing.module';
 
 import { HelpconfirmPage } from './helpconfirm.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     HelpconfirmPageRoutingModule
   ],
   declarations: [HelpconfirmPage]

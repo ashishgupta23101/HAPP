@@ -14,7 +14,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,SharedModule,
+    IonicModule, SharedModule,
     ListingPageRoutingModule
   ],
   declarations: [ListingPage, OrderByPipe]

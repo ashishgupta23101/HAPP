@@ -31,7 +31,6 @@ export class AppComponent implements OnInit{
     this.initializeApp();
   }
 
-  tabreg: string = localStorage.getItem('IsLogin') === 'false' ? 'not-register' : 'welcome';
   ngOnInit() {
   }
   initializeApp() {

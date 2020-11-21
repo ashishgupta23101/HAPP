@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { ChooseCarrierPageRoutingModule } from './choose-carrier-routing.module';
 
 import { ChooseCarrierPage } from './choose-carrier.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     ReactiveFormsModule,
     ChooseCarrierPageRoutingModule
   ],

@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { LoginSuccessPageRoutingModule } from './login-success-routing.module';
 
 import { LoginSuccessPage } from './login-success.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     LoginSuccessPageRoutingModule
   ],
   declarations: [LoginSuccessPage]

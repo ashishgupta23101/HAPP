@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { ForgotPassPageRoutingModule } from './forgot-pass-routing.module';
 
 import { ForgotPassPage } from './forgot-pass.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     ForgotPassPageRoutingModule
   ],
   declarations: [ForgotPassPage]

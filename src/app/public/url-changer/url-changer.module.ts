@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { UrlChangerPageRoutingModule } from './url-changer-routing.module';
 
 import { UrlChangerPage } from './url-changer.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, SharedModule,
     UrlChangerPageRoutingModule
   ],
   declarations: [UrlChangerPage]

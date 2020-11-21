@@ -1,0 +1,22 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button (click)="NavMethod('home')" active>
+      <ion-icon name="home"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="NavMethod('listing')">
+      <ion-icon name="logo-dropbox"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="NavMethod('splash')">
+      <ion-icon name="pie-chart"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button *ngIf="tabreg === 'not-register'" (click)="NavMethod('not-register')" >
+      <ion-icon name="settings"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="tabreg === 'welcome'" (click)="NavMethod('welcome')" >
+      <ion-icon name="settings"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
