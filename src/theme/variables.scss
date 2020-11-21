@@ -334,14 +334,15 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     box-shadow: 0 4px 7px -4px rgba(64, 121, 140, 0.25);
     padding-top: 10px;
     padding-bottom: 15px !important;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: absolute;
+    // overflow-y: auto;
+    // overflow-x: hidden;
+    // position: absolute;
     top: 30px;
     bottom: 8px;
     left: 0;
     right: 0;
-    z-index: 9;}
+   // z-index: 9;
+  }
 
   .header-action-icon ~ .main-container{top:65px;}
   ion-header ~ ion-content .main-container{top:0px;}
