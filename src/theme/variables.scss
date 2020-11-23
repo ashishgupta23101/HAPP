@@ -349,8 +349,8 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   background: transparent;
   border-radius: 0px 0px 30px 30px;
   box-shadow: 0 4px 7px -4px rgba(64, 121, 140, 0.5);
-  position: absolute;
-  bottom: 10px;
+  position: fixed;
+  bottom: 67px;
   left: 0;
   right: 0;
   height: 30px;
@@ -358,8 +358,8 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 }
 
 .bottom-shadow2{
-  position: absolute;
-    bottom: 0px;
+  position: fixed;
+    bottom: 57px;
     left: 0;
     right: 0;
     height: 10px;
