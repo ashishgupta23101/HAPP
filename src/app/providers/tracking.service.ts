@@ -91,7 +91,7 @@ export class TrackingService {
                 this.loadingController.dismiss();
                 switch (nav) {
                   case 'pkgadded':
-                    this.navCtrl.navigateForward(`/pkg-add-success`);
+                    this.navCtrl.navigateForward(`/pkg-add-success/${record.trackingNo}`);
                     break;
                   case 'actpck':
                       this.navCtrl.navigateForward(`/listing`);

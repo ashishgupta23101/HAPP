@@ -35,7 +35,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/link-email-ac/link-email-ac.module').then( m => m.LinkEmailAcPageModule)
   },
   {
-    path: 'pkg-add-success',
+    path: 'pkg-add-success/:any',
     loadChildren: () => import('./public/pkg-add-success/pkg-add-success.module').then( m => m.PkgAddSuccessPageModule)
   },
   {

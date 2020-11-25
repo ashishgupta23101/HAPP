@@ -655,7 +655,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 
   .shadowBox{
     background: #fff;
-    box-shadow: 0px 3px 7px rgb(0 0 0 / 0.16);
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.14);
     border-radius: 15px;
     --background: #fff;
     --border-color: #fff !important;}
@@ -664,8 +664,9 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   .listingBlock{margin-bottom: 15px;
     position: relative;
     padding-right: 22px;
+    overflow: inherit;
     ion-item{    
-      z-index: 9;
+      z-index: 99 !important;
       position: relative;
     }
 
@@ -699,6 +700,10 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     right: 0;
     background: #d3cdd7;
     border-radius: 0px 5px 5px 0px;
+    z-index: 9;
+    transition: all 150ms ease-in-out;
+    -moz-transition: all 150ms ease-in-out;
+    -webkit-transition: all 150ms ease-in-out;
     ion-icon{    font-size: 28px;
     color: #ffffff;
     position: absolute;
@@ -707,6 +712,14 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     left: -2px;}
     &:hover{background: #999;}
   }
+
+  .listingBlock ion-item-options{border:none;}
+  .listingBlock.item-sliding-active-slide .listAarrow{
+    right:191px;
+    transition: all 150ms ease-in-out;
+    -moz-transition: all 150ms ease-in-out;
+    -webkit-transition: all 150ms ease-in-out;}
+
   
   ion-header{background-color: #f8f7f9; padding-top:35px; z-index: 999; 
     ion-segment{background-color:transparent; padding:6px 4px 4px 4px; 
