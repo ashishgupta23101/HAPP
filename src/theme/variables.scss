@@ -701,9 +701,9 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     background: #d3cdd7;
     border-radius: 0px 5px 5px 0px;
     z-index: 9;
-    transition: all 150ms ease-in-out;
-    -moz-transition: all 150ms ease-in-out;
-    -webkit-transition: all 150ms ease-in-out;
+    // transition: all 150ms ease-in-out;
+    // -moz-transition: all 150ms ease-in-out;
+    // -webkit-transition: all 150ms ease-in-out;
     ion-icon{    font-size: 28px;
     color: #ffffff;
     position: absolute;
@@ -714,11 +714,14 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   }
 
   .listingBlock ion-item-options{border:none;}
+
+  .listingBlock.item-sliding-active-slide{padding-right:0px;}
   .listingBlock.item-sliding-active-slide .listAarrow{
-    right:191px;
+    display:none;
+    /*right:191px;
     transition: all 150ms ease-in-out;
     -moz-transition: all 150ms ease-in-out;
-    -webkit-transition: all 150ms ease-in-out;}
+    -webkit-transition: all 150ms ease-in-out;*/}
 
   
   ion-header{background-color: #f8f7f9; padding-top:35px; z-index: 999; 

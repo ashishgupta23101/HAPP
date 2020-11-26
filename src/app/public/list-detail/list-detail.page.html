@@ -11,7 +11,7 @@
         </ion-avatar>
         <div class="listDContent text-center">
           <h2>Headphone</h2>
-          <p class="status">Status: <span [ngClass]="{
+          <p class="status">Status: <span  *ngIf="trackingheader?.Status" [ngClass]="{
             'delivered': trackingheader?.Status.toLowerCase().includes('deliver'),
             'exception': trackingheader?.Status.toLowerCase().includes('exception') ,
             'inTransit' : trackingheader?.Status.toLowerCase().includes('transit') 
