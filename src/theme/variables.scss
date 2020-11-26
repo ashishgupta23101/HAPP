@@ -389,7 +389,8 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   ion-header ~ ion-content .main-container{
     /*top:0px;*/
   }
-
+  ion-footer {background: #ffffff;--background: #ffffff;}
+  ion-footer ion-toolbar{background: #ffffff;--background: #ffffff;}
   ion-tab-bar{
     background: #fff;
     border-top-color: #ededed;
@@ -461,6 +462,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   }
 
   ion-header ion-toolbar{--background: #f8f7f9;}
+  ion-footer ion-toolbar{background: #ffffff;--background: #ffffff;}
   .header-md::after{background: none; height: auto; bottom: 0;}
 
   .header-action-icon{padding-top:30px; padding-left: 12px; padding-right: 12px;}
