@@ -125,7 +125,7 @@ share() {
 this.social.presentActionSheet2();
 }
 goBack() {
-this.navCtrl.back();
+  this.navCtrl.navigateForward('/listing');
 }
 gotoActivePackages() {
 // this.loading.dismiss();
