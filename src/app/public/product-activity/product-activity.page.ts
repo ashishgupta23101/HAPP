@@ -26,7 +26,7 @@ export class ProductActivityPage implements OnInit {
     @Inject(LoaderService) public loading: LoaderService,
     @Inject(TrackingService) private trackService: TrackingService ,
     @Inject(NativeGeocoder) public nativeGeocoder: NativeGeocoder) {
-
+        this.item = new ActivePackages();
         this.route.queryParams.subscribe(params => {
         this.trackingScans = JSON.parse(params.scans);
         this.item = JSON.parse(params.item);
