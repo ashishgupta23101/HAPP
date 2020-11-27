@@ -28,6 +28,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
+import { fancyAnimation } from './animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +42,9 @@ import { SharedModule } from './public/shared/shared.module';
     name: '__mydb',
     driverOrder: ['indexeddb', 'sqlite', 'websql']
   }),
-    ReactiveFormsModule, IonicModule.forRoot(), AngularFireModule.initializeApp(environment.firebase),
+    ReactiveFormsModule, IonicModule.forRoot({
+      navAnimation: fancyAnimation
+    }), AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AppRoutingModule
   ],
