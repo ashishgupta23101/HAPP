@@ -67,7 +67,6 @@ export const fancyAnimation = (_: HTMLElement, opts: any) => {
 
   return rootTransition;
 };
-
 export const modalEnterAnimation = (baseEl: any) => {
   const backdropAnimation = animationCtrl
     .create()
