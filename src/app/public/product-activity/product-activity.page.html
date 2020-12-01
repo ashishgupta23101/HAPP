@@ -1,11 +1,16 @@
-<ion-content class="lightGray">
-  
-  <div class="header-action-icon text-left">
-    <ion-icon class=" " side="start" name="arrow-undo" (click)="goBack()"></ion-icon>  
-    <ion-icon class="fRight" name="share" (click)="share()"> <app-social-sharing  [Key]="item"></app-social-sharing></ion-icon>
+<ion-header [translucent]="true"> 
+  <div class="statusBar">
+    <div class="bottom-shadow3"> </div>
+    <div class="bottom-shadow4"> </div>
   </div> 
+  <div class="header-action-icon text-left">
+    <div class="back_arrow fleft" (click)="goBack()"><img src="../assets/images/back-arrow.svg"></div> 
+    <div class="share_icon fRight" (click)="share()"><app-social-sharing [Key]="item"></app-social-sharing></div> 
+  </div> 
+</ion-header>
 
-  <div class="main-container pt12 plr12 pb30">
+<ion-content class="lightGray"> 
+  <div class="main-container">
       <div class="listDeatilB MapBlock shadowBox">
 
         <div id="map" *ngIf="trackingScans"  style="width:100%; height:100%;">
@@ -27,9 +32,9 @@
                 (scan?.activity.toLowerCase().includes('exception') ? SE_img : LFF_img)}}
                
                   <img src="../../../assets/images/truckIcon.png">-->
-                  <img [src]="scan?.activity?.toLowerCase().includes('out for') ? '../../../assets/images/boxIcon.png' :
-                  (scan?.activity?.toLowerCase().includes('exception') ? '../../../assets/images/barcodeIcon.png' :
-                  '../../../assets/images/truckIcon.png')"/>
+                  <img [src]="scan?.activity?.toLowerCase().includes('out for') ? '../../../assets/images/box_icon.svg' :
+                  (scan?.activity?.toLowerCase().includes('exception') ? '../../../assets/images/barcode_product.svg' :
+                  '../../../assets/images/truck_icon.svg')"/>
                 </div>
                 <div class="ion-label">
                   <h2>{{scan?.activity}}</h2> 
@@ -42,4 +47,7 @@
         </div> 
     </div>
 </div>
-</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar></ion-footer>
+</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
+  <div class="bottom-shadow"> </div>
+  <div class="bottom-shadow2"> </div>
+</ion-footer>

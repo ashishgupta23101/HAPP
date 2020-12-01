@@ -1,8 +1,14 @@
-<ion-content class="lightGray">
-  <br><br> 
-  <div class="main-container plr15 pb30">
-    <div>
-      <h3 class="text-center main-heading mt30">Start Tracking your Packages</h3>
+<ion-header [translucent]="true"> 
+  <div class="statusBar">
+    <div class="bottom-shadow3"> </div>
+    <div class="bottom-shadow4"> </div>
+  </div> 
+</ion-header>
+
+<ion-content class="lightGray homePageCs">  
+  <div class="main-container">
+    <div class="mt30">
+      <h3 class="main-heading text-center">Start Tracking your Packages</h3>
     </div>
 
     <div class="graphicBlock mt110">
@@ -12,12 +18,16 @@
   <form class="mt100" *ngIf="track_Form" [formGroup]="track_Form" (submit)="fillCarrierCode(track_Form.value)"> 
     <div class="trackNumFiled"> 
       <ion-input name="text" type="text" placeholder="Tracking #" class="form-control" (input)="onSearchChange($event.target.value)" formControlName="TrackingNo" required></ion-input>
-      <div class="tracking"><ion-icon name="barcode-outline" (click)="scanPGCode()"></ion-icon></div>
+      <div class="tracking"><i class="fas fa-barcode"></i></div>
     </div>
     <div class="btnBlock mt30">
       <ion-button type="submit" [disabled]="track_Form.invalid" expand="block" fill="solid" class="submitBtn">Submit</ion-button>
     </div>
   </form> 
 </div>
-<div class="WhiteSpce"></div>					 
-</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar></ion-footer>
+					 
+</ion-content><ion-footer class="ion-no-border">
+  <ion-toolbar><app-footer></app-footer></ion-toolbar>
+  <div class="bottom-shadow"> </div>
+  <div class="bottom-shadow2"> </div>
+</ion-footer>

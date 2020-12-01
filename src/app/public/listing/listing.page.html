@@ -1,6 +1,8 @@
-<ion-header [translucent]="true">
-
-  
+<ion-header [translucent]="true"> 
+  <div class="statusBar">
+    <div class="bottom-shadow3"> </div> 
+    <div class="bottom-shadow4"> </div>
+  </div> 
   <ion-segment 
   scrollable="true"
   value="active"
@@ -24,21 +26,11 @@
 <div class="headerSelectFiled">
   <ion-row>
     <ion-col size="6">
-      <!-- <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div> -->
       <ion-select placeholder="Filter by"  [value]="filtBy"  [(ngModel)]="filtBy"  (ionChange)="filterBy()" class="form-control selectFiled mb0">
         <ion-select-option value="Retailer">Retailer</ion-select-option>
         <ion-select-option value="Status">Status</ion-select-option> 
         <ion-select-option value="Category">Category</ion-select-option> 
-      </ion-select> 
+      </ion-select>
     </ion-col>
     <ion-col size="6">
       <ion-select placeholder="Sort by" [value]="daySelect"  [(ngModel)]="daySelect"  (ionChange)="sortedBy()" class="form-control selectFiled mb0">
@@ -50,7 +42,7 @@
       </ion-select>
     </ion-col>
   </ion-row>
-</div>
+</div> 
 </ion-header>
 
 
@@ -68,7 +60,8 @@
 *ngIf="activeItems.length === 0" src="../../../assets/images/no-record-found.png">
 <ng-container *ngIf="activeItems.length > 0">
 
-      <ion-item-sliding *ngFor="let item of activeItems"  class="listingBlock">
+      <ion-item-sliding *ngFor="let item of activeItems"  class="listingBlock"> 
+        <div class="lb_side">
         <ion-item (click)="showDetail(item.Key)" class="shadowBox">
           <ion-avatar slot="start">
             <img [src]="item.ProductUrl">
@@ -85,14 +78,17 @@
             <p class="ExDate">Expected: {{item.ExpectedDate}} </p> 
           </ion-label>
         </ion-item> 
-        <a href="javascript:void(0)" (click)="showDetail(item.Key)" class="listAarrow" ><ion-icon name="chevron-forward-outline"></ion-icon></a> 
+
+      
+        <a href="javascript:void(0)" (click)="showDetail(item.Key)" class="listAarrow" ><i class="fas fa-chevron-right"></i></a> 
+       </div>
         <ion-item-options side="end">
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="archive(item.Key)"><ion-icon title="Archive" name="archive"></ion-icon></ion-item-option>
           <!-- <ion-item-option color="tertiary" *ngIf="segmentModel === 'active'" (click)="MarkasDelievered(item.Key)"><ion-icon title="Mark Delivered" name="checkmark-circle-outline"></ion-icon></ion-item-option> -->
-          <!-- <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="share()" ><app-social-sharing [Key]="item"></app-social-sharing></ion-item-option> -->
+          <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="share()" ><app-social-sharing [Key]="item"></app-social-sharing></ion-item-option>
           <!-- <ion-item-option color="tertiary" *ngIf="segmentModel === 'active'" (click)="editPackages(item.Key)"><ion-icon  title="Edit"  name="create"></ion-icon></ion-item-option> -->
           <ion-item-option color="light" (click)="delete(item.Key)"><ion-icon title="Remove"  name="trash"></ion-icon></ion-item-option>
-          <!-- <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="locate(item.Key)"><ion-icon title="Locate" name="locate"></ion-icon></ion-item-option> -->
+          <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="locate(item.Key)"><ion-icon title="Locate" name="locate"></ion-icon></ion-item-option>
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="retrack(item.Key)"><ion-icon name="repeat"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
@@ -102,4 +98,8 @@
 </div>
 
 </ion-content>
-<ion-footer class="ion-no-border"><ion-toolbar mode="ios"><app-footer></app-footer></ion-toolbar></ion-footer>
+<ion-footer class="ion-no-border">
+  <ion-toolbar><app-footer></app-footer></ion-toolbar>
+  <div class="bottom-shadow"> </div>
+  <div class="bottom-shadow2"> </div>
+</ion-footer>

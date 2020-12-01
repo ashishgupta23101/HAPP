@@ -1,9 +1,15 @@
-<ion-content class="lightGray">
+<ion-header [translucent]="true"> 
+    <div class="statusBar">
+      <div class="bottom-shadow3"> </div>
+      <div class="bottom-shadow4"> </div>
+    </div> 
     <div class="header-action-icon text-right">
-        <ion-icon name="log-out-outline" [routerLink]="['/logout']" routerDirection="backward"></ion-icon>
+        <div class="logout_icon" [routerLink]="['/logout']" routerDirection="backward"><img src="../assets/images/logout_icon.svg"></div> 
     </div>
+  </ion-header>
 
-    <div class="main-container plr15 pb30">
+<ion-content class="lightGray"> 
+    <div class="main-container">
         <div class="profile-section text-center">
             <div class="profile-area">
                 <ion-icon name="person"></ion-icon>
@@ -33,14 +39,14 @@
                 <div class="mb15">
                     <ion-row>
                         <ion-col size="6">
-                            <button class="WShadowBtn text-center" [routerLink]="['/aboutus']" routerDirection="backward"> 
-                <ion-icon name="information-circle-outline" class="infoIcons"></ion-icon>
-              </button>
+                            <button class="WShadowBtn text-center info_circle_icon" [routerLink]="['/aboutus']" routerDirection="backward"> 
+                                <img src="../assets/images/info_circle_icon.svg">
+                            </button>
                         </ion-col>
                         <ion-col size="6">
-                            <button class="WShadowBtn text-center" [routerLink]="['/have-question']" routerDirection="backward"> 
-                <ion-icon name="help-circle-outline" class="infoIcons"></ion-icon>
-              </button>
+                            <button class="WShadowBtn text-center question_circle_icon" [routerLink]="['/have-question']" routerDirection="backward"> 
+                                <img src="../assets/images/question_circle_icon.svg">
+                            </button>
                         </ion-col>
                     </ion-row>
                 </div>
@@ -51,4 +57,7 @@
 
 
     </div>
-</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar></ion-footer>
+</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
+    <div class="bottom-shadow"> </div>
+    <div class="bottom-shadow2"> </div>
+</ion-footer>

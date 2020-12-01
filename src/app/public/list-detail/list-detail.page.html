@@ -1,17 +1,23 @@
-<ion-content class="lightGray">
-  
-  <div class="header-action-icon text-left">
-    <ion-icon class=" " side="start" name="arrow-undo" (click)="goBack()"></ion-icon>  
-    <ion-icon class="fRight" name="share" (click)="share()"> <app-social-sharing *ngIf="hasData" [Key]="item"></app-social-sharing></ion-icon>
+<ion-header [translucent]="true"> 
+  <div class="statusBar">
+    <div class="bottom-shadow3"> </div>
+    <div class="bottom-shadow4"> </div>
   </div> 
-  <div class="main-container pt12 plr12 pb30">
+  <div class="header-action-icon text-left"> 
+    <div class="back_arrow fleft" (click)="goBack()"><img src="../assets/images/back-arrow.svg"></div> 
+    <div class="share_icon fRight" (click)="share()"><app-social-sharing *ngIf="hasData" [Key]="item"></app-social-sharing></div> 
+  </div> 
+</ion-header>
+
+<ion-content class="lightGray"> 
+  <div class="main-container">
     <div class="listDeatilB shadowBox"> 
         <ion-avatar class="listDImg">
           <img src="../../../assets/images/default-product-image.png">
         </ion-avatar>
         <div class="listDContent text-center">
           <h2>Headphone</h2>
-          <p class="status">Status: <span  *ngIf="trackingheader?.Status" [ngClass]="{
+          <p class="status">Status: <span [ngClass]="{
             'delivered': trackingheader?.Status.toLowerCase().includes('deliver'),
             'exception': trackingheader?.Status.toLowerCase().includes('exception') ,
             'inTransit' : trackingheader?.Status.toLowerCase().includes('transit') 
@@ -39,4 +45,8 @@
        
     </div>
 </div>
-</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar></ion-footer>
+</ion-content>
+<ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
+  <div class="bottom-shadow"> </div>
+  <div class="bottom-shadow2"> </div>
+</ion-footer>
