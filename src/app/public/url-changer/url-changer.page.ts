@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {  NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
@@ -15,11 +15,11 @@ export class UrlChangerPage implements OnInit {
 
   apiType = '';
   apiUrl = '';
-  constructor(private navCtrl: NavController,
-              private trackService: TrackingService,
-              public loadingController: LoaderService,
-              private fcm: FcmService,
-              private storage: Storage) {
+  constructor(@Inject(NavController) private navCtrl: NavController,
+              @Inject(TrackingService) private trackService: TrackingService,
+              @Inject(LoaderService) public loadingController: LoaderService,
+              @Inject(FcmService) private fcm: FcmService,
+              @Inject(Storage) private storage: Storage) {
     this.storage.get('deviceID').then(id => {
       if (id !== null && id !== undefined && id !== '') {
         this.loadingController.presentToast('alert', 'DeviceId - ' + id);

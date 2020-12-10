@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment';
-//import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage';
 export class ActivePackages {
     TrackingNo: string;
     Status: string;
@@ -18,19 +18,26 @@ export class Packages {
     Yesterday: Array<ActivePackages> = [];
     ThisWeek: Array<ActivePackages> = [];
     LastWeek: Array<ActivePackages> = [];
+    ThisMonth: Array<ActivePackages> = [];
+    LastMonth: Array<ActivePackages> = [];
 }
 export class FilteringDates {
     Today: Date;
     Yesterday: Date;
-    ThisWeek: any;
-    LastWeek: any;
+    ThisWeek: CusDates = new CusDates();
+    LastWeek: CusDates = new CusDates();
+    ThisMonth: CusDates = new CusDates();
+    LastMonth: CusDates = new CusDates();
 }
-
+export class CusDates {
+    firstDate: any;
+    lastDate: any;
+}
 export class SessionData {
 
     static packages: Packages = new Packages();
     static filteringDates: FilteringDates = new FilteringDates();
     static apiURL: string = environment.api_Url_Prod;
-    static apiType: string = "P";
-    
+    // tslint:disable-next-line: no-inferrable-types
+    static apiType: string = 'P';
 }

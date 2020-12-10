@@ -29,6 +29,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 import { fancyAnimation } from './animations';
+import { AuthGuard } from './auth-guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -58,6 +59,7 @@ import { fancyAnimation } from './animations';
     SplashScreen,
     NativeGeocoder,
     Firebase,
+    AuthGuard,
     FCM,
     Network, InAppBrowser,
     SplashScreen, TrackingService, FunctionsService, FcmService,

@@ -28,6 +28,12 @@ export class AppComponent implements OnInit{
     @Inject(Network) private network: Network,
     @Inject(InAppBrowser) private iab: InAppBrowser
   ) {
+    //localStorage.setItem('IsLogin', 'true');
+    const cusHome = localStorage.getItem('cusHome');
+    if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
+      localStorage.setItem('cusHome', 'tp');
+      // this.navCtrl.navigateForward('/home');
+     }
     this.initializeApp();
   }
 

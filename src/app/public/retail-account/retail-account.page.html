@@ -1,35 +1,44 @@
-<ion-content class="lightGray">
-  
-  <div class="header-action-icon text-left">
-    <ion-icon side="start" name="arrow-undo" (click)="goBack()"></ion-icon>  
-  </div>
+<ion-header [translucent]="true"> 
+  <div class="statusBar">
+    <div class="pageSdwStart"> </div>
+    <div class="pageSdwStart_Bck"> </div>
+  </div> 
+  <div class="header-action-icon text-left"> 
+    <div class="back_arrow fleft" (click)="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="82.394" height="62.785" viewBox="0 0 82.394 62.785">
+      <path id="reply" d="M83.994,67.533S73.809,22.986,33.642,22.986V4.751L1.6,34.839,33.642,65.462V45.519c21.8-.006,38.982,1.928,50.352,22.017Z" transform="translate(-1.6 -4.751)" fill="#63c9ef"/>
+      </svg> 
+    </div> 
+  </div> 
+</ion-header>
 
-  <div class="main-container plr15 pb30">
+<ion-content class="lightGray"> 
+  <div class="main-container retailAcPage">
     <div>
-      <h3 class="text-center main-heading">Link a Retail Account</h3>
+      <h3 class="text-center main-heading mt0">Link a Retail Account</h3>
     </div>
  
-    <div class="RLogoSec mt20">
+    <div class="RLogoSec mt25">
       <ion-row>
         <ion-col size="6">
-           <div id="amazon_logo"  class="RLogoBlock mb15">
+           <div id="amazon_logo"  class="RLogoBlock">
               <a href=""><img src="../assets/images/amazonIcon.png"></a>
            </div>
         </ion-col>
         <ion-col size="6">
-          <div id="walmart_logo"  class="RLogoBlock mb15">
-            <a href=""><img src="../assets/images/walmartIcon.png"></a>
+          <div id="walmart_logo"  class="RLogoBlock">
+            <a href=""><img src="../assets/images/walmart_logo.svg"></a>
          </div>
         </ion-col> 
       </ion-row>
       <ion-row>
         <ion-col size="6">
-           <div id="wyfair_logo"  class="RLogoBlock mb15">
+           <div id="wyfair_logo"  class="RLogoBlock">
               <a href=""><img src="../assets/images/wayfairIcon.png"></a>
            </div>
         </ion-col>
         <ion-col size="6">
-          <div id="overstock_logo" class="RLogoBlock mb15">
+          <div id="overstock_logo" class="RLogoBlock">
             <a href=""><img src="../assets/images/overstockIcon.png"></a>
          </div>
         </ion-col> 
@@ -37,7 +46,7 @@
       <ion-row>
         <ion-col size="6">
            <div id="target_logo" class="RLogoBlock">
-              <a href=""><img src="../assets/images/targetIcon.png"></a>
+              <a href=""><img src="../assets/images/target_logo.svg"></a>
            </div>
         </ion-col>
         <ion-col size="6">
@@ -48,4 +57,27 @@
       </ion-row>
     </div>
   </div>
-</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar></ion-footer>
+</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
+  <div class="powerBy"><span>Powered by 
+    <svg xmlns="http://www.w3.org/2000/svg" width="56.068" height="12.714" viewBox="0 0 56.068 12.714">
+      <g id="Group_484" data-name="Group 484" transform="translate(-41.335 -106.516)" opacity="0.599">
+        <path id="ShipMatrix_S" data-name="ShipMatrix S" d="M45.035,115.984a.475.475,0,0,1-.95,0l-.033-1.9-2.678.018s-.557,3.922,2.547,3.881v1.147h1.343v-1.147s2.752.065,2.752-3.276c0-2.064-2.424-3.309-2.424-3.309a2.364,2.364,0,0,1-1.474-2.129c.017-.753.893-.741.926-.053s.024,1.232.024,1.232h2.653s.328-3.112-2.49-3.112v-.819H44.117v.786s-2.719-.2-2.752,2.26C41.255,113.428,45.165,112.265,45.035,115.984Z" fill="#682d91"/>
+        <path id="Path_1442" data-name="Path 1442" d="M110.987,119.967H113.3V109.9h-3.314l-.745,4.815-.569-4.815h-3.564v10.068h2.314l.063-5.5.938,5.5h1.459l1.1-5.44Z" transform="translate(-39.789 -2.111)" fill="#7e7e7e"/>
+        <g id="Group_482" data-name="Group 482" transform="translate(48.452 108.273)">
+          <path id="Path_1443" data-name="Path 1443" d="M62.707,111.188V113.4a2.2,2.2,0,0,1,.682-.437,2.105,2.105,0,0,1,.785-.146,1.815,1.815,0,0,1,1.094.327,1.311,1.311,0,0,1,.551.755,8.034,8.034,0,0,1,.1,1.56V121H63.471v-5.66a3.537,3.537,0,0,0-.07-.9.334.334,0,0,0-.615.006,2.72,2.72,0,0,0-.079.818V121H60.259v-9.812Z" transform="translate(-60.259 -111.188)" fill="#682d91"/>
+          <path id="Path_1444" data-name="Path 1444" d="M80.07,111.188v1.279H77.549v-1.279Zm0,1.77V121H77.549v-8.042Z" transform="translate(-71.046 -111.188)" fill="#682d91"/>
+          <path id="Path_1445" data-name="Path 1445" d="M89.079,115.653l-.042.71a2.271,2.271,0,0,1,.721-.644,1.782,1.782,0,0,1,.861-.212,1.613,1.613,0,0,1,.985.306,1.282,1.282,0,0,1,.518.706,6.17,6.17,0,0,1,.1,1.358v3.387a6.475,6.475,0,0,1-.131,1.561,1.3,1.3,0,0,1-.533.739,1.682,1.682,0,0,1-.973.276,1.724,1.724,0,0,1-.842-.212,2.286,2.286,0,0,1-.709-.631v1.844H86.588v-9.187Zm.7,2.339a4.081,4.081,0,0,0-.055-.9q-.055-.157-.3-.158a.3.3,0,0,0-.312.182,3.238,3.238,0,0,0-.07.879v3.333a3.286,3.286,0,0,0,.073.909.3.3,0,0,0,.315.182q.236,0,.294-.166a3.323,3.323,0,0,0,.058-.809Z" transform="translate(-76.686 -113.883)" fill="#682d91"/>
+        </g>
+        <g id="Group_483" data-name="Group 483" transform="translate(74.357 108.273)">
+          <path id="Path_1446" data-name="Path 1446" d="M131.434,118.767h-2.3v-.539a3.8,3.8,0,0,1,.215-1.439,2,2,0,0,1,.864-.894,4.032,4.032,0,0,1,3.557.052,1.712,1.712,0,0,1,.758,1.079,16.952,16.952,0,0,1,.127,2.633v4.036h-2.381v-.716a1.494,1.494,0,0,1-1.424.862,2.071,2.071,0,0,1-1.179-.361q-.536-.36-.536-1.578v-.661a1.937,1.937,0,0,1,.285-1.23,4.013,4.013,0,0,1,1.412-.763,4.027,4.027,0,0,0,1.291-.636,1.694,1.694,0,0,0,.085-.667,2.249,2.249,0,0,0-.094-.821.323.323,0,0,0-.312-.191q-.249,0-.31.161a3.272,3.272,0,0,0-.061.833Zm.776,1.1a1.817,1.817,0,0,0-.682.721,2.858,2.858,0,0,0-.094.836,2.436,2.436,0,0,0,.082.806.32.32,0,0,0,.324.182.3.3,0,0,0,.3-.142,2.309,2.309,0,0,0,.07-.748Z" transform="translate(-129.138 -113.883)" fill="#7e7e7e"/>
+          <path id="Path_1447" data-name="Path 1447" d="M147.975,113.042v1.266h.66v1.273h-.66v4.3a2.3,2.3,0,0,0,.082.885q.081.091.681.091v1.3h-.988a7.046,7.046,0,0,1-1.194-.07,1.27,1.27,0,0,1-.63-.321,1.066,1.066,0,0,1-.34-.576,10.219,10.219,0,0,1-.067-1.524v-4.084h-.527v-1.273h.527v-1.266Z" transform="translate(-139.03 -112.345)" fill="#7e7e7e"/>
+          <path id="Path_1448" data-name="Path 1448" d="M158.559,115.653l-.1,1.058a1.821,1.821,0,0,1,1.545-1.2v2.83a2.046,2.046,0,0,0-.988.182.762.762,0,0,0-.388.506,9.121,9.121,0,0,0-.073,1.494v3.175h-2.448v-8.042Z" transform="translate(-145.967 -113.883)" fill="#7e7e7e"/>
+          <path id="Path_1449" data-name="Path 1449" d="M170.443,111.188v1.279h-2.521v-1.279Zm0,1.77V121h-2.521v-8.042Z" transform="translate(-153.336 -111.188)" fill="#7e7e7e"/>
+          <path id="Path_1450" data-name="Path 1450" d="M181.092,115.894l-.976,3.842,1.182,4.2h-2.38q-.355-1.591-.538-2.739-.244,1.433-.532,2.739H175.8l1.054-4.2-1.054-3.842h2.047q.495,2.466.532,2.8.354-2.059.538-2.8Z" transform="translate(-158.252 -114.124)" fill="#7e7e7e"/>
+        </g>
+      </g>
+    </svg>
+    </span></div>
+  <div class="pageSdwEnd"> </div>
+  <div class="pageSdwEnd_Bck"> </div>
+</ion-footer>

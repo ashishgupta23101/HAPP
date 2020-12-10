@@ -2,7 +2,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { formatDate } from '@angular/common';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, MenuController } from '@ionic/angular';
 import { ActivePackages, SessionData } from 'src/app/models/active-packages';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { NavigationExtras, Router } from '@angular/router';
@@ -23,25 +23,586 @@ constructor(
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(AlertController) public alertController: AlertController,
   @Inject(NavController) private navCtrl: NavController ,
+  @Inject(MenuController) private menuCtrl: MenuController,
   @Inject(Storage) private storage: Storage) {
         // tslint:disable-next-line: no-debugger
      // tslint:disable-next-line: only-arrow-functions
-
-     this.segmentModel = 'active';
+     const cusHome = localStorage.getItem('cusHome');
+     if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
+       this.segmentModel = 'history';
+      }else{
+        this.segmentModel = 'active';
+      }
      this.segmentChanged();
   }
 public searchTerm = '';
+// tslint:disable-next-line: variable-name
+mainMenu = true;
+carrierMenu = false;
+statusMenu = false;
+dateMenu = false;
 public sortbyDate = 'Date Created';
 public sessionData: any;
 public filtBy: string;
 public segmentModel: string;
-public daySelect: string;
+public sortBy = 'carr';
 public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
-public sortBy = '1';
 public activeItems: Array<ActivePackages>;
+filterName = 'Filter by';
 readyToLoad = false;
 @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
+Carrier = {
+  ups: false,
+  usps: false,
+  dhl: false,
+  fedex: false,
+  ontrack: false,
+  purolator: false
+};
+Status = {
+  delivered: false,
+  intransit: false,
+  exception: false
+};
+Date = {
+  today: false,
+  yesterday: false,
+  thisweek: false,
+  lastweek: false,
+  thismonth: false,
+  lastmonth: false
+};
 ngOnInit() {
+
+}
+
+menu(b){
+  if (b === 'c'){
+    this.filterName = 'Carrier';
+    this.carrierMenu = true;
+    this.statusMenu = false;
+    this.dateMenu = false;
+    this.mainMenu = false;
+  }
+  else if (b === 's'){
+    this.filterName = 'Status';
+    this.mainMenu = false;
+    this.carrierMenu = false;
+    this.statusMenu = true;
+    this.dateMenu = false;
+  }else if (b === 'd'){
+    this.filterName = 'Date';
+    this.mainMenu = false;
+    this.carrierMenu = false;
+    this.statusMenu = false;
+    this.dateMenu = true;
+  }else {
+    this.filterName = 'Carrier';
+    this.mainMenu = false;
+    this.carrierMenu = true;
+    this.statusMenu = false;
+    this.dateMenu = false;
+  }
+}
+clearall(){
+  this.Carrier = {
+    ups: false,
+    usps: false,
+    dhl: false,
+    fedex: false,
+    ontrack: false,
+    purolator: false
+  };
+  this.Status = {
+    delivered: false,
+    intransit: false,
+    exception: false
+  };
+  this.Date = {
+    today: false,
+    yesterday: false,
+    thisweek: false,
+    lastweek: false,
+    thismonth: false,
+    lastmonth: false
+  };
+  this.menuback();
+  this.menuCtrl.toggle();
+}
+apply(){
+  this.loading.present('Applying filter..');
+  this.menuback();
+  this.menuCtrl.toggle();
+  if (this.Carrier.dhl){
+    if (this.Status.delivered){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('deliver')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('deliver')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('deliver')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('deliver')));
+         }
+      }
+    }
+    if (this.Status.intransit){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('transit')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('transit')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('transit')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('transit')));
+         }
+      }
+    }
+    if (this.Status.exception){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('exception')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('exception')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('exception')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('dhl') && u.Status.toLowerCase().includes('exception')));
+         }
+      }
+    }
+  }
+  if (this.Carrier.ups){
+    if (this.Status.delivered){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('deliver')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('deliver')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('deliver')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('deliver')));
+         }
+      }
+    }
+    if (this.Status.intransit){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('transit')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('transit')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('transit')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('transit')));
+         }
+      }
+    }
+    if (this.Status.exception){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('exception')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('exception')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('exception')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('ups') && u.Status.toLowerCase().includes('exception')));
+         }
+      }
+    }
+  }
+  if (this.Carrier.usps){
+    if (this.Status.delivered){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('deliver')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('deliver')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('deliver')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('deliver')));
+         }
+      }
+    }
+    if (this.Status.intransit){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('transit')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('transit')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('transit')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('transit')));
+         }
+      }
+    }
+    if (this.Status.exception){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('exception')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('exception')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('exception')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('usps') && u.Status.toLowerCase().includes('exception')));
+         }
+      }
+    }
+  }
+  if (this.Carrier.fedex){
+    if (this.Status.delivered){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('deliver')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('deliver')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('deliver')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('deliver')));
+         }
+      }
+    }
+    if (this.Status.intransit){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('transit')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('transit')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('transit')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('transit')));
+         }
+      }
+    }
+    if (this.Status.exception){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('exception')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('exception')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('exception')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('fedex') && u.Status.toLowerCase().includes('exception')));
+         }
+      }
+    }
+  }
+  if (this.Carrier.ontrack){
+    if (this.Status.delivered){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('deliver')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('deliver')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('deliver')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('deliver')));
+         }
+      }
+    }
+    if (this.Status.intransit){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('transit')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('transit')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('transit')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('transit')));
+         }
+      }
+    }
+    if (this.Status.exception){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('exception')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('exception')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('exception')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('ontrack') && u.Status.toLowerCase().includes('exception')));
+         }
+      }
+    }
+  }
+  if (this.Carrier.purolator){
+    if (this.Status.delivered){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('deliver')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('deliver')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('deliver')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('deliver')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('deliver')));
+         }
+      }
+    }
+    if (this.Status.intransit){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('transit')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('transit')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('transit')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('transit')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('transit')));
+         }
+      }
+    }
+    if (this.Status.exception){
+      if (this.Date.lastmonth){
+        this.activeItems.push(this.sessionData.packages.LastMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.lastweek){
+        this.activeItems.push(this.sessionData.packages.LastWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('exception')));
+       }
+      if (this.Date.thismonth){
+        this.activeItems.push(this.sessionData.packages.ThisMonth.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('exception')));
+       }else if (this.Date.thisweek){
+        this.activeItems.push(this.sessionData.packages.ThisWeek.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('exception')));
+       }else {
+         if (this.Date.today){
+          this.activeItems.push(this.sessionData.packages.Today.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('exception')));
+         }
+         if (this.Date.yesterday){
+          this.activeItems.push(this.sessionData.packages.Yesterday.filter(u =>
+           u.Carrier.toLowerCase().includes('purolator') && u.Status.toLowerCase().includes('exception')));
+         }
+      }
+    }
+  }
+  this.loading.dismiss();
+}
+menuback(){
+  this.filterName = 'Filter by';
+  this.mainMenu = true;
+  this.carrierMenu = false;
+  this.statusMenu = false;
+  this.dateMenu = false;
 }
 ionViewWillEnter(){
   this.segmentChanged() ;
@@ -61,7 +622,7 @@ searchPackages() {
   if (this.searchTerm === '' || this.searchTerm === undefined || this.searchTerm === null){
     this.refreshList();
   } else {
-  switch (this.daySelect) {
+  switch (this.sortBy) {
     case 'All':
         this.activeItems = this.trackService.filterItems(SessionData.packages.All, this.searchTerm);
         break;
@@ -126,20 +687,20 @@ segmentChanged() {
 
 }
 sortedBy() {
-  switch (this.daySelect) {
-    case 'All':
+  switch (this.sortBy) {
+    case 'carr':
         this.activeItems = SessionData.packages.All;
         break;
-      case 'Today':
+      case 'stat':
           this.activeItems = SessionData.packages.Today;
           break;
-        case 'Yesterday':
+        case 'dat':
             this.activeItems = SessionData.packages.Yesterday;
             break;
-          case 'ThisWeek':
+          case 'retail':
               this.activeItems = SessionData.packages.ThisWeek;
               break;
-            case 'LastWeek':
+            case 'cat':
                 this.activeItems = SessionData.packages.LastWeek;
                 break;
                 default:

@@ -8,7 +8,7 @@ import { QueryParams } from 'src/app/models/QueryParams';
 import { formatDate } from '@angular/common';
 import { EditPackage } from 'src/app/models/EditPackage';
 import { environment } from 'src/environments/environment';
-import { ActivePackages, SessionData, Packages } from 'src/app/models/active-packages';
+import { ActivePackages, SessionData, Packages, CusDates } from 'src/app/models/active-packages';
 import { NavController} from '@ionic/angular';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { Configuration } from 'src/app/models/configuration';
@@ -51,13 +51,11 @@ export class TrackingService {
     }
     /// get week day
     getFirstLastDayOfWeek(curr: Date) {
-      let result = {};
+      const result  = new CusDates();
       const first = curr.getDate() - curr.getDay();  // First day is the day of the month - the day of the week
       const last = moment(curr).add((6 - curr.getDay()), 'days'); // last day is the first day + 6
-      result = {
-            firstDate: new Date(curr.setDate(first)),
-        lastDate: last.toDate()
-      };
+      result.firstDate = new Date(curr.setDate(first));
+      result.lastDate = last.toDate();
       return result;
     }
     /// get Tracking details for package
@@ -78,7 +76,7 @@ export class TrackingService {
             // Tracking Response
             this.storage.get('_activePackages').then(tData => {
                 if (tData == null) {tData = []; }
-                localStorage.setItem('SCAC','');
+                localStorage.setItem('SCAC', '');
                 // tslint:disable-next-line: max-line-length
                 const index = tData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
                 if (index >= 0) {tData.splice(index, 1); }
@@ -180,9 +178,19 @@ export class TrackingService {
     }
   });
 }
+// tslint:disable-next-line: variable-name
 login(_email: string , _password: string): Observable<any> {
-  let request = {email: _email , password: _password};
+  const request = {email: _email , password: _password};
   return this.http.put(SessionData.apiURL + environment.login, request, {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/json')
+  });
+}
+
+// tslint:disable-next-line: variable-name
+register(_email: string , _password: string, _confirm: string): Observable<any> {
+  const request = {email: _email , password: _password , confirmPassword: _confirm, deviceId: this.uniqueDeviceID.uuid};
+  return this.http.put(SessionData.apiURL + environment.register, request, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')
   });
@@ -263,7 +271,7 @@ login(_email: string , _password: string): Observable<any> {
     }
     // Get TNC API
     TNCapi(trackingNo: string): Observable<any> {
-      const request = {'TrackingNo': trackingNo};
+      const request = {TrackingNo: trackingNo};
       return this.http.post(SessionData.apiURL + environment.tncApi , request, {
         headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -366,7 +374,9 @@ login(_email: string , _password: string): Observable<any> {
     SessionData.packages.Yesterday = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Yesterday);
     SessionData.packages.ThisWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisWeek);
     SessionData.packages.LastWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastWeek);
-}
+    SessionData.packages.ThisMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisMonth);
+    SessionData.packages.LastMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastMonth);
+  }
 /// set archive package data in sessions
 setarchivePackagestoSession(tData: any) {
   SessionData.packages = new  Packages();
@@ -393,6 +403,8 @@ setarchivePackagestoSession(tData: any) {
   SessionData.packages.Yesterday = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Yesterday);
   SessionData.packages.ThisWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisWeek);
   SessionData.packages.LastWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastWeek);
+  SessionData.packages.ThisMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisMonth);
+  SessionData.packages.LastMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastMonth);
 
 }
 

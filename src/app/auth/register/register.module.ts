@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
+import { SharedModule } from 'src/app/public/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,ReactiveFormsModule,
-    IonicModule,
+    FormsModule, ReactiveFormsModule,
+    IonicModule, SharedModule,
     RegisterPageRoutingModule
   ],
   declarations: [RegisterPage]

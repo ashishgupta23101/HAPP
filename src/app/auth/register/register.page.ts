@@ -42,18 +42,28 @@ export class RegisterPage implements OnInit {
         this.fun.showloader('Verifying User...');
         if (this.platform.is('cordova')) {
           if (this.fun.validateEmail(usr.email)) {
-             this.trackService.login(usr.email , usr.password).subscribe(data => {
+             this.trackService.register(usr.email , usr.password, form.confirm).subscribe(data => {
               // tslint:disable-next-line: no-debugger
               this.zone.run(() => {
-              if (data.Error === true)
-              { localStorage.setItem('IsLogin', 'false');
-                this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
-                this.fun.dismissLoader();
-                return;
-              }
-              this.fun.dismissLoader();
-              localStorage.setItem('IsLogin', 'false');
-              this.fun.navigate('home', false);
+                if (data.Error === true)
+                { localStorage.setItem('IsLogin', 'false');
+                  this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
+                  this.fun.dismissLoader();
+                  return;
+                }
+                if (data && data.ResponseData.AccessToken) {
+                  // store user details and jwt token in local storage to keep user logged in between page refreshes
+                  localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
+                  localStorage.setItem('user', usr.email);
+                  localStorage.setItem('pass', usr.password);
+                  this.fun.dismissLoader();
+                  localStorage.setItem('IsLogin', 'true');
+                  this.fun.navigate('welcome', false);
+                }
+                else {
+                  this.fun.presentToast('Invalid Credentials! Please try with valid login credentials.', true, 'bottom', 2100);
+                  this.fun.dismissLoader();
+                }
             });
             },
             error => {

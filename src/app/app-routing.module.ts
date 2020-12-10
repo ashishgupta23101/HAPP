@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth-guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/notification',
     pathMatch: 'full'
   } , {
     path: 'register',
@@ -31,7 +32,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/notification/notification.module').then( m => m.NotificationPageModule)
   },
   {
-    path: 'link-email-ac',
+    path: 'link-email-ac', canActivate: [AuthGuard],
     loadChildren: () => import('./public/link-email-ac/link-email-ac.module').then( m => m.LinkEmailAcPageModule)
   },
   {
@@ -47,7 +48,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/accountcreated/accountcreated.module').then( m => m.AccountcreatedPageModule)
   },
   {
-    path: 'cus-home',
+    path: 'cus-home', canActivate: [AuthGuard],
     loadChildren: () => import('./public/cus-home/cus-home.module').then( m => m.CusHomePageModule)
   },
   {
@@ -99,11 +100,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/not-register/not-register.module').then( m => m.NotRegisterPageModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./public/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'notifications',
+    path: 'notifications', canActivate: [AuthGuard],
     loadChildren: () => import('./public/notifications/notifications.module').then( m => m.NotificationsPageModule)
   },
   {
@@ -127,7 +124,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/retail-ac-user/retail-ac-user.module').then( m => m.RetailAcUserPageModule)
   },
   {
-    path: 'retail-account',
+    path: 'retail-account', canActivate: [AuthGuard],
     loadChildren: () => import('./public/retail-account/retail-account.module').then( m => m.RetailAccountPageModule)
   },
   {
@@ -141,6 +138,14 @@ const routes: Routes = [
   {
     path: 'url-changer',
     loadChildren: () => import('./public/url-changer/url-changer.module').then( m => m.UrlChangerPageModule)
+  },
+  {
+    path: 'etreports',
+    loadChildren: () => import('./public/etreports/etreports.module').then( m => m.ETReportsPageModule)
+  },
+  {
+    path: 'spending-summary',
+    loadChildren: () => import('./public/spending-summary/spending-summary.module').then( m => m.SpendingSummaryPageModule)
   }
 ];
 @NgModule({

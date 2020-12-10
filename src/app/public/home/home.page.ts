@@ -126,6 +126,8 @@ export class HomePage implements OnInit {
   }
   fillIntentValue() {
     this.trackNo = localStorage.getItem('intent');
+    const cusHome = localStorage.getItem('cusHome');
+
    // alert(this.trackNo);
     if (this.trackNo !== null && this.trackNo !== undefined && this.trackNo !== '') {
       // alert(this.trackNo);
@@ -134,7 +136,9 @@ export class HomePage implements OnInit {
       this.GetCarrierByTNC(this.trackNo);
       localStorage.setItem('intent', '');
       // alert('end' + this.trackNo);
-    }
+    } else if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'sp') {
+      this.scanPGCode();
+     }
     else {
       this.clearTrack();
     }
@@ -244,12 +248,18 @@ export class HomePage implements OnInit {
   }
 
   setfilteringDatestoSession() {
+    debugger;
+    // tslint:disable-next-line: variable-name
     let _filteringDates = new FilteringDates();
     _filteringDates.Today = new Date();
     _filteringDates.ThisWeek = this.trackService.getFirstLastDayOfWeek(new Date());
     _filteringDates.Yesterday = moment(_filteringDates.Today).subtract(1, 'days').toDate();
     const dateoflastweek = moment(_filteringDates.ThisWeek.firstDate).subtract(1, 'days').toDate();
     _filteringDates.LastWeek = this.trackService.getFirstLastDayOfWeek(dateoflastweek);
+    _filteringDates.ThisMonth.firstDate = moment(new Date()).startOf('month').toDate();
+    _filteringDates.ThisMonth.lastDate = moment(new Date()).toDate();
+    _filteringDates.LastMonth.firstDate = moment(_filteringDates.ThisMonth.firstDate).subtract(1, 'days').startOf('month').toDate();
+    _filteringDates.LastMonth.lastDate = moment(_filteringDates.LastMonth.firstDate).endOf('month').toDate();
     SessionData.filteringDates = _filteringDates;
   }
 }

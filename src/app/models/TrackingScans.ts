@@ -8,5 +8,6 @@ export class TrackingScans
     location: string;
     scanDateTime: any;
     scanNote: string;
+    MovementCode: string;
     TrackingNo: string;
 }
