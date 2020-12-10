@@ -26,7 +26,11 @@
 <div class="headerSelectFiled">
   <ion-row>
     <ion-col size="6">
-      <ion-menu-button color="light"><ion-icon name="arrow-back"></ion-icon></ion-menu-button>
+      <ion-button class="form-control selectFiled mb0" (click)="openMenu()" >
+        <ion-icon color="light" name="funnel"></ion-icon>
+      <ion-label color="light">Filter by</ion-label>
+      
+    </ion-button>
       <!-- <ion-select placeholder="Filter by"  [value]="filtBy"  [(ngModel)]="filtBy"  (ionChange)="filterBy()" class="form-control selectFiled mb0">
         <ion-select-option value="Retailer">Retailer</ion-select-option>
         <ion-select-option value="Status">Status</ion-select-option> 

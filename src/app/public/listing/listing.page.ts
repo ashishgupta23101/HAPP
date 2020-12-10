@@ -129,6 +129,9 @@ clearall(){
   this.menuback();
   this.menuCtrl.toggle();
 }
+openMenu(){
+  this.menuCtrl.toggle();
+}
 apply(){
   this.loading.present('Applying filter..');
   this.menuback();
