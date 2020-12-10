@@ -46,30 +46,50 @@
           <div class="activityListing">
             <ul>
               <li *ngFor="let scan of trackingScans">
-                <div class="ion-avatar OFD_img">
-                  <!-- {{scan?.MovementCode.toLowerCase().includes('out for') ? OFD_img :
-                (scan?.MovementCode.toLowerCase().includes('exception') ? SE_img : LFF_img)}}
-               
-                  <img src="../../../assets/images/truckIcon.png">-->
-                  <img [src]="scan?.MovementCode === 'OUT' ? '../../../assets/images/ActivityIcons/Icon-Arrival.png' :
-                  (scan?.MovementCode === 'NSH' ? '../../../assets/images/ActivityIcons/Icon-Arrival.png' :
-                  (scan?.MovementCode === 'MAN' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'DPT' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'PS1' ? '../../../assets/images/ActivityIcons/Icon-Arrival.png' :
-                  (scan?.MovementCode === 'CAR' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'EXM' ? '../../../assets/images/ActivityIcons/Icon-Exception.png' :
-                  (scan?.MovementCode === 'OGS' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'DAP' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'STR' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'PS2' ? '../../../assets/images/ActivityIcons/Icon-InTransit.png' :
-                  (scan?.MovementCode === 'EDL' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'PCK' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'CCS' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'INT' ? '../../../assets/images/ActivityIcons/Icon-InTransit.png' :
-                  (scan?.MovementCode === 'DLV' ? '../../../assets/images/ActivityIcons/Icon-Delivered.png' :
-                  (scan?.MovementCode === 'CCE' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  (scan?.MovementCode === 'NON' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
-                  '../../../assets/images/ActivityIcons/Icon-Exception.png')))))))))))))))))"/>
+                <div [ngClass]="[scan?.activity.toLowerCase().includes('deliver') ? 'ion-avatar OFD_img' :
+                (scan?.activity.toLowerCase().includes('except') ? 'ion-avatar SE_img' :
+                'ion-avatar LFF_img')]">
+                <!-- scan?.activity.toLowerCase().includes('de') ? 'ion-avatar OFD_img' :
+                (scan?.MovementCode === 'NSH' ? 'ion-avatar OFD_img' :
+                (scan?.MovementCode === 'MAN' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'DPT' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'PS1' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'CAR' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'EXM' ? 'ion-avatar SE_img' :
+                (scan?.MovementCode === 'OGS' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'DAP' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'STR' ? 'ion-avatar SE_img' :
+                (scan?.MovementCode === 'PS2' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'EDL' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'PCK' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'CCS' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'INT' ? 'ion-avatar LFF_img' :
+                (scan?.MovementCode === 'DLV' ? 'ion-avatar OFD_img' :
+                (scan?.MovementCode === 'CCE' ? 'ion-avatar SE_img' :
+                (scan?.MovementCode === 'NON' ? 'ion-avatar SE_img' :
+                'ion-avatar SE_img')))))))))))))))))
+                scan?.MovementCode === 'OUT' ? '../../../assets/images/box_icon.svg' :
+                  (scan?.MovementCode === 'NSH' ? '../../../assets/images/box_icon.svg' :
+                  (scan?.MovementCode === 'MAN' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'DPT' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'PS1' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'CAR' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'EXM' ? '../../../assets/images/barcode_product.svg' :
+                  (scan?.MovementCode === 'OGS' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'DAP' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'STR' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'PS2' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'EDL' ? '../../../assets/images/box_icon.svg' :
+                  (scan?.MovementCode === 'PCK' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'CCS' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'INT' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'DLV' ? '../../../assets/images/box_icon.svg' :
+                  (scan?.MovementCode === 'CCE' ? '../../../assets/images/truck_icon.svg' :
+                  (scan?.MovementCode === 'NON' ? '../../../assets/images/truck_icon.svg' :
+                  '../../../assets/images/truck_icon.svg'))))))))))))))))) -->
+                  <img [src]="scan?.activity.toLowerCase().includes('deliver') ? '../../../assets/images/box_icon.svg' :
+                (scan?.activity.toLowerCase().includes('except') ? '../../../assets/images/barcode_product.svg' :
+                '../../../assets/images/truck_icon.svg')"/>
                 </div>
                 <div class="ion-label">
                   <h2>{{scan?.activity}}</h2> 
