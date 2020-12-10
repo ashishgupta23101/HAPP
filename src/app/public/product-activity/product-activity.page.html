@@ -51,25 +51,25 @@
                 (scan?.MovementCode.toLowerCase().includes('exception') ? SE_img : LFF_img)}}
                
                   <img src="../../../assets/images/truckIcon.png">-->
-                  <img [src]="scan?.MovementCode === 'OUT' ? '../../../assets/images/box_icon.svg' :
-                  (scan?.MovementCode === 'NSH' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'MAN' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'DPT' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'PS1' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'CAR' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'EXM' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'OGS' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'DAP' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'STR' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'PS2' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'EDL' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'PCK' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'CCS' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'INT' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'DLV' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'CCE' ? '../../../assets/images/barcode_product.svg' :
-                  (scan?.MovementCode === 'NON' ? '../../../assets/images/barcode_product.svg' :
-                  '../../../assets/images/truck_icon.svg')))))))))))))))))"/>
+                  <img [src]="scan?.MovementCode === 'OUT' ? '../../../assets/images/ActivityIcons/Icon-Arrival.png' :
+                  (scan?.MovementCode === 'NSH' ? '../../../assets/images/ActivityIcons/Icon-Arrival.png' :
+                  (scan?.MovementCode === 'MAN' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'DPT' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'PS1' ? '../../../assets/images/ActivityIcons/Icon-Arrival.png' :
+                  (scan?.MovementCode === 'CAR' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'EXM' ? '../../../assets/images/ActivityIcons/Icon-Exception.png' :
+                  (scan?.MovementCode === 'OGS' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'DAP' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'STR' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'PS2' ? '../../../assets/images/ActivityIcons/Icon-InTransit.png' :
+                  (scan?.MovementCode === 'EDL' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'PCK' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'CCS' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'INT' ? '../../../assets/images/ActivityIcons/Icon-InTransit.png' :
+                  (scan?.MovementCode === 'DLV' ? '../../../assets/images/ActivityIcons/Icon-Delivered.png' :
+                  (scan?.MovementCode === 'CCE' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  (scan?.MovementCode === 'NON' ? '../../../assets/images/ActivityIcons/Icon-Info.png' :
+                  '../../../assets/images/ActivityIcons/Icon-Exception.png')))))))))))))))))"/>
                 </div>
                 <div class="ion-label">
                   <h2>{{scan?.activity}}</h2> 
