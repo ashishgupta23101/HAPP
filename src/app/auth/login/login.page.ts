@@ -43,10 +43,8 @@ export class LoginPage implements OnInit {
       const usr = new User();
       usr.email = form.email;
       usr.password = form.password;
-      this.platform.ready().then(() => {
-        this.fun.showloader('Verifying User...');
-        if (this.platform.is('cordova')) {
-          if (this.fun.validateEmail(usr.email)) {
+      this.fun.showloader('Verifying User...');
+      if (this.fun.validateEmail(usr.email)) {
              this.trackService.login(usr.email , usr.password).subscribe(data => {
               // tslint:disable-next-line: no-debugger
               this.zone.run(() => {
@@ -59,8 +57,9 @@ export class LoginPage implements OnInit {
                 if (data && data.ResponseData.AccessToken) {
                   // store user details and jwt token in local storage to keep user logged in between page refreshes
                   localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-                  localStorage.setItem('user', usr.email);
-                  localStorage.setItem('pass', usr.password);
+                  localStorage.setItem('user', data.ResponseData.Username);
+                  localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
+                  // localStorage.setItem('pass', usr.password);
                   this.fun.dismissLoader();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
@@ -80,12 +79,6 @@ export class LoginPage implements OnInit {
             this.fun.dismissLoader();
             this.fun.presentToast('Wrong Input!', true, 'bottom', 2100);
           }
-        } else {
-          this.fun.dismissLoader();
-          this.fun.navigate('home', false);
-          this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
-        }
-      });
    }
   }
 }

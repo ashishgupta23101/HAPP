@@ -18,7 +18,7 @@ export class RegisterPage implements OnInit {
                  @Inject(Platform) private platform: Platform,
                  @Inject(FunctionsService) public fun: FunctionsService,
                  @Inject(TrackingService) public trackService: TrackingService,
-                 @Inject(NgZone) private zone: NgZone,@Inject(NavController) private navCtrl: NavController) {
+                 @Inject(NgZone) private zone: NgZone, @Inject(NavController) private navCtrl: NavController) {
       this.registerForm = this.fb.group({
         email: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required),
@@ -38,10 +38,8 @@ export class RegisterPage implements OnInit {
       const usr = new User();
       usr.email = form.email;
       usr.password = form.password;
-      this.platform.ready().then(() => {
-        this.fun.showloader('Verifying User...');
-        if (this.platform.is('cordova')) {
-          if (this.fun.validateEmail(usr.email)) {
+      this.fun.showloader('Verifying User...');
+      if (this.fun.validateEmail(usr.email)) {
              this.trackService.register(usr.email , usr.password, form.confirm).subscribe(data => {
               // tslint:disable-next-line: no-debugger
               this.zone.run(() => {
@@ -54,8 +52,8 @@ export class RegisterPage implements OnInit {
                 if (data && data.ResponseData.AccessToken) {
                   // store user details and jwt token in local storage to keep user logged in between page refreshes
                   localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-                  localStorage.setItem('user', usr.email);
-                  localStorage.setItem('pass', usr.password);
+                  localStorage.setItem('user', data.ResponseData.Username);
+                  localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
                   this.fun.dismissLoader();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
@@ -76,12 +74,6 @@ export class RegisterPage implements OnInit {
             this.fun.dismissLoader();
             this.fun.presentToast('Wrong Input!', true, 'bottom', 2100);
           }
-        } else {
-          this.fun.dismissLoader();
-          this.fun.navigate('home', false);
-          this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
-        }
-      });
    }
   }
 }

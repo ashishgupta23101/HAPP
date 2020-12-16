@@ -132,7 +132,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/activity/activity.module').then( m => m.ActivityPageModule)
   },
   {
-    path: 'splash',
+    path: 'WIP',
     loadChildren: () => import('./public/splash/splash.module').then( m => m.SplashPageModule)
   },
   {
@@ -140,7 +140,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/url-changer/url-changer.module').then( m => m.UrlChangerPageModule)
   },
   {
-    path: 'etreports',
+    path: 'splash',
     loadChildren: () => import('./public/etreports/etreports.module').then( m => m.ETReportsPageModule)
   },
   {

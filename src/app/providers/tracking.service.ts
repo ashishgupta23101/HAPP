@@ -181,7 +181,7 @@ export class TrackingService {
 // tslint:disable-next-line: variable-name
 login(_email: string , _password: string): Observable<any> {
   const request = {email: _email , password: _password};
-  return this.http.put(SessionData.apiURL + environment.login, request, {
+  return this.http.post(SessionData.apiURL + environment.login, request, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')
   });
@@ -189,8 +189,8 @@ login(_email: string , _password: string): Observable<any> {
 
 // tslint:disable-next-line: variable-name
 register(_email: string , _password: string, _confirm: string): Observable<any> {
-  const request = {email: _email , password: _password , confirmPassword: _confirm, deviceId: this.uniqueDeviceID.uuid};
-  return this.http.put(SessionData.apiURL + environment.register, request, {
+  const request = {email: _email , password: _password , confirmPassword: _confirm, deviceId: this.uniqueDeviceID.uuid, authService: null};
+  return this.http.post(SessionData.apiURL + environment.register, request, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')
   });

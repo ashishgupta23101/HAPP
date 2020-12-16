@@ -6,7 +6,9 @@ export class AuthGuard implements CanActivate {
 
     constructor(@Inject(Router) private router: Router) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (localStorage.getItem('AuthToken')) {
+        const exptime = new Date(localStorage.getItem('expires'));
+        const curtime = new Date();
+        if (localStorage.getItem('AuthToken') && (curtime >= exptime)) {
             // logged in so return true
             return true;
         }

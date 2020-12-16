@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  api_Url_Prod: 'https://demo.easytrackapp.com/smtrackingapi/api/',
-  api_Url_Beta: 'http://10.1.10.46/smtrackingapi/api/',
+  // api_Url_Prod: 'https://demo.easytrackapp.com/smtrackingapi/api/',
+  // api_Url_Beta: 'http://10.1.10.46/smtrackingapi/api/',
+  api_Url_Prod: 'https://10.1.10.76/smtrackingapi/api/',
+  api_Url_Beta: 'http://10.1.10.76/smtrackingapi/api/',
   savePreferances: 'SavePreferences',
   logErrorMessage: 'LogErrorMessage',
   tncApi: 'Tracking/Classifier',

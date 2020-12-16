@@ -1,4 +1,4 @@
-<ion-tabs>
+<!-- <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button class="home_tab_icon" (click)="NavMethod('home')" active>
        <svg xmlns="http://www.w3.org/2000/svg" width="30.06" height="27.272" viewBox="0 0 30.06 27.272">
@@ -43,6 +43,28 @@
           <path id="cog" d="M27.138,17.709a5.669,5.669,0,0,1,2.094-7.734L26.312,4.917a5.593,5.593,0,0,1-2.84.77A5.669,5.669,0,0,1,17.822,0h-5.84a5.593,5.593,0,0,1-.753,2.851A5.668,5.668,0,0,1,3.485,4.9L.565,9.961a5.593,5.593,0,0,1,2.086,2.075A5.668,5.668,0,0,1,.57,19.761L3.49,24.819a5.592,5.592,0,0,1,2.827-.761,5.668,5.668,0,0,1,5.65,5.657h5.84a5.6,5.6,0,0,1,.753-2.821,5.668,5.668,0,0,1,7.731-2.061l2.921-5.058a5.6,5.6,0,0,1-2.073-2.067ZM14.9,20.874a6.017,6.017,0,1,1,6.017-6.017A6.017,6.017,0,0,1,14.9,20.874Z" transform="translate(5.825 0.001)" fill="#452092"/>
         </g>
       </svg>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs> -->
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button (click)="NavMethod('home')" active>
+      <ion-icon name="home"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="NavMethod('listing')">
+      <ion-icon name="logo-dropbox"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="NavMethod('splash')">
+      <ion-icon name="pie-chart"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button *ngIf="tabreg === 'not-register'" (click)="NavMethod('not-register')" >
+      <ion-icon name="settings"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="tabreg === 'welcome'" (click)="NavMethod('welcome')" >
+      <ion-icon name="settings"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
