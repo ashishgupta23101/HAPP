@@ -320,6 +320,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 .mmlr15{margin-left:-15px; margin-right:-15px}
 
 .p15{padding:15px !important;}
+.pb5{padding-bottom:5px !important;}
 .pb30{padding-bottom: 30px !important;}
 .plr10{padding-left:10px; padding-right:10px;}
 .plr12{padding-left:12px; padding-right:12px;}
@@ -434,7 +435,8 @@ ion-tab-bar{
   border-top-color: #fff; 
   ion-tab-button{
   --background: #fff;
-    background: #fff; 
+    background: #fff;
+    ion-icon{font-size: 45px; color:#f00;} 
     svg path{
       fill: #452092;
     }
@@ -484,6 +486,7 @@ ion-tab-bar{
   margin-top:0px;
   position: relative;
   z-index: 99;
+  height:20px;
   span{font-size:8px; font-weight:bold; color:#62BCCC; display: inline-block; line-height:17px;}
   svg{float:right; margin-left:3px;}
 }
@@ -1319,6 +1322,16 @@ app-social-sharing img{max-width:17px;}
     } 
   }
 }
+
+.ss_head{
+  .main-heading{margin:0px;}
+  .title{margin:0px;
+  color: #452092;
+  font-size: 16px;
+  margin: 0 0 0 0;}
+}
+
+.reportInfoSSec{}
 
 
 @media only screen and (min-height: 738px) { 
