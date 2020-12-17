@@ -39,6 +39,7 @@
     "@ionic/storage": "^2.3.1",
     "angularfire2": "^5.4.2",
     "capacitor-barcode-scanner-plugin": "0.0.1",
+    "chart.js": "^2.9.4",
     "cocoapods": "0.0.0",
     "cordova-ios": "^6.1.1",
     "cordova-plugin-add-swift-support": "^2.0.2",

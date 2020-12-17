@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const exptime = new Date(localStorage.getItem('expires'));
         const curtime = new Date();
-        if (localStorage.getItem('AuthToken') && (curtime >= exptime)) {
+        if (localStorage.getItem('AuthToken') && (curtime <= exptime)) {
             // logged in so return true
             return true;
         }

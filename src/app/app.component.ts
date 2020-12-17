@@ -38,6 +38,13 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
+    const exptime = new Date(localStorage.getItem('expires'));
+    const curtime = new Date();
+    if (curtime >= exptime) {
+        // logged in so return true
+        localStorage.setItem('IsLogin', 'false');
+        localStorage.setItem('user', null);
+    }
   }
   initializeApp() {
     this.statusBar.overlaysWebView(false);
