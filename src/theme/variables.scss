@@ -429,10 +429,21 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     border-radius: 29px 0px 0px 0px;}
   }
 
-ion-footer{background-color:#fff;}
+ion-footer{background-color:#fff;
+
+ height: 80px;
+}
 ion-tab-bar{
   background: #fff;
   border-top-color: #fff; 
+  position: absolute;
+  width: 100%;
+  height: 44px;
+  right: 0px;
+  left: 0px;
+  bottom:45pxpx;
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
   ion-tab-button{
   --background: #fff;
     background: #fff;
@@ -487,6 +498,9 @@ ion-tab-bar{
   position: relative;
   z-index: 99;
   height:20px;
+  bottom:20px;
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
   span{font-size:8px; font-weight:bold; color:#62BCCC; display: inline-block; line-height:17px;}
   svg{float:right; margin-left:3px;}
 }
