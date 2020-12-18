@@ -431,7 +431,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 
 ion-footer{background-color:#fff;
 
- height: 80px;
+ height: 70px;
 }
 ion-tab-bar{
   background: #fff;
@@ -441,13 +441,13 @@ ion-tab-bar{
   height: 44px;
   right: 0px;
   left: 0px;
-  bottom:45pxpx;
+  //bottom:45px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
   ion-tab-button{
   --background: #fff;
     background: #fff;
-    ion-icon{font-size: 45px; color:#f00;} 
+    ion-icon{font-size: 45px; color:#452092;} 
     svg path{
       fill: #452092;
     }
@@ -496,11 +496,8 @@ ion-tab-bar{
   text-align: center;
   margin-top:0px;
   position: relative;
-  z-index: 99;
+  z-index: 999;
   height:20px;
-  bottom:20px;
-  margin-bottom: constant(safe-area-inset-bottom);
-  margin-bottom: env(safe-area-inset-bottom);
   span{font-size:8px; font-weight:bold; color:#62BCCC; display: inline-block; line-height:17px;}
   svg{float:right; margin-left:3px;}
 }
