@@ -329,6 +329,8 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 .pt0{padding-top:0px !important;}
 .pt5{padding-top:5px !important;}
 .pt12{padding-top:12px !important;}
+
+.pr10{padding-right:10px !important;}
 .pt65{padding-top:65px;}
 
 .top0{top:0px !important;}
@@ -429,21 +431,19 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
     border-radius: 29px 0px 0px 0px;}
   }
 
-ion-footer{background-color:#fff;
-
- height: 70px;
-}
+ion-footer{
+    background-color:#fff;
+    height: 64px;}
 ion-tab-bar{
-  background: #fff;
-  border-top-color: #fff; 
-  position: absolute;
-  width: 100%;
-  height: 44px;
-  right: 0px;
-  left: 0px;
-  //bottom:45px;
-  margin-bottom: constant(safe-area-inset-bottom);
-  margin-bottom: env(safe-area-inset-bottom);
+    background: #fff;
+    border-top-color: #fff; 
+    position: absolute;
+    width: 100%;
+    height: 44px;
+    right: 0px;
+    left: 0px; 
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
   ion-tab-button{
   --background: #fff;
     background: #fff;
@@ -464,7 +464,7 @@ ion-tab-bar{
   img{width: 34px;}
   svg{
     width: 34px;
-    height: 31px;
+    height: inherit;
   }
 }
 
@@ -472,7 +472,7 @@ ion-tab-bar{
   img{width: 35px;}
   svg{
     width: 35px;
-    height: 34px;
+    height: inherit;
   }
 }
 
@@ -480,7 +480,7 @@ ion-tab-bar{
   img{width: 30px;}
   svg{
     width: 30px;
-    height: 34px;
+    height: inherit;
   }
 }
 
@@ -488,7 +488,7 @@ ion-tab-bar{
   img{width: 32px;}
   svg{
     width: 32px;
-    height: 34px;
+    height: inherit;
   }
 }
 
@@ -496,7 +496,7 @@ ion-tab-bar{
   text-align: center;
   margin-top:0px;
   position: relative;
-  z-index: 999;
+  z-index: 99;
   height:20px;
   span{font-size:8px; font-weight:bold; color:#62BCCC; display: inline-block; line-height:17px;}
   svg{float:right; margin-left:3px;}
@@ -1342,7 +1342,51 @@ app-social-sharing img{max-width:17px;}
   margin: 0 0 0 0;}
 }
 
-.reportInfoSSec{}
+.reportInfoSSec{
+  max-height: 117px;
+  overflow: auto;
+  width: 100%;
+}
+
+.reportInfoBlock{padding-right:5px;
+  ul{
+    padding: 0;
+    margin: 0;
+    li{
+      margin-bottom:12px;
+      line-height: 21px;
+      position: relative; 
+      span.text{
+        font-size: 16px;
+        color: #C7BAE2;
+        float: left;
+        background: #fff;
+        z-index: 1;
+        position: relative;
+        padding-right: 15px;
+      }
+      span.number{
+        font-size: 22px;
+        color: #9786BB;
+        font-weight: bold;
+        float: right;
+        background: #fff;
+        z-index: 1;
+        position: relative;
+        padding-left: 15px;
+      }
+      &:after{
+        content: "";
+        position: absolute;
+        top: 11px;
+        left: 0px;
+        background: #C7BAE2;
+        width: 100%;
+        height: 1px;
+      }
+    }
+  }
+}
 
 
 @media only screen and (min-height: 738px) { 
@@ -1544,32 +1588,28 @@ app-social-sharing img{max-width:17px;}
   .home_tab_icon {
     img{width: 31px;}
     svg{
-      width: 31px;
-      height: 29px;
+      width: 31px; 
     }
   }
   
   .dropbox_tab_icon {
     img{width: 32px;}
     svg{
-      width: 32px;
-      height: 31px;
+      width: 32px; 
     }
   }
   
   .report_tab_icon {
     img{width: 27px;}
     svg{
-      width: 27px;
-      height: 31px
+      width: 27px; 
     }
   }
   
   .setting_tab_icon {
     img{width: 29px;}
     svg{
-      width: 29px;
-      height: 31px;
+      width: 29px; 
     }
   }
 

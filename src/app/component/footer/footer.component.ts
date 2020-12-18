@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -11,25 +11,67 @@ export class FooterComponent implements OnInit {
   constructor(@Inject(NavController) private navCtrl: NavController) { }
 
   tabreg: string = localStorage.getItem('IsLogin') === 'true' ? 'welcome' : 'not-register';
-  ngOnInit() {}
+  ngOnInit() {
+    this.setActiveClass();
+  }
+  setActiveClass() {
+    const cusHome = localStorage.getItem('currPage');
+    switch (cusHome) {
+        case 'tp':
+              $('.home_tab_icon').addClass('tab-selected');
+              $('.dropbox_tab_icon').removeClass('tab-selected');
+              $('.report_tab_icon').removeClass('tab-selected');
+              $('.setting_tab_icon').removeClass('tab-selected');
+              break;
+                case 'lp':
+                  $('.home_tab_icon').removeClass('tab-selected');
+                  $('.dropbox_tab_icon').addClass('tab-selected');
+                  $('.report_tab_icon').removeClass('tab-selected');
+                  $('.setting_tab_icon').removeClass('tab-selected');
+                  break;
+                  case 'rp':
+                      $('.home_tab_icon').removeClass('tab-selected');
+                      $('.dropbox_tab_icon').removeClass('tab-selected');
+                      $('.report_tab_icon').addClass('tab-selected');
+                      $('.setting_tab_icon').removeClass('tab-selected');
+                      break;
+                      case 'sp':
+                        $('.home_tab_icon').removeClass('tab-selected');
+                        $('.dropbox_tab_icon').removeClass('tab-selected');
+                        $('.report_tab_icon').removeClass('tab-selected');
+                        $('.setting_tab_icon').addClass('tab-selected');
+                        break;
+                      default:
+                        $('.home_tab_icon').addClass('tab-selected');
+                        $('.dropbox_tab_icon').removeClass('tab-selected');
+                        $('.report_tab_icon').removeClass('tab-selected');
+                        $('.setting_tab_icon').removeClass('tab-selected');
+    }
+  }
   NavMethod(nav: string) {
     switch(nav) {
           case 'home':
+            localStorage.setItem('currPage', 'tp');
             this.homePageRedirect();
               break;
               case 'listing':
+                  localStorage.setItem('currPage', 'lp');
                   this.navCtrl.navigateForward(`/listing`);
                   break;
                   case 'splash':
+                      localStorage.setItem('currPage', 'rp');
                       this.navCtrl.navigateForward(`/splash`);
                       break;
                       case 'not-register':
+                          localStorage.setItem('currPage', 'sp');
                           this.navCtrl.navigateForward(`/not-register`);
                           break;
                           case 'welcome':
+                            localStorage.setItem('currPage', 'sp');
                             this.navCtrl.navigateForward(`/welcome`);
                             break;
     }
+    this.setActiveClass();
   }
   homePageRedirect() {
     const cusHome = localStorage.getItem('cusHome');
