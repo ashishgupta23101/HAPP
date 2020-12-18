@@ -45,7 +45,7 @@ public sortbyDate = 'Date Created';
 public sessionData: any;
 public filtBy: string;
 public segmentModel: string;
-public sortBy = 'carr';
+public sortBy;
 public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 public activeItems: Array<ActivePackages>;
 filterName = 'Filter by';

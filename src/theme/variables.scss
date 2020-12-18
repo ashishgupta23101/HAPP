@@ -498,6 +498,8 @@ ion-tab-bar{
   position: relative;
   z-index: 99;
   height:20px;
+  --background: #fff;
+  background: #fff;
   span{font-size:8px; font-weight:bold; color:#62BCCC; display: inline-block; line-height:17px;}
   svg{float:right; margin-left:3px;}
 }

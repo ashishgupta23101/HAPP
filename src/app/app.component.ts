@@ -29,6 +29,7 @@ export class AppComponent implements OnInit{
     @Inject(InAppBrowser) private iab: InAppBrowser
   ) {
     //localStorage.setItem('IsLogin', 'true');
+    localStorage.setItem('currPage', 'tp');
     const cusHome = localStorage.getItem('cusHome');
     if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
       localStorage.setItem('cusHome', 'tp');
