@@ -2,60 +2,36 @@
   <div class="statusBar">
     <div class="pageSdwStart"> </div>
     <div class="pageSdwStart_Bck"> </div>
-  </div>  
+  </div> 
 </ion-header>
 
 <ion-content class="lightGray"> 
+  <div class="main-container AcUnLinkPage mt50"> 
 
-  <div class="main-container etreportPage"> 
-    <div>
-      <h3 class="text-center main-heading mt5">Package Summary</h3>
-    </div>
+    <h3 class="text-center main-heading mt0">Account Unlinked!</h3>
 
-      <div class="Canvas_area text-center">
-        <canvas #pieChart width="1000" height="1000"></canvas>
-      </div>
+    <div class="retailUserLogo text-center mt25">
+      <img src="../assets/images/amazonLogo.png">
+    </div> 
 
-      <div class="totalPkg_info mt30">
-        <label>Total Packages: <span>{{reportData.total}}</span></label>
-      </div>
-
-      <div class="user-info-buttons mt15">
-        <button class="WShadowBtn mb17 text-left" data-toggle="modal"  data-target="#myModal">Spending Summary
-          <img src="../assets/images/chevron_down.svg" class="left-arrow"> 
-</button>
-
-        <button class="WShadowBtn mb17 text-left">Packages by Carrier
-          <img src="../assets/images/chevron_down.svg" class="left-arrow"> 
-</button>
-
-        <button class="WShadowBtn mb17 text-left">Package Details
-          <img src="../assets/images/chevron_down.svg" class="left-arrow"> 
-</button> 
-
-    </div>
-    <div class="modal" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-    
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Modal Heading</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-    
-          <!-- Modal body -->
-          <div class="modal-body">
-            Modal body..
-          </div>
-    
-        </div>
+    <div class="accountLink_block text-center mt10">
+      <img src="../assets/images/arrow_long_down.svg" class="arrowLongDownIcon">
+      <br>
+      <img src="../assets/images/unlink_icon.svg" class="mt10 unlinkIcon">
+      <br>
+      <div class="PASIcon mt60 text-center">
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="88.394" height="88.394" viewBox="0 0 88.394 88.394">
+            <path id="checkmark2" d="M66.984,37.1l-3.407-3.407a1.6,1.6,0,0,0-2.271,0L40.86,54.136l-9.72-9.8a1.611,1.611,0,0,0-2.278,0l-3.407,3.41a1.6,1.6,0,0,0,0,2.271L39.711,64.376a1.609,1.609,0,0,0,2.271,0l25-25A1.6,1.6,0,0,0,66.984,37.1ZM47.2,3a44.2,44.2,0,1,0,44.2,44.2A44.2,44.2,0,0,0,47.2,3Zm0,78.195a34,34,0,1,1,34-34A34,34,0,0,1,47.2,81.195Z" transform="translate(-3 -3)" fill="#76706b"/>
+          </svg> 
+        </a>
       </div>
     </div>
 
 
 
-  </div>
+   
+</div>
 </ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
   <div class="powerBy"><span>Powered by 
     <svg xmlns="http://www.w3.org/2000/svg" width="56.068" height="12.714" viewBox="0 0 56.068 12.714">

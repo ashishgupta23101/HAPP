@@ -29,12 +29,16 @@ export class FilteringDates {
     ThisMonth: CusDates = new CusDates();
     LastMonth: CusDates = new CusDates();
 }
+export class Report{
+    labels : Array<string> = [];
+    data : Array<number> = [];
+    total : number;
+}
 export class CusDates {
     firstDate: any;
     lastDate: any;
 }
 export class SessionData {
-
     static packages: Packages = new Packages();
     static filteringDates: FilteringDates = new FilteringDates();
     static apiURL: string = environment.api_Url_Prod;

@@ -8,7 +8,7 @@ import { QueryParams } from 'src/app/models/QueryParams';
 import { formatDate } from '@angular/common';
 import { EditPackage } from 'src/app/models/EditPackage';
 import { environment } from 'src/environments/environment';
-import { ActivePackages, SessionData, Packages, CusDates } from 'src/app/models/active-packages';
+import { ActivePackages, SessionData, Packages, CusDates, Report } from 'src/app/models/active-packages';
 import { NavController} from '@ionic/angular';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { Configuration } from 'src/app/models/configuration';
@@ -408,4 +408,12 @@ setarchivePackagestoSession(tData: any) {
 
 }
 
+  /// Save device id
+  getPackageSummary() { 
+    const rep = new Report();
+        rep.labels = ['Delivered','Exceptions','LateDelivery','ShippingError','InTransit' ];
+        rep.data = [71,14,25,5,32];
+        rep.total = 147;
+        return rep;
+  }
 }

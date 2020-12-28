@@ -737,6 +737,8 @@ ion-select::part(icon){color:#fff; opacity:1;
     span.inTransit{color:#CB9A46;}
     span.exception{color:#cc612a;}
     span.delivered{color:#6ae247;}
+    span.eligible{color:#21D19F;}
+    span.covid19{color:#cc612a;}
 
     ion-avatar{
       width: 121px;
@@ -749,7 +751,7 @@ ion-select::part(icon){color:#fff; opacity:1;
       max-width: 90px;
       max-height: 102px;}
     }
-  &:last-child{margin-bottom:0px;}
+  &:last-child{margin-bottom:0px !important;}
 } 
 
 .listingBlock ion-item-options{border:none;}
@@ -1010,7 +1012,7 @@ display:none;}
     .dummy_img{margin-top:24px;}
   }
 
-  .profileD {margin-bottom: 12px;
+  .profileD {margin-bottom: 15px;
     .main-heading{
       font-size: 20px;
       margin-top: 8px;
@@ -1020,6 +1022,7 @@ display:none;}
     a.user-links{
       font-size: 20px;
       padding: 0;
+      margin-bottom:0px;
       font-weight: bold;
     }
   } 
@@ -1061,7 +1064,7 @@ display:none;}
     ion-col{padding:0px;}
   }
 
-  .RLogoBlock{width: 142px;
+  .RLogoBlock{width: 143px;
     height: 154px;
     background-color: #fff;
     border-radius: 100%;
@@ -1070,7 +1073,7 @@ display:none;}
     margin: 0 auto 23px auto;
 
     a{display: block;
-      width: 142px;
+      width: 143px;
       height: 154px;} 
 
     img{   
@@ -1080,7 +1083,7 @@ display:none;}
       position: relative;}
   }
 
-  #amazon_logo{ 
+  /*#amazon_logo{ 
     img{ max-width: 100px;}
   }
 
@@ -1098,17 +1101,19 @@ display:none;}
 
   #target_logo{ 
     img{ max-width: 126px;}
-  }
+  }*/
 
-  #Etsy_logo{background-color: #e26700;
-    img{max-width: 120px;}
+  #Etsy_logo{background-color: #E26700;
+    /*img{max-width: 120px;}*/
   }
 
 
   .retailAcUserPage{
-    .retailUserLogo{
+    .retailUserLogo{max-width:260px; 
+      margin-left:auto;
+      margin-right:auto;
       margin-top: 60px;
-      img{max-width:270px;}
+      img{}
     } 
   }
 
@@ -1390,6 +1395,55 @@ app-social-sharing img{max-width:17px;}
   }
 }
 
+.reportOtpPage{
+  .reportInfoSSec{padding: 5px; max-height:200px;}
+  .listingBlock{overflow: initial;
+    ion-item{
+      ion-checkbox{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        --size: 42px;
+        --border-color: #21D19F;
+        --border-color-checked: #21D19F;
+        --background-checked: #21D19F;
+        --checkmark-width: 2px;
+      }
+    }
+  } 
+}
+
+.AcLinkPage{
+  .retailUserLogo{max-width:260px;
+    margin-left:auto;
+    margin-right:auto;
+    img{}
+  }  
+}
+
+.AcUnLinkPage{
+  .retailUserLogo{max-width:260px; 
+    margin-left:auto;
+    margin-right:auto;
+    img{}
+  } 
+  .unlinkIcon{
+    margin-top:-10px !important;
+  }
+  .PASIcon{margin-top:5px !important;}
+}
+
+.AcforgotPassP{
+  .retailUserLogo{max-width:260px; 
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 60px; 
+  } 
+  .ConAcUserName{font-size: 20px; font-weight: bold; color:#DFDFDF;}
+}
+
+
+
 
 @media only screen and (min-height: 738px) { 
   .statusBar{
@@ -1507,8 +1561,8 @@ app-social-sharing img{max-width:17px;}
     .left-arrow{width: 17px; top:18px}
   }
 
-  .RLogoBlock{width: 132px; height: 144px;
-    a{width: 132px; height: 144px;}
+  .RLogoBlock{width: 132px; height: 142px;
+    a{width: 132px; height: 142px;}
   } 
 
   .retailAcPage{padding-top:0px;}
@@ -1569,6 +1623,28 @@ app-social-sharing img{max-width:17px;}
   }
 
   .chooseCarrierP{padding-top:0px;}
+
+  .reportOtpPage{ 
+    .listingBlock{ 
+      ion-item{
+        ion-checkbox{
+          right: 0;
+          top: 0;
+          --size: 30px;
+        }
+      }
+    } 
+  }
+
+  .AcLinkPage{margin-top:40px;
+    .PASIcon{margin-top:40px;} 
+  }
+
+  .AcUnLinkPage{ margin-top:40px;
+    .unlinkIcon{
+      max-width: 150px;
+    } 
+  }
 
 }
 
@@ -1675,19 +1751,20 @@ app-social-sharing img{max-width:17px;}
 
   .main-heading{font-size:19px;}
   
-  .RLogoBlock{width: 117px; height: 129px; margin-bottom:12px;
-    a{width: 117px; height: 129px;}
+  .RLogoBlock{width: 117px; height: 126px; margin-bottom:12px;
+    a{width: 117px; height: 126px;}
   } 
 
-  #amazon_logo img{max-width: 90px;}
+  /*#amazon_logo img{max-width: 90px;}
   #wyfair_logo img{max-width: 92px;}
   #overstock_logo img { max-width: 80px;}
   #target_logo img {max-width: 120px;}
-  #Etsy_logo img { max-width: 110px; }
+  #Etsy_logo img { max-width: 110px; }*/
 
   .retailAcUserPage{
     .retailUserLogo{margin-top:30px;
-      img{max-width: 230px;}
+      img{width:85%;}
+      img.etsy_logo1{width:auto; max-height:80px;}
     }
     form{margin-top: 45px;}
     .btnBlock {margin-top: 35px;}
@@ -1809,5 +1886,46 @@ app-social-sharing img{max-width:17px;}
     height: 42px;
     font-size: 17px;
   } 
+
+  .reportOtpPage{ 
+    .listingBlock{ 
+      ion-item{
+        ion-checkbox{
+          --size: 20px;
+          right: -5px;
+          top: -5px;
+        }
+      }
+    } 
+  }
+
+  .AcLinkPage{margin-top:40px;
+    .retailUserLogo{margin-top: 20px;
+      img{width:85%;}
+    }
+    .arrowLongDownIcon{max-width: 40px;}
+    .linkIcon{max-width: 90px;}
+    .PASIcon{margin-top:30px;} 
+  }
+
+  .AcUnLinkPage{margin-top:40px;
+    .retailUserLogo{margin-top: 20px;
+      img{width:85%;}
+    }
+    .arrowLongDownIcon{max-width: 40px;}
+    .unlinkIcon{
+      max-width: 110px;
+    }
+    .PASIcon{margin-top: 10px !important;}
+  }
+
+  .AcforgotPassP{
+    .retailUserLogo{ 
+      margin-top: 30px; 
+      img{width:85%;}
+    } 
+    form{margin-top:80px;}
+    .ConAcUserName{font-size:19px;}
+  }
 
 }
