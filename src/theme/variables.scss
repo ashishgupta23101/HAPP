@@ -614,6 +614,7 @@ ion-header ion-toolbar{--background: #f8f7f9;}
       border-left: 1.5px solid rgba(33, 209, 159, 0.5);
       padding: 3px 24px 0px 20px;
       height: 43px;
+      line-height:38px;
       margin-top: 4px;
         svg{width:32px;}
       }
@@ -656,9 +657,11 @@ ion-segment-button{
 .headerSelectFiled{padding:2px 4px 4px 4px;
   .selectFiled{  
     font-size:20px;
-    color: #666;
+    color: #62bccc;
     height: 35px;
     padding: 5px 10px 5px 15px !important; 
+    --placeholder-color: #DFDFDF;
+    --placeholder-opacity: 1;
   }
 }
 
@@ -1248,12 +1251,13 @@ app-social-sharing img{max-width:17px;}
   bottom: 0;
   left: 0;
   right: 0;
-  line-height: 32px;
+  /*line-height: 32px;*/
   z-index: 99;
 }
 
-.Canvas_area{min-height:200px; line-height: 200px;}
+.Canvas_area{min-height:100px; margin-top:25px;}
 .totalPkg_info{color:#452092; font-weight:700; font-size:22px; line-height:32px;
+  label{width:100%;}
   span{float:right; font-size:30px;}
 }
 
@@ -1441,6 +1445,57 @@ app-social-sharing img{max-width:17px;}
   } 
   .ConAcUserName{font-size: 20px; font-weight: bold; color:#DFDFDF;}
 }
+
+.modal-backdrop{display:none;}
+.modal{background-color: rgb(0, 0, 0, 0.5);}
+.etreportModel{ 
+  .modal-dialog{
+    height: auto !important;
+    background-color: transparent !important;
+    margin: 15px;
+  }
+  .modal-content{
+    border-radius: 14px;
+    border: none;
+    min-height: 279px;
+  }
+  .modal-body{padding-top: 36px;}
+  .main-heading{margin:10px 0 2px 0;}
+  .title{
+    margin: 0;
+    color: #452092;
+    font-size: 16px;
+  }
+  .quantity{
+    margin-top: 16px;
+    font-size: 65px;
+    color: #452092;
+    font-weight: 600;
+    line-height: 50px;
+  }
+}
+
+ion-alert{
+  .alert-head{padding:0px !important;}
+  .alert-message{}
+  .alert-radio-group{border:none !important;
+    .alert-button-inner{
+      border-bottom: 1px solid #dfdfdf;}
+    .alert-radio-label{
+      font-size: 16px;
+      color: #62bccc;
+      font-weight: bold;
+    }
+  }
+  .alert-button-group{
+    button{
+      border-color: rgba(33, 209, 159, 0.3) !important; 
+      color: #452092 !important;
+      font-weight: bold;
+    }
+  }
+}
+
 
 
 
@@ -1657,7 +1712,7 @@ app-social-sharing img{max-width:17px;}
     .btnBlock{margin-top:20px;}
   }
   
-  .trackNumFiled .tracking{height: 38px; padding-top:0px;}
+  .trackNumFiled .tracking{height: 38px; line-height:35px; padding-top:0px;}
 
   .form-control{height: 46px; font-size:18px; margin-bottom:15px;}
   .submitBtn{min-width:162px; height:46px; font-size:18px;}
@@ -1863,7 +1918,7 @@ app-social-sharing img{max-width:17px;}
 
   .totalPkg_info{
     font-size: 19px; line-height:24px;
-    span{ font-size: 25px;}
+    span{ font-size: 25px;} 
   }
 
   

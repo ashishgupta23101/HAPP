@@ -31,6 +31,8 @@ export class ETReportsPage implements OnInit {
   fruits= [];
   @ViewChild('pieChart') pieChart;
   bars: any;
+  pop_status: any;
+  pop_value: any;
   colorArray: any
   ngOnInit() {
    this.reportData = this.trackService.getPackageSummary();
@@ -134,6 +136,12 @@ export class ETReportsPage implements OnInit {
         }]
       },
       options: {
+        onClick: (c, i) => {
+          $('#modelopen').click();
+          let e = i[0];
+          this.pop_status = this.reportData.labels[e._index];
+          this.pop_value = this.reportData.data[e._index];
+        },
         layout: {
           padding: {
             bottom: 30,

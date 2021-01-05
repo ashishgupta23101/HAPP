@@ -9,19 +9,19 @@
 
   <div class="main-container etreportPage"> 
     <div>
-      <h3 class="text-center main-heading mt5">Package Summary</h3>
+      <h3 class="main-heading text-center mt10 mb15">Package Summary</h3>
     </div>
 
       <div class="Canvas_area text-center">
         <canvas #pieChart width="1000" height="1000"></canvas>
       </div>
 
-      <div class="totalPkg_info mt30">
+      <div class="totalPkg_info">
         <label>Total Packages: <span>{{reportData.total}}</span></label>
       </div>
 
       <div class="user-info-buttons mt15">
-        <button class="WShadowBtn mb17 text-left" data-toggle="modal"  data-target="#myModal">Spending Summary
+        <button class="WShadowBtn mb17 text-left">Spending Summary
           <img src="../assets/images/chevron_down.svg" class="left-arrow"> 
 </button>
 
@@ -34,24 +34,7 @@
 </button> 
 
     </div>
-    <div class="modal" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-    
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Modal Heading</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-    
-          <!-- Modal body -->
-          <div class="modal-body">
-            Modal body..
-          </div>
-    
-        </div>
-      </div>
-    </div>
+
 
 
 
@@ -80,3 +63,19 @@
   <div class="pageSdwEnd"> </div>
   <div class="pageSdwEnd_Bck"> </div>
 </ion-footer>
+
+<div class="modal etreportModel" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">  
+      <div class="modal-body text-center">
+        <img src="../assets/images/help_with_circle_icon.svg" /> 
+        <div class="text-center">
+          <h3 class="main-heading">Shipping Error</h3>
+          <h5 class="title">Last 30 Days</h5>
+        </div>
+        <div class="quantity">5</div>
+      </div>
+
+    </div>
+  </div>
+</div>

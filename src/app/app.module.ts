@@ -30,6 +30,7 @@ import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 import { fancyAnimation } from './animations';
 import { AuthGuard } from './auth-guard';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -59,7 +60,7 @@ import { AuthGuard } from './auth-guard';
     SplashScreen,
     NativeGeocoder,
     Firebase,
-    AuthGuard,
+    AuthGuard,GooglePlus,
     FCM,
     Network, InAppBrowser,
     SplashScreen, TrackingService, FunctionsService, FcmService,

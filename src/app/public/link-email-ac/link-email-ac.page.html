@@ -23,12 +23,11 @@
       <img src="../assets/images/linkEmail.svg">
     </div> 
 
-  <form class="mt15" #form="ngForm" > 
-     
+  <form class="mt15" #form="ngForm"> 
       <div>
-        <ion-select placeholder="Email Provider" class="form-control selectFiled">
-          <ion-select-option value="A">A</ion-select-option>
-          <ion-select-option value="B">B</ion-select-option> 
+        <ion-select  [value]="proCode" placeholder="Email Provider"   (ionChange)="proChange()" class="form-control selectFiled">
+          <ion-select-option value="G">Google</ion-select-option>
+          <ion-select-option value="Y">Yahoo</ion-select-option> 
         </ion-select>
       </div> 
       <div>

@@ -32,7 +32,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/notification/notification.module').then( m => m.NotificationPageModule)
   },
   {
-    path: 'link-email-ac', canActivate: [AuthGuard],
+    path: 'link-email-ac',// canActivate: [AuthGuard],
     loadChildren: () => import('./public/link-email-ac/link-email-ac.module').then( m => m.LinkEmailAcPageModule)
   },
   {
