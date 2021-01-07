@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { LoaderService } from 'src/app/providers/loader.service';
+import { SocialAuthService } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 
 @Component({
   selector: 'app-link-email-ac',
@@ -10,7 +12,7 @@ import { LoaderService } from 'src/app/providers/loader.service';
 })
 export class LinkEmailAcPage implements OnInit {
   proCode: any = '';
-  constructor(@Inject(NavController) private navCtrl: NavController,
+  constructor(@Inject(NavController) private navCtrl: NavController,@Inject(SocialAuthService) private authService: SocialAuthService,
   @Inject(LoaderService) private loading: LoaderService,@Inject(GooglePlus) private googlePlus: GooglePlus) { }
   goBack() {
     this.navCtrl.back();
@@ -18,8 +20,17 @@ export class LinkEmailAcPage implements OnInit {
   ngOnInit() {
   }
   proChange(){
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(user =>{
+      alert(JSON.stringify(user));
+    }).catch(err =>{
+      alert(JSON.stringify(err));
+    });
    alert(this.proCode);
-   this.googleSignIn();
+   this.authService.authState.subscribe((user) => {
+    alert(JSON.stringify(user));
+
+  });
+   //this.googleSignIn();
   }
   googleSignIn() {
     this.googlePlus.login({})
@@ -32,7 +43,7 @@ export class LinkEmailAcPage implements OnInit {
       // this.givenName = res.givenName;
       // this.userId = res.userId;
       // this.imageUrl = res.imageUrl;
-      //user.email = res.email;
+      // user.email = res.email;
       localStorage.setItem('authUser', res.email);
       localStorage.setItem('IsAuth', "true");
       //this.saveUser(user);

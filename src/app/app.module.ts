@@ -18,6 +18,11 @@ import { Device } from '@ionic-native/device/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
@@ -38,17 +43,15 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
   imports: [
     HttpClientModule,
     BrowserModule,
-    FormsModule,
+    FormsModule,SocialLoginModule,
     TabsPageModule,SharedModule,
     IonicStorageModule.forRoot({
     name: '__mydb',
     driverOrder: ['indexeddb', 'sqlite', 'websql']
   }),
     ReactiveFormsModule, IonicModule.forRoot({
-      navAnimation: fancyAnimation
-    }), AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AppRoutingModule
+     // navAnimation: fancyAnimation
+    }), AngularFireModule.initializeApp(environment.firebase), AngularFirestoreModule, AppRoutingModule
   ],
   providers: [
     Platform,
@@ -63,7 +66,24 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     AuthGuard,GooglePlus,
     FCM,
     Network, InAppBrowser,
-    SplashScreen, TrackingService, FunctionsService, FcmService,
+    SplashScreen, TrackingService, FunctionsService, FcmService,{
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '837283281198-iq0n5mae2mgbjdervci03kr79rndr0j6.apps.googleusercontent.com'
+            )
+          },
+          // {
+          //   id: FacebookLoginProvider.PROVIDER_ID,
+          //   provider: new FacebookLoginProvider('clientId')
+          // }
+        ]
+      } as SocialAuthServiceConfig,
+    },
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
