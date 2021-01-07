@@ -51,7 +51,9 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
   }),
     ReactiveFormsModule, IonicModule.forRoot({
      // navAnimation: fancyAnimation
-    }), AngularFireModule.initializeApp(environment.firebase), AngularFirestoreModule, AppRoutingModule
+    }), AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AppRoutingModule
   ],
   providers: [
     Platform,
@@ -74,7 +76,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '837283281198-iq0n5mae2mgbjdervci03kr79rndr0j6.apps.googleusercontent.com'
+              '837283281198-chs4ah9a3sad3n0v20nhbs81f4gdp4fd.apps.googleusercontent.com'
             )
           },
           // {
