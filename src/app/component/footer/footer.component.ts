@@ -73,6 +73,9 @@ export class FooterComponent implements OnInit {
     }
     this.setActiveClass();
   }
+  ionViewDidEnter(){
+    this.setActiveClass();
+  }
   homePageRedirect() {
     const cusHome = localStorage.getItem('cusHome');
     switch (cusHome) {
