@@ -76,7 +76,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '837283281198-chs4ah9a3sad3n0v20nhbs81f4gdp4fd.apps.googleusercontent.com'
+              '326714755087-32rhvg145v621d6vkrh362tmjtqb914u.apps.googleusercontent.com'
             )
           },
           // {
