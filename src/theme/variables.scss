@@ -1496,6 +1496,11 @@ ion-alert{
   }
 }
 
+.listingBlock{
+  &.retailerList{padding-right:0px;}
+  ion-label{margin:12px 0;}
+}
+
 
 
 

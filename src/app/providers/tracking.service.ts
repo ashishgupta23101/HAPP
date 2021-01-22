@@ -186,7 +186,22 @@ login(_email: string , _password: string): Observable<any> {
     .set('Content-Type', 'application/json')
   });
 }
-
+getMessages(_token: string): Observable<any> {
+  const url = environment.api_gmail+'messages?includeSpamTrash=true&maxResults='+environment.noOfMail+'&key='+environment.api_google_key;
+  return this.http.get(url, {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token)
+  });
+}
+getMessagebyId(_token: string, _id: string): Observable<any> {
+  const url = environment.api_gmail+'messages/'+_id+'?key='+environment.api_google_key;
+  return this.http.get(url, {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token)
+  });
+}
 // tslint:disable-next-line: variable-name
 register(_email: string , _password: string, _confirm: string): Observable<any> {
   const request = {email: _email , password: _password , confirmPassword: _confirm, deviceId: this.uniqueDeviceID.uuid, authService: null};

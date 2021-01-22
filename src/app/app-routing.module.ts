@@ -146,6 +146,14 @@ const routes: Routes = [
   {
     path: 'spending-summary',
     loadChildren: () => import('./public/spending-summary/spending-summary.module').then( m => m.SpendingSummaryPageModule)
+  },
+  {
+    path: 'mail-list',
+    loadChildren: () => import('./public/mail-list/mail-list.module').then( m => m.MailListPageModule)
+  },
+  {
+    path: 'listing-retailer',
+    loadChildren: () => import('./public/listing-retailer/listing-retailer.module').then( m => m.ListingRetailerPageModule)
   }
 ];
 @NgModule({

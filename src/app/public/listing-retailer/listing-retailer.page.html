@@ -9,53 +9,93 @@
       <path id="reply" d="M83.994,67.533S73.809,22.986,33.642,22.986V4.751L1.6,34.839,33.642,65.462V45.519c21.8-.006,38.982,1.928,50.352,22.017Z" transform="translate(-1.6 -4.751)" fill="#63c9ef"/>
       </svg> 
     </div> 
+    <div class="share_icon fRight" (click)="share()"><app-social-sharing *ngIf="hasData" [Key]="item"></app-social-sharing></div> 
   </div> 
-  <div *ngIf="loggedIn === true" class="header-action-icon text-right">
-    <div class="logout_icon" [routerLink]="['/listing-retailer']" routerDirection="backward">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28.8" height="28.8" viewBox="0 0 28.8 28.8">
-          <path id="log-out" d="M30.4,16,20.8,8v4.8H9.6v6.4H20.8V24ZM4.8,4.8H17.6V1.6H4.8A3.209,3.209,0,0,0,1.6,4.8V27.2a3.209,3.209,0,0,0,3.2,3.2H17.6V27.2H4.8V4.8Z" transform="translate(-1.6 -1.6)" fill="#452092"/>
-        </svg> 
-    </div> 
-</div> 
 </ion-header>
 
 <ion-content class="lightGray"> 
-   
-  <div class="main-container linkEmailAcPage">
-    <div>
-      <h3 class="text-center main-heading mt0">Link Email Account</h3>
+  <div class="main-container pt5">
+    <ng-container>
+      <div class="listingBlock retailerList"> 
+        <div class="lb_side">
+          <ion-item class="shadowBox">
+            <ion-avatar slot="start">
+              <img src="../../../assets/images/default-product-image.png">
+            </ion-avatar>
+            <ion-label>
+              <h2>1Z8X83550360032674 </h2> 
+              <br>
+              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
+              <p class="ExDate">Retailer</p> 
+            </ion-label>
+          </ion-item> 
+        </div>
+      </div> 
+      <div class="listingBlock retailerList"> 
+        <div class="lb_side">
+          <ion-item class="shadowBox">
+            <ion-avatar slot="start">
+              <img src="../../../assets/images/default-product-image.png">
+            </ion-avatar>
+            <ion-label>
+              <h2>1Z8X83550360032674 </h2> 
+              <br>
+              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
+              <p class="ExDate">Retailer</p> 
+            </ion-label>
+          </ion-item> 
+        </div>
+      </div>
+      <div class="listingBlock retailerList"> 
+        <div class="lb_side">
+          <ion-item class="shadowBox">
+            <ion-avatar slot="start">
+              <img src="../../../assets/images/default-product-image.png">
+            </ion-avatar>
+            <ion-label>
+              <h2>1Z8X83550360032674 </h2> 
+              <br>
+              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
+              <p class="ExDate">Retailer</p> 
+            </ion-label>
+          </ion-item> 
+        </div>
+      </div>
+      <div class="listingBlock retailerList"> 
+        <div class="lb_side">
+          <ion-item class="shadowBox">
+            <ion-avatar slot="start">
+              <img src="../../../assets/images/default-product-image.png">
+            </ion-avatar>
+            <ion-label>
+              <h2>1Z8X83550360032674 </h2> 
+              <br>
+              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
+              <p class="ExDate">Retailer</p> 
+            </ion-label>
+          </ion-item> 
+        </div>
+      </div>
+      <div class="listingBlock retailerList"> 
+        <div class="lb_side">
+          <ion-item class="shadowBox">
+            <ion-avatar slot="start">
+              <img src="../../../assets/images/default-product-image.png">
+            </ion-avatar>
+            <ion-label>
+              <h2>1Z8X83550360032674 </h2> 
+              <br>
+              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
+              <p class="ExDate">Retailer</p> 
+            </ion-label>
+          </ion-item> 
+        </div>
+      </div>   
+    </ng-container>
     </div>
+</ion-content>
 
-    <div class="graphicBlock mt20">
-      <img src="../assets/images/linkEmail.svg">
-    </div> 
-
-  <form class="mt15" #form="ngForm"> 
-      <div>
-        <ion-select  [(ngModel)]="proCode" name="provider" placeholder="Email Provider"   (ionChange)="proChange()" class="form-control selectFiled">
-          <ion-select-option value="G">Google</ion-select-option>
-          <ion-select-option value="Y">Yahoo</ion-select-option> 
-        </ion-select>
-      </div> 
-      <ng-container *ngIf="loggedIn === false">
-      <div>
-        <ion-input name="email" type="email" placeholder="Email Username" class="form-control" required></ion-input>
-      </div>
-      <div>
-        <ion-input name="password" type="password" placeholder="Email Password" class="form-control"  required></ion-input>
-      </div> 
-      <div class="btnBlock mt50 text-center">
-        <ion-button    type="submit" class="submitBtn" (click)="googleSignIn()">Link Account</ion-button>
-      </div>
-      </ng-container>
-      <div *ngIf="loggedIn === true"  class="btnBlock mt50 text-center">
-        <ion-button    type="submit" class="submitBtn" (click)="signOut()">De-Link Account</ion-button>
-        <!-- [disabled]="form.invalid" -->
-      </div> 
-  </form> 
-
-</div>
-</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
+<ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
   <div class="powerBy"><span>Powered by 
     <svg xmlns="http://www.w3.org/2000/svg" width="56.068" height="12.714" viewBox="0 0 56.068 12.714">
       <g id="Group_484" data-name="Group 484" transform="translate(-41.335 -106.516)" opacity="0.599">

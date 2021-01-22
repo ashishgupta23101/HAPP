@@ -17,17 +17,26 @@ export class LinkEmailAcPage implements OnInit {
   @Inject(LoaderService) private loading: LoaderService,@Inject(GooglePlus) private googlePlus: GooglePlus) { }
   goBack() {
     this.navCtrl.back();
-    
   }
   ngOnInit() {
     //this.signOut();
-    this.authService.authState.subscribe((user) => {
-      this.socUser = user;
-      this.loggedIn = (user != null);
-    });
+    // this.authService.authState.subscribe((user) => {
+    //   this.socUser = user;
+    //   this.loggedIn = (user != null);
+    // });
+    var tok = localStorage.getItem('accessToken');
+    if( tok === undefined || tok === null || tok === '' || tok === 'NA'){
+       this.loggedIn = false;
+    }
+    else{
+      this.loggedIn = true;
+    }
   }
   proChange(){
-   alert(this.proCode);
+    if(this.proCode === 'G'){
+      this.googleSignIn();
+    }
+   //alert(this.proCode);
   }
   googleSignIn() {
     const googleLoginOptions = {
@@ -36,13 +45,18 @@ export class LinkEmailAcPage implements OnInit {
     
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then(user =>{
       this.socUser = user;
-      this.loading.presentToast('info','Account Linked Successfully')
+      localStorage.setItem('accessToken',user.authToken);
+      console.log(JSON.stringify(this.socUser));
+      this.loading.presentToast('info','Successfully linked with '+this.socUser.firstName)
     }).catch(err =>{
+      localStorage.setItem('accessToken','NA');
       this.loading.presentToast('error','Unable to Link Account!')
     });
 
   }
   signOut() {
+    this.loggedIn = false;
+    localStorage.setItem('accessToken','NA');
     this.authService.signOut(true).then(data =>{
       alert(JSON.stringify(data));
       this.loading.presentToast('info','Account De-Linked Successfully')
