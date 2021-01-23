@@ -15,78 +15,14 @@
 
 <ion-content class="lightGray"> 
   <div class="main-container pt5">
-    <ng-container>
-      <div class="listingBlock retailerList"> 
+    <ng-container *ngIf="mailData && mailData.length > 0">
+      <div ng-repeat="item in mailData" class="listingBlock retailerList"> 
         <div class="lb_side">
           <ion-item class="shadowBox">
-            <ion-avatar slot="start">
-              <img src="../../../assets/images/default-product-image.png">
-            </ion-avatar>
             <ion-label>
-              <h2>1Z8X83550360032674 </h2> 
+              <h2>{{item.subject}} </h2> 
               <br>
-              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
-              <p class="ExDate">Retailer</p> 
-            </ion-label>
-          </ion-item> 
-        </div>
-      </div> 
-      <div class="listingBlock retailerList"> 
-        <div class="lb_side">
-          <ion-item class="shadowBox">
-            <ion-avatar slot="start">
-              <img src="../../../assets/images/default-product-image.png">
-            </ion-avatar>
-            <ion-label>
-              <h2>1Z8X83550360032674 </h2> 
-              <br>
-              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
-              <p class="ExDate">Retailer</p> 
-            </ion-label>
-          </ion-item> 
-        </div>
-      </div>
-      <div class="listingBlock retailerList"> 
-        <div class="lb_side">
-          <ion-item class="shadowBox">
-            <ion-avatar slot="start">
-              <img src="../../../assets/images/default-product-image.png">
-            </ion-avatar>
-            <ion-label>
-              <h2>1Z8X83550360032674 </h2> 
-              <br>
-              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
-              <p class="ExDate">Retailer</p> 
-            </ion-label>
-          </ion-item> 
-        </div>
-      </div>
-      <div class="listingBlock retailerList"> 
-        <div class="lb_side">
-          <ion-item class="shadowBox">
-            <ion-avatar slot="start">
-              <img src="../../../assets/images/default-product-image.png">
-            </ion-avatar>
-            <ion-label>
-              <h2>1Z8X83550360032674 </h2> 
-              <br>
-              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
-              <p class="ExDate">Retailer</p> 
-            </ion-label>
-          </ion-item> 
-        </div>
-      </div>
-      <div class="listingBlock retailerList"> 
-        <div class="lb_side">
-          <ion-item class="shadowBox">
-            <ion-avatar slot="start">
-              <img src="../../../assets/images/default-product-image.png">
-            </ion-avatar>
-            <ion-label>
-              <h2>1Z8X83550360032674 </h2> 
-              <br>
-              <p class="Tracking">Tracking #: <span>1Z8X83550360032674 </span></p>
-              <p class="ExDate">Retailer</p> 
+              <p class="Tracking">From : <span>{{item.from}} </span></p>
             </ion-label>
           </ion-item> 
         </div>
