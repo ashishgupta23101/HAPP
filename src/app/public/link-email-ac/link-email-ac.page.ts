@@ -47,7 +47,8 @@ export class LinkEmailAcPage implements OnInit {
       this.socUser = user;
       localStorage.setItem('accessToken',user.authToken);
       console.log(JSON.stringify(this.socUser));
-      this.loading.presentToast('info','Successfully linked with '+this.socUser.firstName)
+      this.loading.presentToast('info','Successfully linked with '+this.socUser.firstName);
+      this.navCtrl.navigateForward(`/listing-retailer`);
     }).catch(err =>{
       localStorage.setItem('accessToken','NA');
       this.loading.presentToast('error','Unable to Link Account!')

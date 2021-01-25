@@ -3,32 +3,28 @@
     <div class="pageSdwStart"> </div>
     <div class="pageSdwStart_Bck"> </div>
   </div> 
-  <div class="header-action-icon text-left"> 
-    <div class="back_arrow fleft" (click)="goBack()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="82.394" height="62.785" viewBox="0 0 82.394 62.785">
-      <path id="reply" d="M83.994,67.533S73.809,22.986,33.642,22.986V4.751L1.6,34.839,33.642,65.462V45.519c21.8-.006,38.982,1.928,50.352,22.017Z" transform="translate(-1.6 -4.751)" fill="#63c9ef"/>
-      </svg> 
-    </div> 
-    <div class="share_icon fRight" (click)="share()"><app-social-sharing *ngIf="hasData" [Key]="item"></app-social-sharing></div> 
+  <div class="text-center"> 
+    <h4>Tracked Mails</h4>
   </div> 
 </ion-header>
 
 <ion-content class="lightGray"> 
-  <div class="main-container pt5">
-    <ng-container *ngIf="mailData && mailData.length > 0">
-      <div ng-repeat="item in mailData" class="listingBlock retailerList"> 
-        <div class="lb_side">
-          <ion-item class="shadowBox">
-            <ion-label>
-              <h2>{{item.subject}} </h2> 
-              <br>
-              <p class="Tracking">From : <span>{{item.from}} </span></p>
-            </ion-label>
-          </ion-item> 
-        </div>
-      </div>   
+    <ng-container *ngIf="lastMailData && lastMailData.length > 0; else loading">
+      <ion-list>
+      <ion-item *ngFor="let item of lastMailData" (click)="showMail(item)" >
+        <ion-label>
+          <h3>{{item.subject}}</h3>
+          <p style="font-size: 11px;">{{item.from}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
     </ng-container>
-    </div>
+    <ng-template #loading>
+      <div class="text-center">
+        Loading.........
+      </div>
+    </ng-template>
+    <button id="modelopen1" data-toggle="modal"  data-target="#myModal1"></button>
 </ion-content>
 
 <ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
@@ -55,3 +51,17 @@
   <div class="pageSdwEnd"> </div>
   <div class="pageSdwEnd_Bck"> </div>
 </ion-footer>
+<div class="modal etreportModel" id="myModal1">
+  <div class="modal-dialog">
+    <div class="modal-content">  
+      <div class="modal-body text-center"> 
+        <div class="text-left">
+          <h4 class="main-heading">Subject : {{mailData.subject}}</h4>
+          <hr />
+          <h6 class="title">From : {{mailData.from}}</h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

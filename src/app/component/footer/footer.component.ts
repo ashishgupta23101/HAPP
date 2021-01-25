@@ -70,6 +70,10 @@ export class FooterComponent implements OnInit {
                             localStorage.setItem('currPage', 'sp');
                             this.navCtrl.navigateForward(`/welcome`);
                             break;
+                            case 'mail':
+                              localStorage.setItem('currPage', 'sp');
+                              this.navCtrl.navigateForward(`/listing-retailer`);
+                              break;
     }
     this.setActiveClass();
   }

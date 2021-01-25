@@ -3,7 +3,8 @@ import { NavController } from '@ionic/angular';
 import { MailData } from 'src/app/models/MailData';
 import { FunctionsService } from 'src/app/providers/functions.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
-
+import * as $ from 'jquery';
+declare var $: any;
 @Component({
   selector: 'app-listing-retailer',
   templateUrl: './listing-retailer.page.html',
@@ -11,16 +12,24 @@ import { TrackingService } from 'src/app/providers/tracking.service';
 })
 export class ListingRetailerPage implements OnInit {
 
-  mailData : Array<MailData>;
+  lastMailData : Array<MailData>;
+  mailData : MailData = new MailData();
   constructor(                 
   @Inject(FunctionsService) public fun: FunctionsService,
   @Inject(TrackingService) public trackService: TrackingService,
-  @Inject(NavController) private navCtrl: NavController,) { }
+  @Inject(NavController) private navCtrl: NavController) {
+    
+   }
   goBack() {
-    this.navCtrl.back();
+    this.navCtrl.navigateForward(`/link-email-ac`);
+  }
+  showMail(item){
+   // alert(item.subject);
+    this.mailData = item;
+    $('#modelopen1').click();
   }
   ngOnInit() {
-    this.mailData = [];
+    this.lastMailData = [];
     this.trackService.getMessages(localStorage.getItem('accessToken')).subscribe(data => {
       // tslint:disable-next-line: no-debugger
        data.messages.forEach(element => {
@@ -40,13 +49,14 @@ export class ListingRetailerPage implements OnInit {
             //   }
             // }
             data.payload.headers.forEach(val => {
-              
+              if(val.name === 'From'){
+                md.from = val.value;
+              }
               if(val.name === 'Subject' && (val.value.toLowerCase().includes('order') 
               || val.value.toLowerCase().includes('your package')
               || val.value.toLowerCase().includes('your return'))){
                 md.subject = val.value;
-                md.from = 'NA';
-                this.mailData.push(md)
+                this.lastMailData.push(md)
               }
             });
           }
@@ -54,26 +64,22 @@ export class ListingRetailerPage implements OnInit {
         },
         error => {
          localStorage.setItem('IsLogin', 'false');
-         this.fun.dismissLoader();
          this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
         });
 
        });
-       console.log(this.mailData);
+       console.log(this.lastMailData);
     },
     error => {
       debugger;
       if(error.status === 401)
       {
-        this.fun.dismissLoader();
         localStorage.setItem('IsLogin', 'false');
         localStorage.setItem('accessToken', 'NA');
-        this.fun.presentToast('Unauthenticated request! Please login', true, 'bottom', 2100);
+        this.fun.presentToast('Unauthenticated Request!', true, 'bottom', 2100);
         this.goBack();
       }
-     
-     this.fun.dismissLoader();
-     this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
+    
     });
   }
 

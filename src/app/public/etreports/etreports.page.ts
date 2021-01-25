@@ -31,6 +31,7 @@ export class ETReportsPage implements OnInit {
   fruits= [];
   @ViewChild('pieChart') pieChart;
   bars: any;
+  pop_img : string;
   pop_status: any;
   pop_value: any;
   colorArray: any
@@ -137,10 +138,17 @@ export class ETReportsPage implements OnInit {
       },
       options: {
         onClick: (c, i) => {
-          $('#modelopen').click();
+         
           let e = i[0];
           this.pop_status = this.reportData.labels[e._index];
+          this.pop_img = this.pop_status === 'Delivered'?'box2_icon':
+          this.pop_status === 'Exceptions'?'warning_icon':
+          this.pop_status === 'LateDelivery'?'clock_icon':
+          this.pop_status === 'ShippingError'?'help_with_circle_icon':
+          this.pop_status === 'InTransit'?'track_icon':'cycle_icon';
           this.pop_value = this.reportData.data[e._index];
+
+          $('#modelopen').click();
         },
         layout: {
           padding: {
