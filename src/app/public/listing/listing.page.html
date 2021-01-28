@@ -26,7 +26,7 @@
 <div class="headerSelectFiled">
   <ion-row>
     <ion-col size="6">
-      <ion-button class="form-control filterBtn mb0" (click)="openMenu()" >
+      <ion-button class="form-control filterBtn mb0" (click)="openMenu('f')" >
         <ion-icon color="light" name="funnel"></ion-icon>
       <ion-label color="light">Filter by</ion-label>
       
@@ -38,13 +38,11 @@
       </ion-select> -->
     </ion-col>
     <ion-col size="6">
-      <ion-select placeholder="Sort by" [value]="sortBy"  [(ngModel)]="sortBy"  (ionChange)="sortedBy()" class="form-control selectFiled mb0">
-        <ion-select-option value="carr">Carrier</ion-select-option>
-        <ion-select-option value="stat">Status</ion-select-option> 
-        <ion-select-option value="dat">Date</ion-select-option>
-        <ion-select-option value="retail">Retailer</ion-select-option> 
-        <ion-select-option value="cate">Category</ion-select-option> 
-      </ion-select>
+      <ion-button class="form-control filterBtn mb0" (click)="openMenu('s')" >
+        <ion-icon color="light" name="funnel"></ion-icon>
+      <ion-label color="light">Sort by</ion-label>
+      
+    </ion-button>
     </ion-col>
   </ion-row>
 </div> 
@@ -126,10 +124,11 @@
           <ion-icon name="arrow-back" *ngIf="!mainMenu"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-title color="dark">{{filterName}}</ion-title>
+      <ion-title color="dark">{{Issidemenu}} by :</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
+    <ng-container *ngIf="Issidemenu === 'Filter'">
     <ion-list *ngIf="mainMenu">
       <ion-item detail="true" (click)="menu('c')">
         Carrier
@@ -213,9 +212,20 @@
           </ion-item>
     </ion-list>
   </ng-container>
+</ng-container>
+  <ng-container *ngIf="Issidemenu === 'Sort'">
+    <ion-list>
+      <ion-radio-group allow-empty-selection="true" [(ngModel)]="sortBy" name="radio-group" (ionChange)="radioGroupChange($event)" #radioGroup>
+        <ion-item *ngFor="let item of radio_list"  (ionSelect)="radioSelect($event)">
+          <ion-label>{{item.name}}</ion-label>
+          <ion-radio slot="start" name="{{item.name}}" value="{{item.value}}"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </ng-container>
   </ion-content>
   <ion-footer no-border> 
-    <div class="filterAcBtn">
+    <div class="filterAcBtn" *ngIf="Issidemenu === 'Filter'">
       <ion-row>
         <ion-col size="6">
           <ion-button (click)="clearall()" expand="block" fill="outline" class="cusBorderBtn">Clear all</ion-button>

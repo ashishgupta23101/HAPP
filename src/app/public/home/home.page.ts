@@ -195,7 +195,9 @@ export class HomePage implements OnInit {
           this.track_Form = this.formBuilder.group({
             TrackingNo: new FormControl(TrackingNo)
           });
+
           this.loadingController.dismiss();
+          this.loadingController.presentToast('Error', 'Carrier could not be determined.');
           this.open_modal();
           this.trackService.logError(JSON.stringify(error), 'fillCarrierCode');
 

@@ -14,6 +14,8 @@ import { LoaderService } from 'src/app/providers/loader.service';
 import { Configuration } from 'src/app/models/configuration';
 import { ErrorDetails } from 'src/app/models/error';
 import { Device } from '@ionic-native/device/ngx';
+import { __param } from 'tslib';
+import { HelperService } from './helper.service';
 
 
 
@@ -30,6 +32,7 @@ export class TrackingService {
     @Inject(Device) private uniqueDeviceID: Device,
     @Inject(LoaderService) public loadingController: LoaderService,
     @Inject(Storage) private storage: Storage,
+    @Inject(HelperService) private helper: HelperService,
     @Inject(NavController) private navCtrl: NavController) {
     }
     filterItems(items: any , searchTerm) {
@@ -102,7 +105,7 @@ export class TrackingService {
           },
           error => {
             this.loadingController.dismiss();
-            this.loadingController.presentToast('error', 'Error while Tracking.');
+            this.loadingController.presentToast('error', 'Could not be tracked by '+ this.helper.GetCarrierName(queryParam.Carrier));
             this.logError('Error - ' + JSON.stringify(error), 'Tracking');
           });
       } else {

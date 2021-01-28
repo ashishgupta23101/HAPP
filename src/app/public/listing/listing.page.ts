@@ -35,6 +35,11 @@ constructor(
       }
      this.segmentChanged();
   }
+  defaultSelectedRadio = "radio_2";
+  //Get value on ionChange on IonRadioGroup
+  selectedRadioGroup:any;
+  //Get value on ionSelect on IonRadio item
+  selectedRadioItem:any;
 public searchTerm = '';
 // tslint:disable-next-line: variable-name
 mainMenu = true;
@@ -46,6 +51,7 @@ public sessionData: any;
 public filtBy: string;
 public segmentModel: string;
 public sortBy;
+public Issidemenu : string = 'Filter';
 public dateSelected: any = formatDate(new Date(), 'MM/dd/yyyy', 'en');
 public activeItems: Array<ActivePackages>;
 filterName = 'Filter by';
@@ -104,6 +110,13 @@ menu(b){
     this.dateMenu = false;
   }
 }
+radio_list = [
+  {name:'Carrier',value:'carr'},
+  {name:'Status',value:'stat'},
+  {name:'Date',value:'dat'},
+  {name:'Retailer',value:'retail'},
+  {name:'Category',value:'cate'}
+]
 clearall(){
   this.Carrier = {
     ups: false,
@@ -129,7 +142,31 @@ clearall(){
   this.menuback();
   this.menuCtrl.toggle();
 }
-openMenu(){
+radioGroupChange(event) {
+
+  this.menuCtrl.toggle();
+  this.loading.present('Applying sorting..');
+  this.sortBy = event.detail.value;
+  this.sortedBy();
+
+}
+
+
+radioSelect(event) {
+  console.log("radioSelect",event.detail);
+  this.selectedRadioItem = event.detail;
+}
+openMenu(sm : string){
+  switch(sm){
+  case 'f':
+  this.Issidemenu = 'Filter';
+  break;
+  case 's':
+    this.Issidemenu = 'Sort';
+    break;
+    default :
+    this.Issidemenu = 'Filter';
+  }
   this.menuCtrl.toggle();
 }
 apply(){
@@ -690,26 +727,32 @@ segmentChanged() {
 
 }
 sortedBy() {
+ try{
   switch (this.sortBy) {
     case 'carr':
-        this.activeItems = SessionData.packages.All;
+        this.activeItems = this.activeItems.sort((a,b) => a.Carrier.localeCompare(b.Carrier));
         break;
       case 'stat':
-          this.activeItems = SessionData.packages.Today;
+          this.activeItems = this.activeItems.sort((a,b) => a.Status.localeCompare(b.Status));
           break;
         case 'dat':
-            this.activeItems = SessionData.packages.Yesterday;
+            this.activeItems = this.activeItems.sort((a,b) => a.ExpectedDate.localeCompare(b.ExpectedDate));
             break;
           case 'retail':
-              this.activeItems = SessionData.packages.ThisWeek;
+              //this.activeItems = this.activeItems.sort((a,b) => a.Carrier.localeCompare(b.Carrier));
               break;
-            case 'cat':
-                this.activeItems = SessionData.packages.LastWeek;
+            case 'cate':
+                //this.activeItems = this.activeItems.sort((a,b) => a.Carrier.localeCompare(b.Carrier));
                 break;
                 default:
-                    this.activeItems = SessionData.packages.All;
+                    this.activeItems = this.activeItems;
                     break;
   }
+  this.loading.dismiss();
+}catch(e){
+  this.loading.dismiss(); 
+}
+
 }
 filterBy() {
   switch (this.filtBy) {
