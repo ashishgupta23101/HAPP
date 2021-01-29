@@ -33,8 +33,8 @@
           <div class="activityListing">
             <ul>
               <li *ngFor="let scan of trackingScans">
-                <div [ngClass]="[scan?.activity.toLowerCase().includes('deliver') ? 'ion-avatar OFD_img' :
-                (scan?.activity.toLowerCase().includes('except') ? 'ion-avatar SE_img' :
+                <div [ngClass]="[scan?.activity?.toLowerCase().includes('deliver') ? 'ion-avatar OFD_img' :
+                (scan?.activity?.toLowerCase().includes('except') ? 'ion-avatar SE_img' :
                 'ion-avatar LFF_img')]">
                 <!-- scan?.activity.toLowerCase().includes('de') ? 'ion-avatar OFD_img' :
                 (scan?.MovementCode === 'NSH' ? 'ion-avatar OFD_img' :
@@ -74,8 +74,8 @@
                   (scan?.MovementCode === 'CCE' ? '../../../assets/images/truck_icon.svg' :
                   (scan?.MovementCode === 'NON' ? '../../../assets/images/truck_icon.svg' :
                   '../../../assets/images/truck_icon.svg'))))))))))))))))) -->
-                  <img [src]="scan?.activity.toLowerCase().includes('deliver') ? '../../../assets/images/box_icon.svg' :
-                (scan?.activity.toLowerCase().includes('except') ? '../../../assets/images/barcode_product.svg' :
+                  <img [src]="scan?.activity?.toLowerCase().includes('deliver') ? '../../../assets/images/box_icon.svg' :
+                (scan?.activity?.toLowerCase().includes('except') ? '../../../assets/images/barcode_product.svg' :
                 '../../../assets/images/truck_icon.svg')"/>
                 </div>
                 <div class="ion-label">

@@ -36,10 +36,18 @@ export class FooterComponent implements OnInit {
                       $('.setting_tab_icon').removeClass('tab-selected');
                       break;
                       case 'sp':
+                        $('.setting_tab_icon').addClass('tab-selected');
                         $('.home_tab_icon').removeClass('tab-selected');
                         $('.dropbox_tab_icon').removeClass('tab-selected');
                         $('.report_tab_icon').removeClass('tab-selected');
                         $('.setting_tab_icon').addClass('tab-selected');
+                        break;
+                        case 'ml':
+                        $('.mail_tab_icon').addClass('tab-selected');
+                        $('.home_tab_icon').removeClass('tab-selected');
+                        $('.dropbox_tab_icon').removeClass('tab-selected');
+                        $('.report_tab_icon').removeClass('tab-selected');
+                        $('.mail_tab_icon').addClass('tab-selected');
                         break;
                       default:
                         $('.home_tab_icon').addClass('tab-selected');
@@ -71,7 +79,7 @@ export class FooterComponent implements OnInit {
                             this.navCtrl.navigateForward(`/welcome`);
                             break;
                             case 'mail':
-                              localStorage.setItem('currPage', 'sp');
+                              localStorage.setItem('currPage', 'ml');
                               this.navCtrl.navigateForward(`/listing-retailer`);
                               break;
     }
