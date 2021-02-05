@@ -14,5 +14,11 @@ export class LogoutPage implements OnInit {
   }
   ngOnInit() {
   }
-
+  logout(){
+    localStorage.setItem('expires',null);
+    localStorage.setItem('user',null);
+    localStorage.setItem('IsLogin', 'false');
+    localStorage.setItem('AuthToken',null);
+    this.navCtrl.navigateForward('/login');
+  }
 }

@@ -32,7 +32,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/notification/notification.module').then( m => m.NotificationPageModule)
   },
   {
-    path: 'link-email-ac',// canActivate: [AuthGuard],
+    path: 'link-email-ac', canActivate: [AuthGuard],
     loadChildren: () => import('./public/link-email-ac/link-email-ac.module').then( m => m.LinkEmailAcPageModule)
   },
   {
@@ -152,8 +152,12 @@ const routes: Routes = [
     loadChildren: () => import('./public/mail-list/mail-list.module').then( m => m.MailListPageModule)
   },
   {
-    path: 'listing-retailer',
+    path: 'listing-retailer', canActivate: [AuthGuard],
     loadChildren: () => import('./public/listing-retailer/listing-retailer.module').then( m => m.ListingRetailerPageModule)
+  },
+  {
+    path: 'vendors', canActivate: [AuthGuard],
+    loadChildren: () => import('./public/vendors/vendors.module').then( m => m.VendorsPageModule)
   }
 ];
 @NgModule({

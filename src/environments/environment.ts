@@ -16,6 +16,10 @@ export const environment = {
   register: 'User/Register',
   saveConfiguration: 'SaveConfigure',
   saveDeviceID: 'SaveGsmRegistration',
+  getAllVendors : '',
+  saveVendor : '',
+  getAllProviders : '',
+  saveEmailAccount : '',
   trackingAPI: 'Tracking?TrackingNo=@TrackingNo&Carrier=@Carrier&Description=@Description&Residential=@Residential&DeviceNo=@DeviceNo&AppUser=ShipMatrixApp&AppPwd=ShipMatrixApp&RegistrationId=@RegistrationId',
   firebase: {
     apiKey: 'AIzaSyB33vRTWxyjeYy3q-iuLykvTPkHb-xteq4',

@@ -2,31 +2,33 @@
   <div class="statusBar">
     <div class="pageSdwStart"> </div>
     <div class="pageSdwStart_Bck"> </div>
-  </div>  
+  </div> 
+  <div class="header-action-icon text-left"> 
+    <div class="back_arrow fleft" (click)="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="82.394" height="62.785" viewBox="0 0 82.394 62.785">
+      <path id="reply" d="M83.994,67.533S73.809,22.986,33.642,22.986V4.751L1.6,34.839,33.642,65.462V45.519c21.8-.006,38.982,1.928,50.352,22.017Z" transform="translate(-1.6 -4.751)" fill="#63c9ef"/>
+      </svg> 
+    </div> 
+  </div> 
 </ion-header>
 
-<ion-content class="lightGray"> 
-  <div class="main-container logoutPage">
-    <div>
-      <h3 class="text-center main-heading mt50">Logout of Easy Track?</h3>
+<ion-content class="lightGray">  
+  <div class="main-container retailAcPage">
+    <div class="text-center">
+      <h3 class="main-heading mb0">Retail Account</h3>
+      <p class="main-title">Choose retailers you want to link</p>
     </div>
-
-    <div class="graphicBlock3 mt30">
-      <img src="../../../assets/images/Logout.svg">
-    </div> 
-
-    <div class="logoutBtn mt50">
-      <ion-row>
-        <ion-col size="6">
-          <ion-button type="submit" expand="block" fill="outline" class="cusBorderBtn" (click)="goBack()">No Thanks</ion-button>
-        </ion-col>
-        <ion-col size="6">
-          <ion-button type="submit" expand="block" fill="solid" class="submitBtn" (click)="logout()">Logout</ion-button>
-        </ion-col> 
-      </ion-row>
-    </div> 
-
+ 
+    <div class="notifyPage mt30">
+       <div class="notifiBlock mb15" *ngFor="let item of vendors">
+          <label>{{item.VendorName}}</label>
+          <ion-toggle color="success" [(ngModel)]="item.IsSelected" (ionChange)="chooseHome($event,item.VendorName)"></ion-toggle>
+       </div>
+<div class="btnBlock mt30 text-center">
+  <ion-button fill="solid" (click)="save()" class="submitBtn">Save</ion-button>
 </div>
+    </div> 
+  </div>
 </ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
   <div class="powerBy"><span>Powered by 
     <svg xmlns="http://www.w3.org/2000/svg" width="56.068" height="12.714" viewBox="0 0 56.068 12.714">

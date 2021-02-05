@@ -15,6 +15,7 @@ export class UrlChangerPage implements OnInit {
 
   apiType = '';
   apiUrl = '';
+  CurrapiUrl = '';
   constructor(@Inject(NavController) private navCtrl: NavController,
               @Inject(TrackingService) private trackService: TrackingService,
               @Inject(LoaderService) public loadingController: LoaderService,
@@ -36,6 +37,7 @@ export class UrlChangerPage implements OnInit {
     });
     this.apiType = SessionData.apiType;
     this.apiUrl = SessionData.apiURL;
+    this.CurrapiUrl = SessionData.apiURL;
     if (this.apiType === 'P'){
       this.apiUrl = environment.api_Url_Prod ;
       this.apiType = 'P';
@@ -54,7 +56,7 @@ export class UrlChangerPage implements OnInit {
      }else if (this.apiType === 'B'){
       this.apiUrl = environment.api_Url_Beta ;
      }else {
-      this.apiUrl = SessionData.apiURL;
+      this.apiUrl = '';
      }
   }
   ngOnInit() {

@@ -17,6 +17,12 @@
     <ion-item>
       <ion-input type="text" [(ngModel)]="apiUrl" placeholder="Enter API Url"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>Current API</h3>
+          <p style="font-size: 11px;">{{CurrapiUrl}}</p>
+        </ion-label>
+      </ion-item>
       <ion-button class="submit-btn" color="tertiary"  type="submit" expand="block" (click)="saveUrl()">Save</ion-button>
 
 

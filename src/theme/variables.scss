@@ -847,14 +847,15 @@ display:none;}
     bottom: 80px;
     left: 12px;
     right: 12px;
-    ion-col{padding:0px 5px;}
-    img{max-width: 121px;}
+    ion-col{padding:0px 5px; text-align:center !important;}
+    img{max-width: 121px; max-height:44px;}
     img.LDAmzon_icon{
       top: 5px;
       position: relative;
       max-width: 130px;
     }
   }
+
 
 
   .MapBlock{ padding:0 0 56px 0; 

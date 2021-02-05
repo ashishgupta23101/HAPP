@@ -16,6 +16,8 @@ import { ErrorDetails } from 'src/app/models/error';
 import { Device } from '@ionic-native/device/ngx';
 import { __param } from 'tslib';
 import { HelperService } from './helper.service';
+import { EmailAccount } from '../models/Providers';
+import { VendorAccount } from '../models/vendorAccount';
 
 
 
@@ -23,6 +25,30 @@ import { HelperService } from './helper.service';
   providedIn: 'root'
 })
 export class TrackingService {
+  getAllVendors() : Observable<any> {
+    return this.http.get(SessionData.apiURL + environment.getAllVendors , {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    });
+  }
+  saveVendor(selectedVendors: VendorAccount) : Observable<any> {
+    return this.http.post(SessionData.apiURL + environment.saveVendor , selectedVendors, {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    });
+  }
+  getAllProviders(): Observable<any> {
+    return this.http.get(SessionData.apiURL + environment.getAllProviders , {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    });
+  }
+  saveEmailAccount(emailAccount: EmailAccount) : Observable<any> {
+    return this.http.post(SessionData.apiURL + environment.saveEmailAccount , emailAccount, {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    });
+  }
 // tslint:disable-next-line: variable-name
 
   private config: any;
@@ -115,7 +141,48 @@ export class TrackingService {
 
   }
 
+  getAllActivePackages(deviceid:any): Observable<any> {
+    return this.http.post(SessionData.apiURL + environment.getAllVendors ,deviceid, {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    });
+  }
 
+  setLatestPackages(){
+    this.storage.get('deviceID').then(id => {
+      if (id !== '' && id !== null && id !== undefined ){
+    this.getAllActivePackages(id).subscribe(data => {
+      // tslint:disable-next-line: no-debugger
+      data.forEach(element => {
+        const queryParam = new QueryParams();
+        queryParam.TrackingNo = element.TrackingNo;
+        queryParam.Carrier = element.Carrier;
+        queryParam.DeviceNo = id;
+        queryParam.Description = '';
+        queryParam.Residential = 'false';
+        this.storage.get('_activePackages').then(tData => {
+            if (tData == null) {tData = []; }
+            localStorage.setItem('SCAC', '');
+            // tslint:disable-next-line: max-line-length
+            const index = tData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
+            if (index >= 0) {tData.splice(index, 1); }
+            const record: any = data.objResponse;
+            record.trackingNo = queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim();
+            record.ResultData.Description = queryParam.Description;
+            record.ResultData.Residential = queryParam.Residential;
+            tData.push(record);
+            this.storage.set('_activePackages', tData);
+          });
+      });
+    },
+    error => {
+     
+    });
+  } else {
+    this.loadingController.presentToast('alert', 'Invalid Request');
+  }
+});
+  }
      /// refresh for all package
    refreshTrackingDetails(arrayPackage: Array<ActivePackages>) {
     this.storage.get('deviceID').then(id => {
@@ -183,7 +250,7 @@ export class TrackingService {
 }
 // tslint:disable-next-line: variable-name
 login(_email: string , _password: string): Observable<any> {
-  const request = {email: _email , password: _password};
+  const request = {Email: _email , Password: _password};
   return this.http.post(SessionData.apiURL + environment.login, request, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')
@@ -207,7 +274,7 @@ getMessagebyId(_token: string, _id: string): Observable<any> {
 }
 // tslint:disable-next-line: variable-name
 register(_email: string , _password: string, _confirm: string): Observable<any> {
-  const request = {email: _email , password: _password , confirmPassword: _confirm, deviceId: this.uniqueDeviceID.uuid, authService: null};
+  const request = {Email: _email , Password: _password , ConfirmPassword: _confirm, DeviceId: this.uniqueDeviceID.uuid?this.uniqueDeviceID.uuid:'browser', AuthService: ''};
   return this.http.post(SessionData.apiURL + environment.register, request, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')

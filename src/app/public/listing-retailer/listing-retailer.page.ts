@@ -14,6 +14,7 @@ export class ListingRetailerPage implements OnInit {
 
   lastMailData : Array<MailData>;
   mailData : MailData = new MailData();
+  loaded: boolean = false;
   constructor(                 
   @Inject(FunctionsService) public fun: FunctionsService,
   @Inject(TrackingService) public trackService: TrackingService,
@@ -39,28 +40,18 @@ export class ListingRetailerPage implements OnInit {
            
             debugger;
             let md = new MailData(); 
-            // for (let i = 0; i < data.payload.headers.length; i++) {
-            //   let val = data.payload.headers[i];
-            //   if(val.name === 'Subject' && (val.value.toLowerCase().includes('order') 
-            //   || val.value.toLowerCase().includes('your package')
-            //   || val.value.toLowerCase().includes('your return') )){
-            //     md.subject = val.value ;
-                
-            //   }
-            // }
-            data.payload.headers.forEach(val => {
-              if(val.name === 'From'){
-                md.from = val.value;
-              }
-              if(val.name === 'Subject' && (val.value.toLowerCase().includes('order') 
-              || val.value.toLowerCase().includes('your package')
-              || val.value.toLowerCase().includes('your return'))){
-                md.subject = val.value;
-                this.lastMailData.push(md)
-              }
-            });
+            var  subData =   data.payload.headers.filter(val => val.name === 'Subject' && (val.value.toLowerCase().includes('order') 
+            || val.value.toLowerCase().includes('your package')
+            || val.value.toLowerCase().includes('your return')));
+         
+            if(subData.length > 0){
+              var  fromData =   data.payload.headers.filter(val => val.name === 'From');
+              md.subject = subData[0].value;
+              md.from = fromData.length > 0?fromData[0].value:'NA';
+              this.lastMailData.push(md)
+            }
+           
           }
-          
         },
         error => {
          localStorage.setItem('IsLogin', 'false');

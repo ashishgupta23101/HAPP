@@ -35,6 +35,10 @@ export class RegisterPage implements OnInit {
     if (!this.registerForm.valid) {
       return false;
     } else {
+      if(form.confirm !== form.password){
+        this.fun.presentToast('Password not matched with confirm password!', true, 'bottom', 2100);
+        return false;
+      }
       const usr = new User();
       usr.email = form.email;
       usr.password = form.password;
