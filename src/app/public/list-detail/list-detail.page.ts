@@ -90,7 +90,7 @@ this.trackingResult = val.ResultData;
 this.trackingheader = val.Trackingheader;
 this.item.TrackingNo = val.Trackingheader.TrackingNo;
 this.item.Carrier = val.Trackingheader.CarrierCode;
-this.item.Status = val.Trackingheader.Status;
+this.item.Status = val.ResultData.Status;
 this.hasData = true;
 // this.loading.dismiss();
 } else {
@@ -104,7 +104,7 @@ this.trackingResult = val1.ResultData;
 this.trackingheader = val1.Trackingheader;
 this.item.TrackingNo = val1.Trackingheader.TrackingNo;
 this.item.Carrier = val1.Trackingheader.CarrierCode;
-this.item.Status = val1.Trackingheader.Status;
+this.item.Status = val1.ResultData.Status;
 this.hasData = true;
 // this.loading.dismiss();
 } else{
@@ -248,7 +248,7 @@ buttons: [
                       if (index >= 0) {
                         const record: any = tData.find(item => item.trackingNo === key.trim());
                         tData.splice(index, 1);
-                        record.Trackingheader.Status = 'Delivered';
+                        record.ResultData.Status = 'Delivered';
                         tData.push(record);
                         this.storage.set('_activePackages', tData).then(() => {
                           this.gotoActivePackages();

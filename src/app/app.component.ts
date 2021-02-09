@@ -83,6 +83,7 @@ export class AppComponent implements OnInit{
     }else{
       this.storage.set('deviceID', 'browser');
     }
+      this.trackService.setLatestPackages();
       this.trackService.saveToken();
       this.splashScreen.hide();
     }).catch(() => {

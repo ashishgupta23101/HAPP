@@ -145,6 +145,7 @@ export class HomePage implements OnInit {
   }
   ionViewWillEnter() {
     // this.fillIntentValue();
+
     this.clearTrack();
     const isLastScanned = localStorage.getItem('isScanned');
     if ( isLastScanned === 'true'){

@@ -27,6 +27,7 @@ constructor(
   @Inject(Storage) private storage: Storage) {
         // tslint:disable-next-line: no-debugger
      // tslint:disable-next-line: only-arrow-functions
+     
      const cusHome = localStorage.getItem('cusHome');
      if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
        this.segmentModel = 'history';
@@ -901,7 +902,7 @@ const alert = await this.alertController.create({
                           if (index >= 0) {
                             const record: any = tData.find(item => item.trackingNo === key.trim());
                             tData.splice(index, 1);
-                            record.Trackingheader.Status = 'Delivered';
+                            record.ResultData.Status = 'Delivered';
                             tData.push(record);
                             this.storage.set('_activePackages', tData).then(() => {
                               // this.loading.dismiss();

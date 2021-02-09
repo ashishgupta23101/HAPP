@@ -36,7 +36,8 @@ export class ETReportsPage implements OnInit {
   pop_value: any;
   colorArray: any
   ngOnInit() {
-   this.reportData = this.trackService.getPackageSummary();
+   this.reportData = this.trackService.PackageSummary;
+   
    this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092']
    // this.generateColorArray(5);
    Chart.pluginService.register({

@@ -21,11 +21,11 @@
         </ion-avatar>
         <div class="listDContent text-center">
           <h2>Headphone</h2>
-          <p class="status">Status: <span *ngIf="trackingheader?.Status" [ngClass]="{
-            'delivered': trackingheader?.Status.toLowerCase().includes('deliver'),
-            'exception': trackingheader?.Status.toLowerCase().includes('exception') ,
-            'inTransit' : trackingheader?.Status.toLowerCase().includes('transit') 
-        }">{{trackingheader?.Status}}</span></p> 
+          <p class="status">Status: <span *ngIf="trackingResult?.Status" [ngClass]="{
+            'delivered': trackingResult?.Status.toLowerCase().includes('deliver'),
+            'exception': trackingResult?.Status.toLowerCase().includes('exception') ,
+            'inTransit' : trackingResult?.Status.toLowerCase().includes('transit') 
+        }">{{trackingResult?.Status}}</span></p> 
           <p class="Tracking">Tracking #: <span>{{trackingResult?.TrackingNo}} </span></p>
           <p class="ExDate">Expected: {{trackingheader?.DeliveredDateTime}} </p> 
         </div> 
