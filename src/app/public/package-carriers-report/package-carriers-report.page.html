@@ -3,46 +3,72 @@
     <div class="pageSdwStart"> </div>
     <div class="pageSdwStart_Bck"> </div>
   </div>  
+
+  <div class="header-action-icon pb5"> 
+    <div class="back_arrow text-left" (click)="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="82.394" height="62.785" viewBox="0 0 82.394 62.785">
+        <path id="reply" d="M83.994,67.533S73.809,22.986,33.642,22.986V4.751L1.6,34.839,33.642,65.462V45.519c21.8-.006,38.982,1.928,50.352,22.017Z" transform="translate(-1.6 -4.751)" fill="#63c9ef"/>
+        </svg> 
+    </div> 
+
+    <div class="ss_head text-center">
+      <h3 class="main-heading">Packages by Carrier</h3> 
+      <h5 class="title">Last 30 Days</h5>
+    </div>
+  </div>
+  
+  <div class="headerSelectFiled">
+    <!-- <ion-row>
+      <ion-col size="12">
+        <ion-select placeholder="Sort by" [value]="daySelect"  [(ngModel)]="daySelect"  (ionChange)="sortedBy()" class="form-control selectFiled mb0">
+          <ion-select-option value="All">Amazon</ion-select-option>
+          <ion-select-option value="Today">UPS</ion-select-option> 
+          <ion-select-option value="Yesterday">FedEx</ion-select-option>
+          <ion-select-option value="ThisWeek">USPS</ion-select-option> 
+          <ion-select-option value="LastWeek">DHL</ion-select-option> 
+          <ion-select-option value="LastWeek">Other</ion-select-option> 
+        </ion-select>
+      </ion-col>
+    </ion-row> -->
+  </div>
 </ion-header>
+
 
 <ion-content class="lightGray"> 
 
-  <div class="main-container etreportPage"> 
-    <div>
-      <h3 class="main-heading text-center mt10 mb15">Package Summary</h3>
+  <div class="main-container spendingSmryPage"> 
+
+    <div  class="Canvas_area text-center">
+      <canvas *ngIf="reportData.total > 0" #pieChart width="1000" height="1000"></canvas>
+      <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
+      *ngIf="reportData.total === 0" src="../../../assets/images/no-record-found.png">
     </div>
 
-      <div  class="Canvas_area text-center">
-        <canvas *ngIf="reportData.total > 0" #pieChart width="1000" height="1000"></canvas>
-        <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
-        *ngIf="reportData.total === 0" src="../../../assets/images/no-record-found.png">
-      </div>
-
-      <div class="totalPkg_info">
+      <div class="totalPkg_info mt30">
         <label>Total Packages: <span>{{reportData.total}}</span></label>
       </div>
 
-      <div class="user-info-buttons mt15">
-        <button class="WShadowBtn mb17 text-left"  [routerLink]="['/spending-summary']" routerDirection="backward">Spending Summary
-          <img src="../assets/images/chevron_down.svg" class="left-arrow"> 
-</button>
-
-        <button class="WShadowBtn mb17 text-left"  [routerLink]="['/package-carriers-report']" routerDirection="backward">Packages by Carrier
-          <img src="../assets/images/chevron_down.svg" class="left-arrow"> 
-</button>
-
-        <button class="WShadowBtn mb17 text-left"  [routerLink]="['/report-otp']" routerDirection="backward">Package Details
-          <img src="../assets/images/chevron_down.svg" class="left-arrow"> 
-</button> 
-
-    </div>
-
+      <div class="shadowBox mt15 p15 pr10"> 
+        <h3 class="main-heading text-center mt0">Packages per Carrier</h3> 
+        <div class="reportInfoSSec mt15">
+          <div class="reportInfoBlock">
+            <ul>
+              <li><span class="text">Amazon</span> <span class="number">{{reportData.data[0]}}</span></li>
+              <li><span class="text">UPS</span> <span class="number">{{reportData.data[1]}}</span></li>
+              <li><span class="text">FedEx</span> <span class="number">{{reportData.data[2]}}</span></li>
+              <li><span class="text">USPS</span> <span class="number">{{reportData.data[3]}}</span></li> 
+              <li><span class="text">DHL</span> <span class="number">{{reportData.data[4]}}</span></li> 
+              <li><span class="text">Others</span> <span class="number">{{reportData.data[5]}}</span></li> 
+            </ul>
+          </div>
+        </div>
+      </div>
 
 
 
   </div>
-  <button id="modelopen" data-toggle="modal"  data-target="#myModal"></button>
-</ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
+</ion-content>
+<ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
   <div class="powerBy"><span>Powered by 
     <svg xmlns="http://www.w3.org/2000/svg" width="56.068" height="12.714" viewBox="0 0 56.068 12.714">
       <g id="Group_484" data-name="Group 484" transform="translate(-41.335 -106.516)" opacity="0.599">
@@ -66,19 +92,3 @@
   <div class="pageSdwEnd"> </div>
   <div class="pageSdwEnd_Bck"> </div>
 </ion-footer>
-
-<div class="modal etreportModel" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">  
-      <div class="modal-body text-center">
-        <img src="../assets/images/{{pop_img}}.svg" /> 
-        <div class="text-center">
-          <h3 class="main-heading">{{pop_status}}</h3>
-          <h5 class="title">Last 30 Days</h5>
-        </div>
-        <div class="quantity">{{pop_value}}</div>
-      </div>
-
-    </div>
-  </div>
-</div>

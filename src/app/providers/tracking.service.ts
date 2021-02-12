@@ -18,6 +18,7 @@ import { __param } from 'tslib';
 import { HelperService } from './helper.service';
 import { EmailAccount } from '../models/Providers';
 import { VendorAccount } from '../models/vendorAccount';
+import { debug } from 'console';
 
 
 
@@ -25,6 +26,29 @@ import { VendorAccount } from '../models/vendorAccount';
   providedIn: 'root'
 })
 export class TrackingService {
+  MarkDeliveredPackage(arg0: string, arg1: string) : Observable<any> {
+    return this.http.get(SessionData.apiURL + environment.getAllVendors , {
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    });
+  }
+  deletePackage(arg0: string) : Observable<any> {
+    debugger;
+    const data = {
+      DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
+      TrackingNo: arg0
+    }
+    let _token = localStorage.getItem('AuthToken');
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
+    return this.http.post(SessionData.apiURL + environment.deletePackage ,data, {
+      headers: _header
+    });
+  }
   PackageSummary: Report = {
     labels : ['Delivered','Exceptions','LateDelivery','ShippingError','InTransit' ],
     data : [0,0,0,0,0],
@@ -37,8 +61,8 @@ export class TrackingService {
     }
   PackagebyCarrier: Report = {
     labels : ['Amazon','UPS','FedEx','USPS','DHL','Other' ],
-    data : [0,0,0,0,0,0],
-    total : 0
+    data : [0,30,10,0,0,0],
+    total : 40
   }
   ReportOTP: Report = {
     labels : ['Delivered','Return','InTransit' ],
@@ -53,11 +77,14 @@ export class TrackingService {
   }
   saveVendor(selectedVendors: VendorAccount) : Observable<any> {
     let _token = localStorage.getItem('AuthToken');
-    _token =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?'NA':_token;
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
     return this.http.post(SessionData.apiURL + environment.saveVendor , selectedVendors, {
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', 'Bearer '+_token)
+      headers: _header
     });
   }
   getAllProviders(): Observable<any> {
@@ -68,11 +95,14 @@ export class TrackingService {
   }
   saveEmailAccount(emailAccount: EmailAccount) : Observable<any> {
     let _token = localStorage.getItem('AuthToken');
-    _token =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?'NA':_token;
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
     return this.http.post(SessionData.apiURL + environment.saveEmailAccount , emailAccount, {
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', 'Bearer '+_token)
+      headers: _header
     });
   }
 // tslint:disable-next-line: variable-name
@@ -179,12 +209,15 @@ export class TrackingService {
   getAllActivePackages(deviceid:any): Observable<any> {
     let params = new HttpParams().set('deviceId', deviceid);
     let _token = localStorage.getItem('AuthToken');
-    _token =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?null:'Bearer '+_token;
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
     return this.http.get(SessionData.apiURL + environment.getAllPackages ,{
       params: params,
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', _token)
+      headers: _header
     });
   }
 
@@ -200,22 +233,7 @@ export class TrackingService {
             if (tData == null) {tData = []; }
             localStorage.setItem('SCAC', '');
             this.PackageSummary.total ++;
-            if(element.ResultData.Status?.toLowerCase().includes('deliver')){
-              this.PackageSummary.data[0] ++;
-              
-            }
-            if(element.ResultData.Status?.toLowerCase().includes('exception')){
-              this.PackageSummary.data[1] ++;
-            }
-            if(element.ResultData.Status?.toLowerCase().includes('late')){
-              this.PackageSummary.data[2] ++;
-            }
-            if(element.ResultData.Status?.toLowerCase().includes('manifesterror')){
-              this.PackageSummary.data[3] ++;
-            }
-            if(element.ResultData.Status?.toLowerCase().includes('transit')){
-              this.PackageSummary.data[4] ++;
-            }
+            this.PackagebyCarrier.total ++;
             // tslint:disable-next-line: max-line-length
             const index = tData.findIndex(item => item.trackingNo === itemKey);
             if (index >= 0) {tData.splice(index, 1); }
@@ -223,13 +241,53 @@ export class TrackingService {
             record.trackingNo = itemKey;
             record.ResultData.Description = element.Trackingheader.Description;
             record.ResultData.Residential = 'false';
+            
+            if(element.Trackingheader.CarrierCode === 'A'){
+              this.PackagebyCarrier.data[0] ++;
+            }
+            else if(element.Trackingheader.CarrierCode === 'U'){
+              this.PackagebyCarrier.data[1] ++;
+            }
+            else if(element.Trackingheader.CarrierCode === 'F' || element.Trackingheader.CarrierCode === 'R'){
+              this.PackagebyCarrier.data[2] ++;
+            }
+            else if(element.Trackingheader.CarrierCode === 'S'){
+              this.PackagebyCarrier.data[3] ++;
+            }
+            else if(element.Trackingheader.CarrierCode === 'D'){
+              this.PackagebyCarrier.data[4] ++;
+            }
+            else {
+              this.ReportOTP.data[1] ++;
+            }
+            if(element.ResultData.Status?.toLowerCase().includes('deliver')){
+              this.PackageSummary.data[0] ++;
+              this.ReportOTP.data[0] ++;
+            }
+            else if(element.ResultData.Status?.toLowerCase().includes('exception')){
+              this.PackageSummary.data[1] ++;
+            }
+            else if(element.ResultData.Status?.toLowerCase().includes('late')){
+              this.PackageSummary.data[2] ++;
+            }
+            else if(element.ResultData.Status?.toLowerCase().includes('manifest error')){
+              this.PackageSummary.data[3] ++;
+            }
+            else if(element.ResultData.Status?.toLowerCase().includes('transit')){
+              this.PackageSummary.data[4] ++;
+              this.ReportOTP.data[2] ++;
+            }
+            else if(element.ResultData.Status?.toLowerCase().includes('return')){
+              this.ReportOTP.data[1] ++;
+            }
             tData.push(record);
+            this.storage.set('_latePackages',tData)
             this.storage.set('_activePackages', tData);
           });
       });
     },
     error => {
-     
+      console.log(error);
     });
   } else {
     this.loadingController.presentToast('alert', 'Invalid Request');

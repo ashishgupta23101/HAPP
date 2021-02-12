@@ -833,7 +833,9 @@ this.navCtrl.navigateForward(`/edit-package/${key}`);
 }
 // tslint:disable-next-line: variable-name
 async presentConfirm(key: string , _header: string, _message: string, _opration: string) {
+
 try {
+  let keyItem = key.split('-');
 const alert = await this.alertController.create({
   header: _header,
   message: _message,
@@ -884,11 +886,17 @@ const alert = await this.alertController.create({
                       // tslint:disable-next-line: max-line-length
                       const index = tData.findIndex(item => item.trackingNo === key.trim());
                       if (index >= 0) {
+                        this.trackService.deletePackage(keyItem[0]).subscribe(data => {
                         tData.splice(index, 1);
                         this.storage.set('_activePackages', tData).then(() => {
                           // this.loading.dismiss();
                           this.refreshList();
                        });
+                      },
+                      error => {
+                        this.loading.dismiss();
+                        this.loading.presentToast('error', 'Unable to delete!');
+                      });
                        }
                     });
                   break;
@@ -900,6 +908,7 @@ const alert = await this.alertController.create({
                           // tslint:disable-next-line: max-line-length
                           const index = tData.findIndex(item => item.trackingNo === key.trim());
                           if (index >= 0) {
+                            //this.trackService.MarkDeliveredPackage(keyItem[0],keyItem[1],'Delivered').subscribe(data => {
                             const record: any = tData.find(item => item.trackingNo === key.trim());
                             tData.splice(index, 1);
                             record.ResultData.Status = 'Delivered';
@@ -908,6 +917,10 @@ const alert = await this.alertController.create({
                               // this.loading.dismiss();
                               this.refreshList();
                            });
+                          // },
+                          // error => {
+                          //   this.loading.presentToast('error', 'Unable to Mark!');
+                          // });
                            }
                         });
                       break;

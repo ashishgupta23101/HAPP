@@ -148,6 +148,10 @@ const routes: Routes = [
     loadChildren: () => import('./public/spending-summary/spending-summary.module').then( m => m.SpendingSummaryPageModule)
   },
   {
+    path: 'report-otp',
+    loadChildren: () => import('./public/report-otp/report-otp.module').then( m => m.ReportOtpPageModule)
+  },
+  {
     path: 'mail-list',
     loadChildren: () => import('./public/mail-list/mail-list.module').then( m => m.MailListPageModule)
   },
@@ -158,6 +162,10 @@ const routes: Routes = [
   {
     path: 'vendors', canActivate: [AuthGuard],
     loadChildren: () => import('./public/vendors/vendors.module').then( m => m.VendorsPageModule)
+  },
+  {
+    path: 'package-carriers-report',
+    loadChildren: () => import('./public/package-carriers-report/package-carriers-report.module').then( m => m.PackageCarriersReportPageModule)
   }
 ];
 @NgModule({

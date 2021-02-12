@@ -12,11 +12,11 @@ import { Chart } from 'chart.js';
 import { InfoModelComponent } from 'src/app/component/info-model/info-model.component';
 declare var $: any;
 @Component({
-  selector: 'app-etreports',
-  templateUrl: './etreports.page.html',
-  styleUrls: ['./etreports.page.scss'],
+  selector: 'app-package-carriers-report',
+  templateUrl: './package-carriers-report.page.html',
+  styleUrls: ['./package-carriers-report.page.scss'],
 })
-export class ETReportsPage implements OnInit {
+export class PackageCarriersReportPage implements OnInit {
 
   constructor(@Inject(TrackingService) private trackService: TrackingService,
   @Inject(Router) private router: Router,
@@ -34,10 +34,13 @@ export class ETReportsPage implements OnInit {
   pop_status: any;
   pop_value: any;
   colorArray: any
+  goBack() {
+    this.navCtrl.back();
+  }
   ngOnInit() {
-   this.reportData = this.trackService.PackageSummary;
+   this.reportData = this.trackService.PackagebyCarrier;
 
-   this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092'];
+   this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092','#452092'];
    // this.generateColorArray(5);
    Chart.pluginService.register({
 		beforeDraw: function (chart) {
@@ -104,7 +107,7 @@ export class ETReportsPage implements OnInit {
   }
   ionViewDidEnter() {
     if(this.reportData.total > 0){
-      this.createBarChart();}
+    this.createBarChart();}
   }
 
   async presentModal() {
@@ -126,7 +129,7 @@ export class ETReportsPage implements OnInit {
   }
   createBarChart() {
     this.bars = new Chart(this.pieChart.nativeElement, {
-      type: 'doughnut',
+      type: 'horizontalBar',
       data: {
         labels: this.reportData.labels,
         datasets: [{
@@ -139,7 +142,6 @@ export class ETReportsPage implements OnInit {
       },
       options: {
         onClick: (c, i) => {
-         
           let e = i[0];
           this.pop_status = this.reportData.labels[e._index];
           this.pop_img = this.pop_status === 'Delivered'?'box2_icon':
@@ -148,8 +150,7 @@ export class ETReportsPage implements OnInit {
           this.pop_status === 'ShippingError'?'help_with_circle_icon':
           this.pop_status === 'InTransit'?'track_icon':'cycle_icon';
           this.pop_value = this.reportData.data[e._index];
-
-          $('#modelopen').click();
+          this.navCtrl.navigateForward('listing');
         },
         layout: {
           padding: {
@@ -157,14 +158,6 @@ export class ETReportsPage implements OnInit {
             right: 15
           }
         },
-        elements: {
-          center: {
-          text: 'Last 30 Days',
-          color: '#452092' ,//Default black
-          fontStyle: 'Helvetica', //Default Arial
-          sidePadding: 15 //Default 20 (as a percentage)
-        }
-      },
         legend: {
           display: false
         },
@@ -181,6 +174,7 @@ export class ETReportsPage implements OnInit {
               color: "rgba(0, 0, 0, 0)",
              },
             ticks: {
+              mirror:true,
               beginAtZero: true
             }
           }]

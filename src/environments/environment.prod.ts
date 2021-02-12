@@ -1,14 +1,19 @@
 export const environment = {
   production: true,
- // api_Url_Prod: 'https://demo.easytrackapp.com/smtrackingapi/api/',
+// api_Url_Prod: 'https://demo.easytrackapp.com/smtrackingapi/api/',
   api_Url_Prod: 'http://10.1.10.76/smtrackingapi/api/',
   api_Url_Beta: 'http://10.1.10.46/smtrackingapi/api/',
+  api_gmail : 'https://gmail.googleapis.com/gmail/v1/users/me/',
+  api_google_key : 'AIzaSyCCoQU-9vtEeL-MsI-nYRfUXMGh42HrFQo',
+  noOfMail: 50,
   savePreferances: 'SavePreferences',
   logErrorMessage: 'LogErrorMessage',
   tncApi: 'Tracking/Classifier',
-  login: 'login',
+  login: 'User/Login',
+  register: 'User/Register',
   saveConfiguration: 'SaveConfigure',
   saveDeviceID: 'SaveGsmRegistration',
+  deletePackage : 'Package/Delete',
   getAllVendors : '',
   saveVendor : '',
   getAllProviders : '',
@@ -25,3 +30,12 @@ export const environment = {
     appId: '1:619491163084:ios:6889ae55f18bacd093fb69'
   }
 };
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

@@ -17,6 +17,7 @@ export const environment = {
   register: 'User/Register',
   saveConfiguration: 'SaveConfigure',
   saveDeviceID: 'SaveGsmRegistration',
+  deletePackage : 'Package/Delete',
   getAllVendors : '',
   saveVendor : '',
   getAllProviders : '',
