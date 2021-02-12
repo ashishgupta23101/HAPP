@@ -61,8 +61,8 @@ export class TrackingService {
     }
   PackagebyCarrier: Report = {
     labels : ['Amazon','UPS','FedEx','USPS','DHL','Other' ],
-    data : [0,30,10,0,0,0],
-    total : 40
+    data : [0,0,0,0,0,0],
+    total : 0
   }
   ReportOTP: Report = {
     labels : ['Delivered','Return','InTransit' ],

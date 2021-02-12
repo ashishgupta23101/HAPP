@@ -141,6 +141,26 @@ export class PackageCarriersReportPage implements OnInit {
         }]
       },
       options: {
+        animation: {
+          duration: 1,
+onComplete () {
+const chartInstance = this.chart;
+const ctx = chartInstance.ctx;
+const dataset = this.data.datasets[0];
+const meta = chartInstance.controller.getDatasetMeta(0);
+
+Chart.helpers.each(meta.data.forEach((bar, index) => {
+const label = this.data.labels[index];
+const labelPositionX = 20;
+const labelWidth = ctx.measureText(label).width + labelPositionX;
+
+ctx.textBaseline = 'middle';
+ctx.textAlign = 'left';
+ctx.fillStyle = '#333';
+ctx.fillText(label, labelPositionX, bar._model.y);
+}));
+}
+},
         onClick: (c, i) => {
           let e = i[0];
           this.pop_status = this.reportData.labels[e._index];
@@ -163,7 +183,7 @@ export class PackageCarriersReportPage implements OnInit {
         },
         scales: {
           xAxes: [{
-            display: false,
+            display: true,
             gridLines: {
                 color: "rgba(0, 0, 0, 0)",
             }
