@@ -23,6 +23,7 @@ export const environment = {
   getAllProviders : '',
   saveEmailAccount : '',
   getAllPackages: 'Package/All',
+  refreshToken:'User/RefreshToken',
   trackingAPI: 'Tracking?TrackingNo=@TrackingNo&Carrier=@Carrier&Description=@Description&Residential=@Residential&DeviceNo=@DeviceNo&AppUser=ShipMatrixApp&AppPwd=ShipMatrixApp&RegistrationId=@RegistrationId',
   firebase: {
     apiKey: 'AIzaSyB33vRTWxyjeYy3q-iuLykvTPkHb-xteq4',

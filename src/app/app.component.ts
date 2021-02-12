@@ -51,8 +51,12 @@ export class AppComponent implements OnInit{
     const exptime = new Date(localStorage.getItem('expires'));
         const curtime = new Date();
         if (curtime > exptime) {
-            // logged in so return true
-            localStorage.setItem('AuthToken',null);
+          this.trackService.refreshToken().subscribe(data => {
+            console.log(data);
+           },
+            error => {
+              console.log(error);
+            });
         }
     this.statusBar.overlaysWebView(false);
     // set status bar to white

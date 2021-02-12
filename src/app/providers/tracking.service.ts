@@ -93,6 +93,16 @@ export class TrackingService {
       .set('Content-Type', 'application/json')
     });
   }
+  refreshToken(): Observable<any> {
+    let _token = localStorage.getItem('AuthToken');
+    _token =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?null:'Bearer '+_token;
+    let _params = new HttpParams().set('Authorization', _token);
+    return this.http.get(SessionData.apiURL + environment.refreshToken , {
+      params:_params,
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+    });
+  }
   saveEmailAccount(emailAccount: EmailAccount) : Observable<any> {
     let _token = localStorage.getItem('AuthToken');
     let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
