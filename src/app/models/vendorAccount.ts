@@ -1,4 +1,5 @@
 export class VendorAccount {
-    UserName : string;
+    Username : string;
     VendorNames : Array<string>;
+    Password: string;
 }

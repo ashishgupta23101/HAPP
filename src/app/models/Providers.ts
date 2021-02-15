@@ -4,7 +4,7 @@ export class Provider {
 }
 
 export class EmailAccount {
-    UserName : string;
+    Username : string;
     Password : string;
     AuthToken : string;
     ProviderName : string;

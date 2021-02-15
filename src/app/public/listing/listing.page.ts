@@ -860,7 +860,8 @@ const alert = await this.alertController.create({
                   // tslint:disable-next-line: max-line-length
                   const index = tData.findIndex(item => item.trackingNo === key.trim());
                   if (index >= 0) {
-                    // tslint:disable-next-line: no-shadowed-variable
+                    this.trackService.archivePackage(keyItem[0],keyItem[1]).subscribe(data => {
+                      // tslint:disable-next-line: no-shadowed-variable
                     const record: any = tData.find(item => item.trackingNo === key.trim());
                     tData.splice(index, 1);
                     this.storage.set('_activePackages', tData);
@@ -875,6 +876,11 @@ const alert = await this.alertController.create({
                         this.refreshList();
                      });
                    });
+                     },
+                      error => {
+                        this.loading.presentToast('error', 'Unable to Archive!');
+                      });
+                    
                   }
                 });
               break;
@@ -886,7 +892,7 @@ const alert = await this.alertController.create({
                       // tslint:disable-next-line: max-line-length
                       const index = tData.findIndex(item => item.trackingNo === key.trim());
                       if (index >= 0) {
-                        this.trackService.deletePackage(keyItem[0]).subscribe(data => {
+                        this.trackService.deletePackage(keyItem[0],keyItem[1]).subscribe(data => {
                         tData.splice(index, 1);
                         this.storage.set('_activePackages', tData).then(() => {
                           // this.loading.dismiss();

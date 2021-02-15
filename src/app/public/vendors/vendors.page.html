@@ -18,14 +18,15 @@
       <h3 class="main-heading mb0">Retail Account</h3>
       <p class="main-title">Choose retailers you want to link</p>
     </div>
- 
-    <div class="notifyPage mt30">
+    <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
+    *ngIf="vendors.length === 0" src="../../../assets/images/no-record-found.png">
+    <div *ngIf="vendors.length > 0" class="notifyPage mt30">
        <div class="notifiBlock mb15" *ngFor="let item of vendors">
           <label>{{item.VendorName}}</label>
           <ion-toggle color="success" [(ngModel)]="item.IsSelected" (ionChange)="chooseHome($event,item.VendorName)"></ion-toggle>
        </div>
 <div class="btnBlock mt30 text-center">
-  <ion-button fill="solid" (click)="save()" class="submitBtn">Save</ion-button>
+  <ion-button fill="solid"  vendors (click)="save()" class="submitBtn">Save</ion-button>
 </div>
     </div> 
   </div>

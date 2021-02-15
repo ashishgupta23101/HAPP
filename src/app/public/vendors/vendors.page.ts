@@ -12,58 +12,34 @@ import { TrackingService } from 'src/app/providers/tracking.service';
 })
 export class VendorsPage implements OnInit {
 
-  vendors : Array<Vendor> = [
-    {VendorName : "Amazon",
-    Phone : "9999999999",
-    Email : "amazon@gmail.com",
-    Url : "amazon.com",
-    IsSelected : true },
-    {VendorName : "Etsy",
-    Phone : "9999999999",
-    Email : "ETSY@gmail.com",
-    Url : "amazon.com",
-    IsSelected : false },
-    {VendorName : "Overstock",
-    Phone : "9999999999",
-    Email : "amazon@gmail.com",
-    Url : "amazon.com",
-    IsSelected : false },
-    {VendorName : "Target",
-    Phone : "9999999999",
-    Email : "amazon@gmail.com",
-    Url : "amazon.com",
-    IsSelected : false },
-    {VendorName : "Walmart",
-    Phone : "9999999999",
-    Email : "amazon@gmail.com",
-    Url : "amazon.com",
-    IsSelected : false },
-    {VendorName : "Wayfair",
-    Phone : "9999999999",
-    Email : "amazon@gmail.com",
-    Url : "amazon.com",
-    IsSelected : false }
-]
+  vendors : Array<Vendor> = []
 
 selectedVendors : VendorAccount;
   constructor(@Inject(NavController) private navCtrl: NavController,
   @Inject(TrackingService) public trackService: TrackingService,
-  @Inject(LoaderService) public loadingController: LoaderService) { }
+  @Inject(LoaderService) public loadingController: LoaderService) {
+    this.loadingController.present('Fetching Retailers..');
+    this.getAllVendors();
+   }
   goBack() {
     this.navCtrl.back();
   }
   getAllVendors(){
     this.trackService.getAllVendors().subscribe(data => {
       // tslint:disable-next-line: no-debugger
+      this.loadingController.dismiss();
+      this.vendors = data.ResponseData;
+      
     },
     error => {
-     
+      this.loadingController.dismiss();
+      this.loadingController.presentToast('error', 'Unable to fetch Vendors');
     });
   }
   ngOnInit() {
     this.selectedVendors = new VendorAccount();
-    this.selectedVendors.UserName = localStorage.getItem('user');
-    this.getAllVendors();
+    this.selectedVendors.Username = localStorage.getItem('user');
+    //this.getAllVendors();
   }
   chooseHome(event: any, cpage: string){
     this.selectedVendors.VendorNames = [];
@@ -75,12 +51,15 @@ selectedVendors : VendorAccount;
     // alert(localStorage.getItem('cusHome'));
   }
   save(){
+    this.loadingController.present('Saving Retailers..');
     this.trackService.saveVendor(this.selectedVendors).subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      
+      this.loadingController.dismiss();
+      this.loadingController.presentToast('info', 'Vendor linked Successfully.');
     },
     error => {
-     
+      this.loadingController.dismiss();
+      this.loadingController.presentToast('error', 'Unable to link Vendors');
     });
   }
 }

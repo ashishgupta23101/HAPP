@@ -26,17 +26,34 @@ import { debug } from 'console';
   providedIn: 'root'
 })
 export class TrackingService {
+  archivePackage(arg0: string,arg1:string)  : Observable<any> {
+    const data = {
+      DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
+      TrackingNo: arg0,
+      Carrier:arg1
+    }
+    let _token = localStorage.getItem('AuthToken');
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
+    return this.http.post(SessionData.apiURL + environment.archivePackage ,data, {
+      headers: _header
+    });
+  }
   MarkDeliveredPackage(arg0: string, arg1: string) : Observable<any> {
     return this.http.get(SessionData.apiURL + environment.getAllVendors , {
       headers: new HttpHeaders()
       .set('Content-Type', 'application/json')
     });
   }
-  deletePackage(arg0: string) : Observable<any> {
-    debugger;
+  deletePackage(arg0: string,arg1:string)  : Observable<any> {
     const data = {
       DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
-      TrackingNo: arg0
+      TrackingNo: arg0,
+      Carrier:arg1
     }
     let _token = localStorage.getItem('AuthToken');
     let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
@@ -70,9 +87,15 @@ export class TrackingService {
     total : 0
   }
   getAllVendors() : Observable<any> {
+    let _token = localStorage.getItem('AuthToken');
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
     return this.http.get(SessionData.apiURL + environment.getAllVendors , {
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/json')
+      headers: _header
     });
   }
   saveVendor(selectedVendors: VendorAccount) : Observable<any> {
@@ -88,9 +111,15 @@ export class TrackingService {
     });
   }
   getAllProviders(): Observable<any> {
+    let _token = localStorage.getItem('AuthToken');
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
     return this.http.get(SessionData.apiURL + environment.getAllProviders , {
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/json')
+      headers: _header
     });
   }
   refreshToken(): Observable<any> {
@@ -239,6 +268,7 @@ export class TrackingService {
       // tslint:disable-next-line: no-debugger
       data.ResponseData.forEach(element => {
        let itemKey = element.Trackingheader.TrackingNo.trim() + '-' + element.Trackingheader.CarrierCode.trim();
+       if(element.ResultData.Archived === '' || element.ResultData.Archived === null || element.ResultData.Archived === undefined){
         this.storage.get('_activePackages').then(tData => {
             if (tData == null) {tData = []; }
             localStorage.setItem('SCAC', '');
@@ -291,9 +321,24 @@ export class TrackingService {
               this.ReportOTP.data[1] ++;
             }
             tData.push(record);
-            this.storage.set('_latePackages',tData)
+            //this.storage.set('_latePackages',tData)
             this.storage.set('_activePackages', tData);
           });
+       }else{
+        this.storage.get('_archivePackages').then(tData => {
+            if (tData == null) {tData = []; }
+            // tslint:disable-next-line: max-line-length
+            const index = tData.findIndex(item => item.trackingNo === itemKey);
+            if (index >= 0) {tData.splice(index, 1); }
+            const record: any = element;
+            record.trackingNo = itemKey;
+            record.ResultData.Description = element.Trackingheader.Description;
+            record.ResultData.Residential = 'false';
+            tData.push(record);
+            this.storage.set('_archivePackages', tData);
+          });
+       }
+
       });
     },
     error => {

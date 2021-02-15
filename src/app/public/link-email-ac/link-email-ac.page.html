@@ -25,10 +25,12 @@
     </div> 
 
   <form class="mt15" #form="ngForm"> 
+    <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
+*ngIf="providers.length === 0" src="../../../assets/images/no-record-found.png">
+<ng-container *ngIf="providers.length > 0">
       <div>
         <ion-select  [(ngModel)]="proCode" name="provider" placeholder="Email Provider"   (ionChange)="proChange()" class="form-control selectFiled">
-          <ion-select-option value="G">Google</ion-select-option>
-          <ion-select-option value="Y">Yahoo</ion-select-option> 
+          <ion-select-option *ngFor="let item of providers" [value]="item.ProviderName">{{item.ProviderName}}</ion-select-option>
         </ion-select>
       </div> 
       <ng-container *ngIf="loggedIn === false">
@@ -46,6 +48,7 @@
         <ion-button    type="submit" class="submitBtn" (click)="signOut()">De-Link Account</ion-button>
         <!-- [disabled]="form.invalid" -->
       </div> 
+</ng-container>
   </form> 
 
 </div>

@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { SocialAuthService, SocialUser, GoogleLoginProvider } from "angularx-social-login";
-import { EmailAccount } from 'src/app/models/Providers';
+import { EmailAccount, Provider } from 'src/app/models/Providers';
 import { TrackingService } from 'src/app/providers/tracking.service';
 
 @Component({
@@ -16,21 +16,29 @@ export class LinkEmailAcPage implements OnInit {
   socUser : SocialUser;
   emailAccount : EmailAccount = new EmailAccount();
   loggedIn : boolean;
+  providers : Array<Provider> = []
   constructor(@Inject(NavController) private navCtrl: NavController,
   @Inject(SocialAuthService) private authService: SocialAuthService,
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
-  @Inject(GooglePlus) private googlePlus: GooglePlus) { }
+  @Inject(GooglePlus) private googlePlus: GooglePlus) {
+    this.loading.present('Fetching Accounts..');
+    this.getallProviders();
+   }
   goBack() {
     this.navCtrl.back();
   }
   getallProviders(){
     this.trackService.getAllProviders().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      
+
+      this.providers = data.ResponseData;
+      this.loading.dismiss();
     },
     error => {
-     
+      this.loading.presentToast('error', 'No Account Available.');
+      this.loading.dismiss();
+      this.goBack();
     });
   }
   ngOnInit() {
@@ -48,7 +56,7 @@ export class LinkEmailAcPage implements OnInit {
     }
   }
   proChange(){
-    if(this.proCode === 'G'){
+    if(this.proCode === 'Google'){
       this.googleSignIn();
     }
    //alert(this.proCode);
@@ -61,10 +69,11 @@ export class LinkEmailAcPage implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then(user =>{
       this.socUser = user;
       localStorage.setItem('accessToken',user.authToken);
-      this.emailAccount.UserName = localStorage.getItem('user');
+      this.emailAccount.Username = localStorage.getItem('user');
       this.emailAccount.AuthToken = user.authToken;
       this.emailAccount.ProviderName = this.proCode;
       this.emailAccount.Password = '';
+      this.loading.present('Linking Account.');
       this.LinkAccount();
       
       console.log(JSON.stringify(this.socUser));
@@ -79,10 +88,12 @@ export class LinkEmailAcPage implements OnInit {
   LinkAccount(){
     this.trackService.saveEmailAccount(this.emailAccount).subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      
+      this.loading.dismiss();
+      this.loading.presentToast('info', 'Account linked Successfully.');
     },
     error => {
-     
+      this.loading.dismiss();
+      this.loading.presentToast('error', 'Unable to link Account.');
     });
   }
   signOut() {
