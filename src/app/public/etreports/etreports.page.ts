@@ -35,6 +35,7 @@ export class ETReportsPage implements OnInit {
   pop_value: any;
   colorArray: any
   ngOnInit() {
+    debugger;
    this.reportData = this.trackService.PackageSummary;
 
    this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092'];
@@ -79,26 +80,7 @@ export class ETReportsPage implements OnInit {
         ctx.fillText(txt, centerX, centerY);
 			}
     }
-    // ,
-    // afterDraw: function (chart) {   
-    //   const images = [];
-    //   images.push("https://canvasjs.com/wp-content/uploads/images/gallery/gallery-overview/apple.png");
-    //   images.push("https://canvasjs.com/wp-content/uploads/images/gallery/gallery-overview/orange.png");
-    //   images.push("https://canvasjs.com/wp-content/uploads/images/gallery/gallery-overview/banana.png");
-    //   images.push("https://canvasjs.com/wp-content/uploads/images/gallery/gallery-overview/mango.png");
-    //   images.push("https://canvasjs.com/wp-content/uploads/images/gallery/gallery-overview/grape.png");
-     
-    //   var ctx = chart.chart.ctx; 
-    //   var xAxis = chart.scales['x-axis-0'];
-    //   var yAxis = chart.scales['y-axis-0'];
-    //   xAxis.ticks.forEach((value, index) => {  
-    //     var x = xAxis.getPixelForTick(index);      
-    //     var image = new Image();
-    //     debugger;
-    //     image.src = images[index],
-    //     ctx.drawImage(image, x - 12, yAxis.bottom + 10);
-    //   });      
-    // }
+
 	});
 
   }

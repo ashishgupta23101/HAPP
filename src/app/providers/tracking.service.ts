@@ -18,9 +18,6 @@ import { __param } from 'tslib';
 import { HelperService } from './helper.service';
 import { EmailAccount } from '../models/Providers';
 import { VendorAccount } from '../models/vendorAccount';
-import { debug } from 'console';
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -124,12 +121,14 @@ export class TrackingService {
   }
   refreshToken(): Observable<any> {
     let _token = localStorage.getItem('AuthToken');
-    _token =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?null:'Bearer '+_token;
-    let _params = new HttpParams().set('Authorization', _token);
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
     return this.http.get(SessionData.apiURL + environment.refreshToken , {
-      params:_params,
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/json')
+      headers: _header
     });
   }
   saveEmailAccount(emailAccount: EmailAccount) : Observable<any> {
@@ -262,6 +261,8 @@ export class TrackingService {
 
   setLatestPackages(){
     debugger;
+    this.storage.set('_activePackages', []);
+    this.storage.set('_archivePackages', []);
     this.storage.get('deviceID').then(id => {
       if (id !== '' && id !== null && id !== undefined ){
     this.getAllActivePackages(id).subscribe(data => {
@@ -461,7 +462,6 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
   }
     /// save Error
     logError(errormsg: string, errorLoc: string) {
-      debugger;
       const errorData = new ErrorDetails();
       this.storage.get('deviceID').then(id => {
         if (id !== null && id !== undefined && id !== '') {

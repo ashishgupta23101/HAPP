@@ -71,7 +71,6 @@ selectedData: any;
 // }
 ngOnInit() {
   // tslint:disable-next-line: no-debugger
-  debugger;
   this.trackNo = this.route.snapshot.paramMap.get('any');
 }
 ionViewWillEnter(){

@@ -22,7 +22,8 @@ export class FcmService {
               @Inject(Platform) private platform: Platform) {}
   async getToken() {
     let token;
-
+    try{
+    token = await this.firebase.getToken();
     if (this.platform.is('android')) {
       token = await this.firebase.getToken();
     }
@@ -34,6 +35,9 @@ export class FcmService {
     if (!token) return;
     this.storage.set('deviceToken', token);
     this.saveToken(token);
+    }catch(err){
+      this.trackService.logError(JSON.stringify(err), 'getToken()');
+    }
   }
 
   private saveToken(token) {

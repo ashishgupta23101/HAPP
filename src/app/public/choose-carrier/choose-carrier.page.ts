@@ -32,7 +32,6 @@ export class ChooseCarrierPage implements OnInit {
   }
   doTrack(value) {
     try {
-      debugger;
       this.queryParam = new QueryParams();
       this.queryParam.TrackingNo = this.trackingNo;
       this.queryParam.Carrier = value.Carrier;
@@ -52,7 +51,6 @@ export class ChooseCarrierPage implements OnInit {
   }
 
   dismiss() {
-    debugger;
     this.navCtrl.back();
   }
 

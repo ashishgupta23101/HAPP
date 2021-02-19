@@ -37,8 +37,6 @@ export class ListingRetailerPage implements OnInit {
          this.trackService.getMessagebyId(localStorage.getItem('accessToken'),element.id).subscribe(data => {
           // tslint:disable-next-line: no-debugger
           if(data){
-           
-            debugger;
             let md = new MailData(); 
             var  subData =   data.payload.headers.filter(val => val.name === 'Subject' && (val.value.toLowerCase().includes('order') 
             || val.value.toLowerCase().includes('your package')
@@ -62,7 +60,6 @@ export class ListingRetailerPage implements OnInit {
        console.log(this.lastMailData);
     },
     error => {
-      debugger;
       if(error.status === 401)
       {
         localStorage.setItem('IsLogin', 'false');

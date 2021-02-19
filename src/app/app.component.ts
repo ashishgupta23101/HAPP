@@ -39,23 +39,31 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    const exptime = new Date(localStorage.getItem('expires'));
-    const curtime = new Date();
-    if (curtime >= exptime) {
-        // logged in so return true
-        localStorage.setItem('IsLogin', 'false');
-        localStorage.setItem('user', null);
-    }
+  
   }
   initializeApp() {
     const exptime = new Date(localStorage.getItem('expires'));
         const curtime = new Date();
         if (curtime > exptime) {
           this.trackService.refreshToken().subscribe(data => {
-            console.log(data);
+            if (data.Error === true){ 
+                localStorage.setItem('AuthToken', null);
+                  localStorage.setItem('IsLogin', 'false');
+                  localStorage.setItem('user', null);
+                  return;
+                }
+            if (data && data.ResponseData.AccessToken) {
+                  localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
+                  localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
+                  localStorage.setItem('IsLogin', 'true');
+                }
            },
             error => {
               console.log(error);
+              localStorage.setItem('AuthToken', null);
+              localStorage.setItem('IsLogin', 'false');
+              localStorage.setItem('user', null);
+             // this.navCtrl.navigateForward('login');
             });
         }
     this.statusBar.overlaysWebView(false);
@@ -91,6 +99,7 @@ export class AppComponent implements OnInit{
       this.trackService.GenerateDeviceID();
 
     }else{
+      this.fcm.notificationSetup();
       this.storage.set('deviceID', 'browser');
     }
       this.trackService.setLatestPackages();

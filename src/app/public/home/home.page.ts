@@ -222,7 +222,6 @@ export class HomePage implements OnInit {
   }
   doTrack(value, ccode = 'NA') {
     try {
-      debugger;
       localStorage.setItem('intent', '');
       this.carrierCode = ccode == 'NA' ? this.carrierSelectRef.value : ccode;
       this.queryParam = new QueryParams();
@@ -251,7 +250,6 @@ export class HomePage implements OnInit {
   }
 
   setfilteringDatestoSession() {
-    debugger;
     // tslint:disable-next-line: variable-name
     let _filteringDates = new FilteringDates();
     _filteringDates.Today = new Date();

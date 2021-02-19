@@ -97,7 +97,6 @@ export class PackageCarriersReportPage implements OnInit {
     //   xAxis.ticks.forEach((value, index) => {  
     //     var x = xAxis.getPixelForTick(index);      
     //     var image = new Image();
-    //     debugger;
     //     image.src = images[index],
     //     ctx.drawImage(image, x - 12, yAxis.bottom + 10);
     //   });      
