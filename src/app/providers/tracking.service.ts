@@ -618,13 +618,13 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
       pack.Carrier = element.Trackingheader.CarrierCode;
       pack.DateCreated = element.ResultData.Created === '' || element.ResultData.Created === null ? 'NA' : element.ResultData.Created;
       pack.ExpectedDate = element.Trackingheader.EstDeliveryDate === ''
-       || element.ResultData.EstDeliveryDate === null ? 'NA' : element.Trackingheader.EstDeliveryDate;
+      || element.ResultData.EstDeliveryDate === null ? 'NA' : element.Trackingheader.EstDeliveryDate;
       pack.LastUpdated = element.ResultData.Updated === '' || element.ResultData.Updated === null ? 'NA' : element.ResultData.Updated;
       pack.Key = element.trackingNo;
       pack.ImgUrl = pack.Status.toLowerCase().includes('delivered') ? '../../../assets/slicing/deliveredontime.png' :
-                 (pack.Status.toLowerCase().includes('transit') ? '../../../assets/slicing/intransit.png' :
-                 (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
-                 '../../../assets/slicing/deliveredlate.png'));
+      (pack.Status.toLowerCase().includes('transit') ? '../../../assets/slicing/intransit.png' :
+      (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
+      '../../../assets/slicing/deliveredlate.png'));
       SessionData.packages.All.push(pack);
     });
     SessionData.packages.Today = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Today);

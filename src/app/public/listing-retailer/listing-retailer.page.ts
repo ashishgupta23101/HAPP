@@ -41,14 +41,12 @@ export class ListingRetailerPage implements OnInit {
             var  subData =   data.payload.headers.filter(val => val.name === 'Subject' && (val.value.toLowerCase().includes('order') 
             || val.value.toLowerCase().includes('your package')
             || val.value.toLowerCase().includes('your return')));
-         
             if(subData.length > 0){
-              var  fromData =   data.payload.headers.filter(val => val.name === 'From');
+              var  fromData = data.payload.headers.filter(val => val.name === 'From');
               md.subject = subData[0].value;
               md.from = fromData.length > 0?fromData[0].value:'NA';
               this.lastMailData.push(md)
             }
-           
           }
         },
         error => {
