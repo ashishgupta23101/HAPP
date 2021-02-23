@@ -81,6 +81,7 @@ export class LinkEmailAcPage implements OnInit {
       this.navCtrl.navigateForward(`/listing-retailer`);
     }).catch(err =>{
       localStorage.setItem('accessToken','NA');
+      this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
       this.loading.presentToast('error','Unable to Link Account!')
     });
 

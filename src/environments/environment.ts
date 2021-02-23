@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
- api_Url_Prod: 'https://demo.easytrackapp.com/smtrackingapi/api/',
-  //api_Url_Prod: 'http://10.1.10.76/smtrackingapi/api/',
+ //api_Url_Prod: 'https://demo.easytrackapp.com/smtrackingapi/api/',
+  api_Url_Prod: 'http://10.1.10.76/smtrackingapi/api/',
   api_Url_Beta: 'http://10.1.10.46/smtrackingapi/api/',
   api_gmail : 'https://gmail.googleapis.com/gmail/v1/users/me/',
   api_google_key : 'AIzaSyCCoQU-9vtEeL-MsI-nYRfUXMGh42HrFQo',
