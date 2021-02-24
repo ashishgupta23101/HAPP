@@ -20,24 +20,28 @@ export class FcmService {
               @Inject(AngularFirestore) private afs: AngularFirestore,
               @Inject(Device) private uniqueDeviceID: Device, 
               @Inject(Platform) private platform: Platform) {}
-  async getToken() {
+  getToken() {
     let token;
     try{
-   // token = await this.firebase.getToken();
-    if (this.platform.is('android')) {
-      token = await this.firebase.getToken();
-    }
-
-    if (this.platform.is('ios')) {
-      token = await this.firebase.getToken();
-      await this.firebase.grantPermission();
-    }
-    if (!token) return;
-    this.storage.set('deviceToken', token);
-    this.saveToken(token);
+      this.platform.ready().then(() => {
+        if (this.platform.is('android')) {
+          token = this.firebase.getToken();
+        }
+    
+        if (this.platform.is('ios')) {
+          token =  this.firebase.getToken();
+           this.firebase.grantPermission();
+        }
+        if (!token) return;
+        this.storage.set('deviceToken', token);
+        this.saveToken(token);
+        
+      });
     }catch(err){
       this.trackService.logError(JSON.stringify(err), 'getToken()');
     }
+   // token = await this.firebase.getToken();
+   
   }
 
   private saveToken(token) {
