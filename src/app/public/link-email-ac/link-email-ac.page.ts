@@ -100,13 +100,14 @@ export class LinkEmailAcPage implements OnInit {
   signOut() {
     this.loggedIn = false;
     localStorage.setItem('accessToken','NA');
-    this.authService.signOut(true).then(data =>{
-      alert(JSON.stringify(data));
-      this.loading.presentToast('info','Account De-Linked Successfully')
-    }).catch(err =>{
-      console.log(JSON.stringify(err));
-      this.loading.presentToast('error','Unable to De-Link Account!')
-    });
+    this.loading.presentToast('info','Account De-Linked Successfully')
+    // this.authService.signOut(true).then(data =>{
+    //   alert(JSON.stringify(data));
+      
+    // }).catch(err =>{
+    //   console.log(JSON.stringify(err));
+    //   this.loading.presentToast('error','Unable to De-Link Account!')
+    // });
     //localStorage.setItem('accessId','0');
   }
 }
