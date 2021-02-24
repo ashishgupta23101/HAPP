@@ -1,6 +1,6 @@
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Inject, Injectable } from '@angular/core';
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { Firebase } from '@ionic-native/firebase/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -15,7 +15,7 @@ export class FcmService {
 
   constructor(
     @Inject(TrackingService) private trackService : TrackingService,
-              @Inject(FirebaseX) private firebase: FirebaseX,
+              @Inject(Firebase) private firebase: Firebase,
               @Inject(Storage) private storage : Storage,
               @Inject(AngularFirestore) private afs: AngularFirestore,
               @Inject(Device) private uniqueDeviceID: Device, 
@@ -23,7 +23,7 @@ export class FcmService {
   async getToken() {
     let token;
     try{
-    token = await this.firebase.getToken();
+   // token = await this.firebase.getToken();
     if (this.platform.is('android')) {
       token = await this.firebase.getToken();
     }
@@ -67,7 +67,7 @@ export class FcmService {
   }
 
   onNotifications() {
-    return this.firebase.onMessageReceived();
+    return this.firebase.onNotificationOpen();
   }
 
   public notificationSetup() {
