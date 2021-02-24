@@ -1,4 +1,4 @@
-import { FCM } from '@ionic-native/fcm/ngx';
+//import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic';
 import { Inject, Injectable } from '@angular/core';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { Platform } from '@ionic/angular';
@@ -8,6 +8,7 @@ import { TrackingService } from './tracking.service';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { Device } from '@ionic-native/device/ngx';
 import { SessionData } from 'src/app/models/active-packages';
+import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx/FCM';
 
 @Injectable()
 export class FcmService {
@@ -15,7 +16,7 @@ export class FcmService {
 
   constructor(
     @Inject(TrackingService) private trackService : TrackingService,
-              @Inject(Firebase) private firebase: Firebase,
+              @Inject(Firebase) private firebase: FCM,
               @Inject(Storage) private storage : Storage,
               @Inject(AngularFirestore) private afs: AngularFirestore,
               @Inject(Device) private uniqueDeviceID: Device, 
@@ -30,7 +31,7 @@ export class FcmService {
 
     if (this.platform.is('ios')) {
       token = await this.firebase.getToken();
-      await this.firebase.grantPermission();
+      await this.firebase.hasPermission();
     }
     if (!token) return;
     this.storage.set('deviceToken', token);
@@ -55,11 +56,11 @@ export class FcmService {
   }
 
   subscribetoMessage(topic){
-    this.firebase.subscribe(topic);
+    this.firebase.subscribeToTopic(topic);
   }
 
   unsubscribetoMessage(topic){
-    this.firebase.unsubscribe(topic);
+    this.firebase.unsubscribeFromTopic(topic);
   }
 
   refreshToken(){
@@ -67,7 +68,7 @@ export class FcmService {
   }
 
   onNotifications() {
-    return this.firebase.onNotificationOpen();
+    return this.firebase.onNotification();
   }
 
   public notificationSetup() {
