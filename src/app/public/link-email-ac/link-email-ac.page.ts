@@ -11,6 +11,8 @@ import { TrackingService } from 'src/app/providers/tracking.service';
   templateUrl: './link-email-ac.page.html',
   styleUrls: ['./link-email-ac.page.scss'],
 })
+// ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=com.shipmatrix.ezttrack
+// npm install --save @ionic-native/google-plus@4
 export class LinkEmailAcPage implements OnInit {
   proCode: any = '';
   socUser : SocialUser;
