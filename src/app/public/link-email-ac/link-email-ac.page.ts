@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { SocialAuthService, SocialUser, GoogleLoginProvider } from "angularx-social-login";
@@ -21,7 +21,8 @@ export class LinkEmailAcPage implements OnInit {
   @Inject(SocialAuthService) private authService: SocialAuthService,
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
-  @Inject(GooglePlus) private googlePlus: GooglePlus) {
+  @Inject(GooglePlus) private googlePlus: GooglePlus, 
+  @Inject(Platform) private platform: Platform) {
     this.loading.present('Fetching Accounts..');
     this.getallProviders();
    }
@@ -62,28 +63,37 @@ export class LinkEmailAcPage implements OnInit {
    //alert(this.proCode);
   }
   googleSignIn() {
-    const googleLoginOptions = {
-      scope: 'https://www.googleapis.com/auth/gmail.readonly'
-    }; // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
-    
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then(user =>{
-      this.socUser = user;
-      localStorage.setItem('accessToken',user.authToken);
-      this.emailAccount.Username = localStorage.getItem('user');
-      this.emailAccount.AuthToken = user.authToken;
-      this.emailAccount.ProviderName = this.proCode;
-      this.emailAccount.Password = '';
-      this.loading.present('Linking Account.');
-      this.LinkAccount();
-      
-      console.log(JSON.stringify(this.socUser));
-      this.loading.presentToast('info','Successfully linked with '+this.socUser.firstName);
-      this.navCtrl.navigateForward(`/listing-retailer`);
-    }).catch(err =>{
-      localStorage.setItem('accessToken','NA');
-      this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
-      this.loading.presentToast('error','Unable to Link Account!')
+    this.platform.ready().then(() => {
+      const googleLoginOptions = {
+        scope: 'https://www.googleapis.com/auth/gmail.readonly'
+      }; 
+      // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
+       this.authService.initState.subscribe((isinit) => {
+         if(isinit === true){
+          this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then(user =>{
+            this.socUser = user;
+            localStorage.setItem('accessToken',user.authToken);
+            this.emailAccount.Username = localStorage.getItem('user');
+            this.emailAccount.AuthToken = user.authToken;
+            this.emailAccount.ProviderName = this.proCode;
+            this.emailAccount.Password = '';
+            this.loading.present('Linking Account.');
+            this.LinkAccount();
+            
+            console.log(JSON.stringify(this.socUser));
+            this.loading.presentToast('info','Successfully linked with '+this.socUser.firstName);
+            this.navCtrl.navigateForward(`/listing-retailer`);
+          }).catch(err =>{
+            localStorage.setItem('accessToken','NA');
+            this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
+            this.loading.presentToast('error','Unable to Link Account!')
+          });
+         }else{this.loading.presentToast('info','Provider no ready!')}
+
+       });
+
     });
+
 
   }
   LinkAccount(){
