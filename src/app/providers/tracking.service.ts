@@ -83,7 +83,9 @@ export class TrackingService {
     data : [0,0,0],
     total : 0
   }
+
   getAllVendors() : Observable<any> {
+
     let _token = localStorage.getItem('AuthToken');
     let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
     new HttpHeaders()
@@ -211,7 +213,9 @@ export class TrackingService {
                 localStorage.setItem('SCAC', '');
                 // tslint:disable-next-line: max-line-length
                 const index = tData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
-                if (index >= 0) {tData.splice(index, 1); }
+                if (index >= 0) {
+                  tData.splice(index, 1);
+                }
                 const record: any = data.objResponse;
                 record.trackingNo = queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim();
                 record.ResultData.Description = queryParam.Description;
@@ -230,6 +234,7 @@ export class TrackingService {
                         this.navCtrl.navigateForward(`/list-detail/${record.trackingNo}`);
                         break;
                 }
+               // this.getReportsData();
               });
           },
           error => {
@@ -264,7 +269,7 @@ export class TrackingService {
     this.storage.set('_activePackages', []);
     this.storage.set('_archivePackages', []);
     this.storage.get('deviceID').then(id => {
-      if (id !== '' && id !== null && id !== undefined ){
+    if (id !== '' && id !== null && id !== undefined ){
     this.getAllActivePackages(id).subscribe(data => {
       // tslint:disable-next-line: no-debugger
       data.ResponseData.forEach(element => {
@@ -273,8 +278,6 @@ export class TrackingService {
         this.storage.get('_activePackages').then(tData => {
             if (tData == null) {tData = []; }
             localStorage.setItem('SCAC', '');
-            this.PackageSummary.total ++;
-            this.PackagebyCarrier.total ++;
             // tslint:disable-next-line: max-line-length
             const index = tData.findIndex(item => item.trackingNo === itemKey);
             if (index >= 0) {tData.splice(index, 1); }
@@ -282,45 +285,6 @@ export class TrackingService {
             record.trackingNo = itemKey;
             record.ResultData.Description = element.Trackingheader.Description;
             record.ResultData.Residential = 'false';
-            
-            if(element.Trackingheader.CarrierCode === 'A'){
-              this.PackagebyCarrier.data[0] ++;
-            }
-            else if(element.Trackingheader.CarrierCode === 'U'){
-              this.PackagebyCarrier.data[1] ++;
-            }
-            else if(element.Trackingheader.CarrierCode === 'F' || element.Trackingheader.CarrierCode === 'R'){
-              this.PackagebyCarrier.data[2] ++;
-            }
-            else if(element.Trackingheader.CarrierCode === 'S'){
-              this.PackagebyCarrier.data[3] ++;
-            }
-            else if(element.Trackingheader.CarrierCode === 'D'){
-              this.PackagebyCarrier.data[4] ++;
-            }
-            else {
-              this.ReportOTP.data[1] ++;
-            }
-            if(element.ResultData.Status?.toLowerCase().includes('deliver')){
-              this.PackageSummary.data[0] ++;
-              this.ReportOTP.data[0] ++;
-            }
-            else if(element.ResultData.Status?.toLowerCase().includes('exception')){
-              this.PackageSummary.data[1] ++;
-            }
-            else if(element.ResultData.Status?.toLowerCase().includes('late')){
-              this.PackageSummary.data[2] ++;
-            }
-            else if(element.ResultData.Status?.toLowerCase().includes('manifest error')){
-              this.PackageSummary.data[3] ++;
-            }
-            else if(element.ResultData.Status?.toLowerCase().includes('transit')){
-              this.PackageSummary.data[4] ++;
-              this.ReportOTP.data[2] ++;
-            }
-            else if(element.ResultData.Status?.toLowerCase().includes('return')){
-              this.ReportOTP.data[1] ++;
-            }
             tData.push(record);
             //this.storage.set('_latePackages',tData)
             this.storage.set('_activePackages', tData);
@@ -341,14 +305,70 @@ export class TrackingService {
        }
 
       });
-    },
-    error => {
-      console.log(error);
-    });
+    },error => { console.log(error); });
   } else {
     this.loadingController.presentToast('alert', 'Invalid Request');
   }
 });
+  }
+  getReportsData(){
+    
+    this.storage.get('_activePackages').then(tData => {
+       if (tData == null) {
+        tData = [];
+        return;
+       }
+       this.PackageSummary.total = 0;
+       this.SpendingSummary.total = 0;
+       this.PackagebyCarrier.total = 0;
+       this.ReportOTP.total = 0;
+       this.PackageSummary.data = [0,0,0,0,0];
+       this.SpendingSummary.data = [0,0,0,0,0,0];
+       this.PackagebyCarrier.data = [0,0,0,0,0,0];
+       this.ReportOTP.data = [0,0,0];
+       tData.forEach(element => {
+        this.PackageSummary.total ++;
+        this.PackagebyCarrier.total ++;
+        if(element.Trackingheader.CarrierCode === 'A'){
+          this.PackagebyCarrier.data[0] ++;
+        }
+        else if(element.Trackingheader.CarrierCode === 'U'){
+          this.PackagebyCarrier.data[1] ++;
+        }
+        else if(element.Trackingheader.CarrierCode === 'F' || element.Trackingheader.CarrierCode === 'R'){
+          this.PackagebyCarrier.data[2] ++;
+        }
+        else if(element.Trackingheader.CarrierCode === 'S'){
+          this.PackagebyCarrier.data[3] ++;
+        }
+        else if(element.Trackingheader.CarrierCode === 'D'){
+          this.PackagebyCarrier.data[4] ++;
+        }
+        else {
+          this.ReportOTP.data[1] ++;
+        }
+        if(element.ResultData.Status?.toLowerCase().includes('deliver')){
+          this.PackageSummary.data[0] ++;
+          this.ReportOTP.data[0] ++;
+        }
+        else if(element.ResultData.Status?.toLowerCase().includes('exception')){
+          this.PackageSummary.data[1] ++;
+        }
+        else if(element.ResultData.Status?.toLowerCase().includes('late')){
+          this.PackageSummary.data[2] ++;
+        }
+        else if(element.ResultData.Status?.toLowerCase().includes('manifest error')){
+          this.PackageSummary.data[3] ++;
+        }
+        else if(element.ResultData.Status?.toLowerCase().includes('transit')){
+          this.PackageSummary.data[4] ++;
+          this.ReportOTP.data[2] ++;
+        }
+        else if(element.ResultData.Status?.toLowerCase().includes('return')){
+          this.ReportOTP.data[1] ++;
+        }
+       });
+    });
   }
      /// refresh for all package
    refreshTrackingDetails(arrayPackage: Array<ActivePackages>) {

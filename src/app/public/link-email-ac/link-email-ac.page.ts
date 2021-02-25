@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
-import { GooglePlus } from '@ionic-native/google-plus';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { SocialAuthService, SocialUser, GoogleLoginProvider } from "angularx-social-login";
 import { EmailAccount, Provider } from 'src/app/models/Providers';
@@ -23,7 +22,6 @@ export class LinkEmailAcPage implements OnInit {
   @Inject(SocialAuthService) private authService: SocialAuthService,
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
-  @Inject(GooglePlus) private googlePlus: GooglePlus, 
   @Inject(Platform) private platform: Platform) {
     this.loading.present('Fetching Accounts..');
     this.getallProviders();
@@ -45,15 +43,6 @@ export class LinkEmailAcPage implements OnInit {
     });
   }
   ngOnInit() {
-    //this.signOut();
-    this.googlePlus.login({})
-    .then(res => {
-      console.log(JSON.stringify(res));
-    })
-    .catch(err => {
-
-    });
-  
     var tok = localStorage.getItem('accessToken');
     if( tok === undefined || tok === null || tok === '' || tok === 'NA'){
        this.loggedIn = false;
@@ -118,7 +107,6 @@ export class LinkEmailAcPage implements OnInit {
     this.loading.presentToast('info','Account De-Linked Successfully')
     // this.authService.signOut(true).then(data =>{
     //   alert(JSON.stringify(data));
-      
     // }).catch(err =>{
     //   console.log(JSON.stringify(err));
     //   this.loading.presentToast('error','Unable to De-Link Account!')

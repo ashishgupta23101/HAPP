@@ -25,7 +25,9 @@ export class ETReportsPage implements OnInit {
   @Inject(AlertController) public alertController: AlertController,
   @Inject(NavController) private navCtrl: NavController ,
   @Inject(MenuController) private menuCtrl: MenuController,
-  @Inject(Storage) private storage: Storage) { }
+  @Inject(Storage) private storage: Storage) {
+    this.trackService.getReportsData();
+   }
   reportData : Report;
 
   @ViewChild('pieChart') pieChart;

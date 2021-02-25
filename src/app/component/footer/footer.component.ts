@@ -15,8 +15,8 @@ export class FooterComponent implements OnInit {
     this.setActiveClass();
   }
   setActiveClass() {
-    const cusHome = localStorage.getItem('currPage');
-    switch (cusHome) {
+    const currPage = localStorage.getItem('currPage');
+    switch (currPage) {
         case 'tp':
               $('.home_tab_icon').addClass('tab-selected');
               $('.dropbox_tab_icon').removeClass('tab-selected');
@@ -64,26 +64,31 @@ export class FooterComponent implements OnInit {
               break;
               case 'listing':
                   localStorage.setItem('currPage', 'lp');
+                  this.setActiveClass();
                   this.navCtrl.navigateForward(`/listing`);
                   break;
                   case 'splash':
                       localStorage.setItem('currPage', 'rp');
+                      this.setActiveClass();
                       this.navCtrl.navigateForward(`/splash`);
                       break;
                       case 'not-register':
                           localStorage.setItem('currPage', 'sp');
+                          this.setActiveClass();
                           this.navCtrl.navigateForward(`/not-register`);
                           break;
                           case 'welcome':
                             localStorage.setItem('currPage', 'sp');
+                            this.setActiveClass();
                             this.navCtrl.navigateForward(`/welcome`);
                             break;
                             case 'mail':
                               localStorage.setItem('currPage', 'ml');
+                              this.setActiveClass();
                               this.navCtrl.navigateForward(`/listing-retailer`);
                               break;
     }
-    this.setActiveClass();
+
   }
   ionViewDidEnter(){
     this.setActiveClass();
@@ -93,16 +98,20 @@ export class FooterComponent implements OnInit {
     switch (cusHome) {
           case 'tp':
             case 'sp':
+              this.setActiveClass();
               this.navCtrl.navigateForward(`/home`);
               break;
               case 'ap':
                 case 'hp':
+                  this.setActiveClass();
                   this.navCtrl.navigateForward(`/listing`);
                   break;
                   case 'gr':
+                    this.setActiveClass();
                       this.navCtrl.navigateForward(`/splash`);
                       break;
                       default:
+                        this.setActiveClass();
                           this.navCtrl.navigateForward(`/home`);
                           break;
     }

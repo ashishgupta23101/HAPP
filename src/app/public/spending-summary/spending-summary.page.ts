@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-spending-summary',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpendingSummaryPage implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(NavController) private navCtrl: NavController) { }
 
   ngOnInit() {
   }
-
+  goBack() {
+    this.navCtrl.back();
+  }
 }

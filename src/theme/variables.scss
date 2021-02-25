@@ -491,6 +491,13 @@ ion-tab-bar{
     height: inherit;
   }
 }
+.mail_tab_icon{
+  img{width: 32px;}
+  svg{
+    width: 32px;
+    height: inherit;
+  }
+}
 
 .powerBy{    
   text-align: center;
@@ -1753,7 +1760,12 @@ ion-alert{
       width: 29px; 
     }
   }
-
+  .mail_tab_icon{
+    img{width: 29px;}
+    svg{
+      width: 29px; 
+    }
+  }
   .powerBy{     
     margin-top:0px;}
 

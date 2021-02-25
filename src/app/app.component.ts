@@ -49,7 +49,7 @@ export class AppComponent implements OnInit{
             if (data.Error === true){ 
                 localStorage.setItem('AuthToken', null);
                   localStorage.setItem('IsLogin', 'false');
-                  localStorage.setItem('user', null);
+                  //localStorage.setItem('user', null);
                   return;
                 }
             if (data && data.ResponseData.AccessToken) {
@@ -62,13 +62,13 @@ export class AppComponent implements OnInit{
               console.log(error);
               localStorage.setItem('AuthToken', null);
               localStorage.setItem('IsLogin', 'false');
-              localStorage.setItem('user', null);
+              //localStorage.setItem('user', null);
              // this.navCtrl.navigateForward('login');
             });
         }
     this.statusBar.overlaysWebView(false);
     // set status bar to white
-    this.statusBar.styleDefault();
+    this.statusBar.styleLightContent();
     this.platform.ready().then(() => {
       this.platform.resume.subscribe(async () => {
         const trackNo = localStorage.getItem('intent');

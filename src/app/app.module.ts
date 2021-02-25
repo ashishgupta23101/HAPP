@@ -35,7 +35,6 @@ import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 import { fancyAnimation } from './animations';
 import { AuthGuard } from './auth-guard';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -65,7 +64,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     SplashScreen,
     NativeGeocoder,
     Firebase,
-    AuthGuard,GooglePlus,
+    AuthGuard,
     FCM,
     Network, InAppBrowser,
     SplashScreen, TrackingService, FunctionsService, FcmService,{
@@ -76,7 +75,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '326714755087-32rhvg145v621d6vkrh362tmjtqb914u.apps.googleusercontent.com'
+              '326714755087-mmnlkbvqbkbhk4rtudcl2sqi7rj3pqc7.apps.googleusercontent.com'
             )
           },
           // {
