@@ -44,10 +44,14 @@ export class LinkEmailAcPage implements OnInit {
   }
   ngOnInit() {
     //this.signOut();
-    // this.authService.authState.subscribe((user) => {
-    //   this.socUser = user;
-    //   this.loggedIn = (user != null);
-    // });
+    this.googlePlus.login({})
+    .then(res => {
+      console.log(JSON.stringify(res));
+    })
+    .catch(err => {
+
+    });
+  
     var tok = localStorage.getItem('accessToken');
     if( tok === undefined || tok === null || tok === '' || tok === 'NA'){
        this.loggedIn = false;
@@ -68,8 +72,8 @@ export class LinkEmailAcPage implements OnInit {
         scope: 'https://www.googleapis.com/auth/gmail.readonly'
       }; 
       // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
-       this.authService.initState.subscribe((isinit) => {
-         if(isinit === true){
+      //  this.authService.initState.subscribe((isinit) => {
+      //    if(isinit === true){
           this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then(user =>{
             this.socUser = user;
             localStorage.setItem('accessToken',user.authToken);
@@ -88,9 +92,8 @@ export class LinkEmailAcPage implements OnInit {
             this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
             this.loading.presentToast('error','Unable to Link Account!')
           });
-         }else{this.loading.presentToast('info','Provider no ready!')}
-
-       });
+      //    }else{this.loading.presentToast('info','Provider no ready!')}
+      //  });
 
     });
 
