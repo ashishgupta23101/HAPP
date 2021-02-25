@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { GooglePlus } from '@ionic-native/google-plus';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { SocialAuthService, SocialUser, GoogleLoginProvider } from "angularx-social-login";
 import { EmailAccount, Provider } from 'src/app/models/Providers';
@@ -11,7 +11,7 @@ import { TrackingService } from 'src/app/providers/tracking.service';
   templateUrl: './link-email-ac.page.html',
   styleUrls: ['./link-email-ac.page.scss'],
 })
-// ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=com.shipmatrix.ezttrack
+// ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=837283281198-iq0n5mae2mgbjdervci03kr79rndr0j6.apps.googleusercontent.com
 // npm install --save @ionic-native/google-plus@4
 export class LinkEmailAcPage implements OnInit {
   proCode: any = '';
