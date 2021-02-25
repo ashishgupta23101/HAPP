@@ -11,7 +11,7 @@ import { TrackingService } from 'src/app/providers/tracking.service';
   templateUrl: './link-email-ac.page.html',
   styleUrls: ['./link-email-ac.page.scss'],
 })
-// ionic cordova plugin add cordova-plugin-googleplus --variable REVERSED_CLIENT_ID=837283281198-iq0n5mae2mgbjdervci03kr79rndr0j6.apps.googleusercontent.com
+// cordova plugin add cordova-plugin-googleplus@4.0.5 --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.619491163084-e2gc4lrhvdm0psjtjmfdsim5mrmo7vpf
 // npm install --save @ionic-native/google-plus@4
 export class LinkEmailAcPage implements OnInit {
   proCode: any = '';
