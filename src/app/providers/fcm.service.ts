@@ -20,25 +20,27 @@ export class FcmService {
               @Inject(AngularFirestore) private afs: AngularFirestore,
               @Inject(Device) private uniqueDeviceID: Device, 
               @Inject(Platform) private platform: Platform) {}
-  getToken() {
+  async getToken() {
     let token;
     try{
-      this.platform.ready().then(() => {
+     // this.platform.ready().then(() => {
         if (this.platform.is('android')) {
-          token = this.firebase.getToken();
+          token = await this.firebase.getToken();
         }
     
         if (this.platform.is('ios')) {
-          token =  this.firebase.getToken();
-           this.firebase.grantPermission();
+          token = await this.firebase.getToken();
+            this.firebase.grantPermission();
         }
+        this.trackService.logError(JSON.stringify(token), 'getToken()');
         if (!token) return;
         this.storage.set('deviceToken', token);
         this.saveToken(token);
         
-      });
+      //});
     }catch(err){
       this.trackService.logError(JSON.stringify(err), 'getToken()');
+      
     }
    // token = await this.firebase.getToken();
    
@@ -75,6 +77,7 @@ export class FcmService {
   }
 
   public notificationSetup() {
+     this.platform.ready().then(() => {
     this.getToken();
     this.refreshToken().subscribe(token => {
       console.log(token);
@@ -114,5 +117,7 @@ export class FcmService {
         });
 
         this.unsubscribetoMessage(this.uniqueDeviceID);
+      });
+
   }
 }
