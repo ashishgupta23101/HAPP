@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
                 if (data && data.ResponseData.AccessToken) {
                   // store user details and jwt token in local storage to keep user logged in between page refreshes
                   localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-                  localStorage.setItem('user', data.ResponseData.Username);
+                  localStorage.setItem('user', usr.email);
                   localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
                   // localStorage.setItem('pass', usr.password);
                   this.fun.dismissLoader();

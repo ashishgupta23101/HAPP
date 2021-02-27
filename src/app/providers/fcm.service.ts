@@ -30,7 +30,7 @@ export class FcmService {
               // token =  this.firebase.getToken();
                  this.firebase.grantPermission();
              }
-             this.trackService.logError(JSON.stringify(token), 'getToken()');
+             //this.trackService.logError(JSON.stringify(token), 'getToken()');
              if (!token) return;
              this.storage.set('deviceToken', token);
              this.saveToken(token);

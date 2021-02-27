@@ -14,7 +14,7 @@ import { LoaderService } from 'src/app/providers/loader.service';
 import { Storage } from '@ionic/storage';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import { FcmService } from 'src/app/providers/fcm.service';
-
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -40,7 +40,11 @@ export class HomePage implements OnInit {
               @Inject(FormBuilder) public formBuilder: FormBuilder,
               @Inject(LoaderService) public loadingController: LoaderService,
               @Inject(TrackingService) private trackService: TrackingService,
-              @Inject(NavController) private navCtrl: NavController) {
+              @Inject(NavController) private navCtrl: NavController,
+              @Inject(GooglePlus) private googlePlus: GooglePlus) {
+                this.googlePlus.login({})
+                .then(res => console.log(res))
+                .catch(err => console.error(err));
       // this.storage.get('deviceID').then(id => {
       //   if (id === null || id === undefined || id === '') {
       //     this.trackService.GenerateDeviceID();

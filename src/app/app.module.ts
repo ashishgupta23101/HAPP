@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Storage } from '@ionic/storage';
 import { Animation } from '@ionic/core';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TrackingService } from './providers/tracking.service';
 import { FunctionsService } from './providers/functions.service';
@@ -35,7 +36,8 @@ import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 import { fancyAnimation } from './animations';
 import { AuthGuard } from './auth-guard';
-
+//npm install cordova-plugin-googleplus
+//npm install @ionic-native/google-plus
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -63,7 +65,7 @@ import { AuthGuard } from './auth-guard';
     Device,
     SplashScreen,
     NativeGeocoder,
-    Firebase,
+    Firebase,GooglePlus,
     AuthGuard,
     FCM,
     Network, InAppBrowser,
