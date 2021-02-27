@@ -432,10 +432,17 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
   }
 
 ion-footer{
-    background-color:#fff;
-    height: 64px;}
+    --background:#fff !important;
+    background:#fff !important;
+    height: 64px;
+    ion-toolbar{
+      --background:#fff !important;
+      background:#fff !important;
+    }
+  }
 ion-tab-bar{
-    background: #fff;
+    --background:#fff !important;
+    background:#fff !important;
     border-top-color: #fff; 
     position: absolute;
     width: 100%;
@@ -485,13 +492,6 @@ ion-tab-bar{
 }
 
 .setting_tab_icon {
-  img{width: 32px;}
-  svg{
-    width: 32px;
-    height: inherit;
-  }
-}
-.mail_tab_icon{
   img{width: 32px;}
   svg{
     width: 32px;
@@ -550,8 +550,6 @@ ion-tab-bar{
 }
 
 .submitBtn{
-  --background-activated: none;
-    --background-focused: none;
   --border-radius: 14px;
   --background: #62BCCC;
   --color: #fff;
@@ -565,6 +563,12 @@ ion-tab-bar{
   margin: 0;
   opacity: 1;
   height: 51px;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  --webkit-appearance: none !important;
+  --moz-appearance: none !important;
+  --appearance: none !important; 
   &:hover{--background: #40798C;}
 }  
 
@@ -834,6 +838,7 @@ display:none;}
     box-shadow: 0px -3px 6px rgb(0 0 0 / 0.16);
     padding: 10px 20px;
     height: 55px;
+    line-height: 35px;
     display: block;
     width: 100%;
     font-family: SegoeUI;
@@ -861,10 +866,9 @@ display:none;}
     img.LDAmzon_icon{
       top: 5px;
       position: relative;
-      max-width: 130px;
+      max-width: 130px; 
     }
   }
-
 
 
   .MapBlock{ padding:0 0 56px 0; 
@@ -1312,8 +1316,8 @@ app-social-sharing img{max-width:17px;}
   }
 
   ion-content{
-    background-color: #fff;
-    --background-color: #fff;}
+    background: #fff !important;
+    --background: #fff !important;}
 
   ion-checkbox{
     --border-color:#452092;
@@ -1730,7 +1734,7 @@ ion-alert{
   .trackNumFiled .tracking{height: 38px; line-height:35px; padding-top:0px;}
 
   .form-control{height: 46px; font-size:18px; margin-bottom:15px;}
-  .submitBtn{min-width:162px;--width:167px; height:46px; font-size:18px;}
+  .submitBtn{min-width:162px; height:46px; font-size:18px;}
   .cusBorderBtn{min-width:162px; height:46px; font-size:18px;}
 
   .home_tab_icon {
@@ -1760,12 +1764,7 @@ ion-alert{
       width: 29px; 
     }
   }
-  .mail_tab_icon{
-    img{width: 29px;}
-    svg{
-      width: 29px; 
-    }
-  }
+
   .powerBy{     
     margin-top:0px;}
 
