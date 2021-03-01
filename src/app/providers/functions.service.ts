@@ -102,7 +102,7 @@ export class FunctionsService {
   async presentToast(message, show_button, position, duration) {
     const toast = await this.toastController.create({
       message: message,
-      position: position,
+      position: 'top',
       duration: duration
     });
     toast.present();

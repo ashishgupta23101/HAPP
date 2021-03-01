@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonSelect, ModalController, NavController, Platform } from '@ionic/angular';
@@ -14,7 +14,6 @@ import { LoaderService } from 'src/app/providers/loader.service';
 import { Storage } from '@ionic/storage';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import { FcmService } from 'src/app/providers/fcm.service';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -33,18 +32,14 @@ export class HomePage implements OnInit {
   barcodeScannerOptions: BarcodeScannerOptions;
   trackNo = '';
   @ViewChild('carrierList') carrierSelectRef: IonSelect;
-
   // tslint:disable-next-line: max-line-length
   constructor(@Inject(BarcodeScanner) private barcodeScanner: BarcodeScanner,
               @Inject(Router) private router: Router,
               @Inject(FormBuilder) public formBuilder: FormBuilder,
               @Inject(LoaderService) public loadingController: LoaderService,
               @Inject(TrackingService) private trackService: TrackingService,
-              @Inject(NavController) private navCtrl: NavController,
-              @Inject(GooglePlus) private googlePlus: GooglePlus) {
-                this.googlePlus.login({})
-                .then(res => console.log(res))
-                .catch(err => console.error(err));
+              @Inject(NavController) private navCtrl: NavController) {
+
       // this.storage.get('deviceID').then(id => {
       //   if (id === null || id === undefined || id === '') {
       //     this.trackService.GenerateDeviceID();
@@ -65,6 +60,7 @@ export class HomePage implements OnInit {
      // this.carCode = this.helper.GetCarrierCode(searchValue);
     }
   }
+
   gotoScanner() {
     this.navCtrl.navigateForward(`/barcode-scanner`);
   }
@@ -126,6 +122,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+
     this.fillIntentValue();
   }
   fillIntentValue() {
@@ -147,9 +144,10 @@ export class HomePage implements OnInit {
       this.clearTrack();
     }
   }
+
   ionViewWillEnter() {
     // this.fillIntentValue();
-
+    //this.googleSDK();
     this.clearTrack();
     const isLastScanned = localStorage.getItem('isScanned');
     if ( isLastScanned === 'true'){

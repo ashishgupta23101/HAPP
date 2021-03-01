@@ -54,8 +54,8 @@ export class LoaderService {
       message,
       color: msgtype.toLowerCase() === 'error' ? 'danger' : (msgtype.toLowerCase() === 'warning' ? 'dark' :
                               (msgtype.toLowerCase() === 'info' ? 'dark' : 'dark')),
-      position: msgtype.toLowerCase() === 'error' ? 'top' : (msgtype.toLowerCase() === 'warning' ? 'top' :
-      (msgtype.toLowerCase() === 'info' ? 'bottom' : 'bottom')),
+     // position: msgtype.toLowerCase() === 'error' ? 'top' : (msgtype.toLowerCase() === 'warning' ? 'top' : (msgtype.toLowerCase() === 'info' ? 'bottom' : 'bottom')),
+      position: 'top',
       duration: 4000
     });
     toast.present();

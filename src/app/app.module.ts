@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Storage } from '@ionic/storage';
 import { Animation } from '@ionic/core';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { AngularFireAuthModule } from "@angular/fire/auth";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TrackingService } from './providers/tracking.service';
 import { FunctionsService } from './providers/functions.service';
@@ -19,11 +19,6 @@ import { Device } from '@ionic-native/device/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import {
-  GoogleLoginProvider,
-  FacebookLoginProvider
-} from 'angularx-social-login';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
@@ -44,7 +39,7 @@ import { AuthGuard } from './auth-guard';
   imports: [
     HttpClientModule,
     BrowserModule,
-    FormsModule,SocialLoginModule,
+    FormsModule,
     TabsPageModule,SharedModule,
     IonicStorageModule.forRoot({
     name: '__mydb',
@@ -53,7 +48,7 @@ import { AuthGuard } from './auth-guard';
     ReactiveFormsModule, IonicModule.forRoot({
      // navAnimation: fancyAnimation
     }), AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule, AngularFireAuthModule,
     AppRoutingModule
   ],
   providers: [
@@ -65,28 +60,11 @@ import { AuthGuard } from './auth-guard';
     Device,
     SplashScreen,
     NativeGeocoder,
-    Firebase,GooglePlus,
+    Firebase,
     AuthGuard,
     FCM,
     Network, InAppBrowser,
-    SplashScreen, TrackingService, FunctionsService, FcmService,{
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '326714755087-mmnlkbvqbkbhk4rtudcl2sqi7rj3pqc7.apps.googleusercontent.com'
-            )
-          },
-          // {
-          //   id: FacebookLoginProvider.PROVIDER_ID,
-          //   provider: new FacebookLoginProvider('clientId')
-          // }
-        ]
-      } as SocialAuthServiceConfig,
-    },
+    SplashScreen, TrackingService, FunctionsService, FcmService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

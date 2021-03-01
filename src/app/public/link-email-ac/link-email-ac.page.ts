@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { LoaderService } from 'src/app/providers/loader.service';
-import { SocialAuthService, SocialUser, GoogleLoginProvider } from "angularx-social-login";
 import { EmailAccount, Provider } from 'src/app/models/Providers';
 import { TrackingService } from 'src/app/providers/tracking.service';
+import { FcmService } from 'src/app/providers/fcm.service';
 
 @Component({
   selector: 'app-link-email-ac',
@@ -14,12 +14,12 @@ import { TrackingService } from 'src/app/providers/tracking.service';
 // npm install --save @ionic-native/google-plus@4
 export class LinkEmailAcPage implements OnInit {
   proCode: any = '';
-  socUser : SocialUser;
   emailAccount : EmailAccount = new EmailAccount();
   loggedIn : boolean;
+  accessToken : string;
   providers : Array<Provider> = []
   constructor(@Inject(NavController) private navCtrl: NavController,
-  @Inject(SocialAuthService) private authService: SocialAuthService,
+  @Inject(FcmService) private fcm: FcmService,
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
   @Inject(Platform) private platform: Platform) {
@@ -65,18 +65,18 @@ export class LinkEmailAcPage implements OnInit {
       // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
       //  this.authService.initState.subscribe((isinit) => {
       //    if(isinit === true){
-          this.authService.signIn(GoogleLoginProvider.PROVIDER_ID, googleLoginOptions).then(user =>{
-            this.socUser = user;
-            localStorage.setItem('accessToken',user.authToken);
+          this.fcm.SigninWithGoogle().then(res =>{
+            this.accessToken = res.credential.accessToken;
+            localStorage.setItem('accessToken',this.accessToken);
             this.emailAccount.Username = localStorage.getItem('user');
-            this.emailAccount.AuthToken = user.authToken;
+            this.emailAccount.AuthToken = this.accessToken;
             this.emailAccount.ProviderName = this.proCode;
             this.emailAccount.Password = '';
             this.loading.present('Linking Account.');
             this.LinkAccount();
             
-            console.log(JSON.stringify(this.socUser));
-            this.loading.presentToast('info','Successfully linked with '+this.socUser.firstName);
+            console.log(JSON.stringify(this.accessToken));
+            this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
             this.navCtrl.navigateForward(`/listing-retailer`);
           }).catch(err =>{
             localStorage.setItem('accessToken','NA');
