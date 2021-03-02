@@ -10,6 +10,7 @@ import { FcmService } from './providers/fcm.service';
 import { TrackingService } from './providers/tracking.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { inject } from '@angular/core/testing';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -26,8 +27,13 @@ export class AppComponent implements OnInit{
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network,
-    @Inject(InAppBrowser) private iab: InAppBrowser
+    @Inject(InAppBrowser) private iab: InAppBrowser, 
+    @Inject(GooglePlus) private googlePlus: GooglePlus
   ) {
+    this.googlePlus.login({
+      'offline': true
+    }).then( res => console.log(res))
+      .catch(err => console.error(err));
     //localStorage.setItem('IsLogin', 'true');
     localStorage.setItem('currPage', 'tp');
     const cusHome = localStorage.getItem('cusHome');

@@ -31,8 +31,9 @@ import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 import { fancyAnimation } from './animations';
 import { AuthGuard } from './auth-guard';
-//npm install cordova-plugin-googleplus
-//npm install @ionic-native/google-plus
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+//cordova plugin add cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.619491163084-e2gc4lrhvdm0psjtjmfdsim5mrmo7vpf
+//npm install --save @ionic-native/google-plus
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -57,7 +58,7 @@ import { AuthGuard } from './auth-guard';
     LoaderService,
     BarcodeScanner,
     SocialSharing,
-    Device,
+    Device,GooglePlus,
     SplashScreen,
     NativeGeocoder,
     Firebase,
