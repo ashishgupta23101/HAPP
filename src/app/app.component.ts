@@ -8,7 +8,6 @@ import { LoaderService } from './providers/loader.service';
 import { QueryParams } from './models/QueryParams';
 import { FcmService } from './providers/fcm.service';
 import { TrackingService } from './providers/tracking.service';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { inject } from '@angular/core/testing';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 @Component({
@@ -26,14 +25,8 @@ export class AppComponent implements OnInit{
     @Inject(Platform) private platform: Platform,
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(FcmService) private fcm: FcmService,
-    @Inject(Network) private network: Network,
-    @Inject(InAppBrowser) private iab: InAppBrowser, 
-    @Inject(GooglePlus) private googlePlus: GooglePlus
+    @Inject(Network) private network: Network
   ) {
-    this.googlePlus.login({
-      'offline': true
-    }).then( res => console.log(res))
-      .catch(err => console.error(err));
     //localStorage.setItem('IsLogin', 'true');
     localStorage.setItem('currPage', 'tp');
     const cusHome = localStorage.getItem('cusHome');
@@ -117,7 +110,7 @@ export class AppComponent implements OnInit{
   }
   openUrl() {
     this.platform.ready().then(() => {
-        const browser = this.iab.create('https://shipmatrix.com/');
+       // const browser = this.iab.create('https://shipmatrix.com/');
     });
   }
 }

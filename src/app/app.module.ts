@@ -26,12 +26,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Network } from '@ionic-native/network/ngx';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 import { fancyAnimation } from './animations';
 import { AuthGuard } from './auth-guard';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 //cordova plugin add cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.619491163084-e2gc4lrhvdm0psjtjmfdsim5mrmo7vpf
 //npm install --save @ionic-native/google-plus
 @NgModule({
@@ -49,7 +47,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     ReactiveFormsModule, IonicModule.forRoot({
      // navAnimation: fancyAnimation
     }), AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule, AngularFireAuthModule,
+    AngularFirestoreModule,
     AppRoutingModule
   ],
   providers: [
@@ -58,13 +56,13 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     LoaderService,
     BarcodeScanner,
     SocialSharing,
-    Device,GooglePlus,
+    Device,
     SplashScreen,
     NativeGeocoder,
     Firebase,
     AuthGuard,
     FCM,
-    Network, InAppBrowser,
+    Network,
     SplashScreen, TrackingService, FunctionsService, FcmService,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

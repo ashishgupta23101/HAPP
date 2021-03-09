@@ -3,7 +3,6 @@ import { NavController, Platform } from '@ionic/angular';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { EmailAccount, Provider } from 'src/app/models/Providers';
 import { TrackingService } from 'src/app/providers/tracking.service';
-import { FcmService } from 'src/app/providers/fcm.service';
 
 @Component({
   selector: 'app-link-email-ac',
@@ -19,7 +18,6 @@ export class LinkEmailAcPage implements OnInit {
   accessToken : string;
   providers : Array<Provider> = []
   constructor(@Inject(NavController) private navCtrl: NavController,
-  @Inject(FcmService) private fcm: FcmService,
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
   @Inject(Platform) private platform: Platform) {
@@ -65,24 +63,24 @@ export class LinkEmailAcPage implements OnInit {
       // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
       //  this.authService.initState.subscribe((isinit) => {
       //    if(isinit === true){
-          this.fcm.SigninWithGoogle().then(res =>{
-            this.accessToken = res.credential.accessToken;
-            localStorage.setItem('accessToken',this.accessToken);
-            this.emailAccount.Username = localStorage.getItem('user');
-            this.emailAccount.AuthToken = this.accessToken;
-            this.emailAccount.ProviderName = this.proCode;
-            this.emailAccount.Password = '';
-            this.loading.present('Linking Account.');
-            this.LinkAccount();
+          // this.fcm.SigninWithGoogle().then(res =>{
+          //   this.accessToken = res.credential.accessToken;
+          //   localStorage.setItem('accessToken',this.accessToken);
+          //   this.emailAccount.Username = localStorage.getItem('user');
+          //   this.emailAccount.AuthToken = this.accessToken;
+          //   this.emailAccount.ProviderName = this.proCode;
+          //   this.emailAccount.Password = '';
+          //   this.loading.present('Linking Account.');
+          //   this.LinkAccount();
             
-            console.log(JSON.stringify(this.accessToken));
-            this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
-            this.navCtrl.navigateForward(`/listing-retailer`);
-          }).catch(err =>{
-            localStorage.setItem('accessToken','NA');
-            this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
-            this.loading.presentToast('error','Unable to Link Account!')
-          });
+          //   console.log(JSON.stringify(this.accessToken));
+          //   this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
+          //   this.navCtrl.navigateForward(`/listing-retailer`);
+          // }).catch(err =>{
+          //   localStorage.setItem('accessToken','NA');
+          //   this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
+          //   this.loading.presentToast('error','Unable to Link Account!')
+          // });
       //    }else{this.loading.presentToast('info','Provider no ready!')}
       //  });
 

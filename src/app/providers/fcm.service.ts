@@ -9,7 +9,6 @@ import { TrackingService } from './tracking.service';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { Device } from '@ionic-native/device/ngx';
 import { SessionData } from 'src/app/models/active-packages';
-import { AngularFireAuth } from "@angular/fire/auth";
 import { AuthUser } from '../models/user';
 @Injectable()
 export class FcmService {
@@ -21,13 +20,9 @@ authUser : AuthUser;
               @Inject(Storage) private storage : Storage,
               @Inject(AngularFirestore) private afs: AngularFirestore,
               @Inject(Device) private uniqueDeviceID: Device, 
-              @Inject(Platform) private platform: Platform,
-              @Inject(AngularFireAuth) public afAuth: AngularFireAuth,
-              @Inject(AngularFireAuth) private angularFireAuth: AngularFireAuth
+              @Inject(Platform) private platform: Platform
           ) {
-              this.afAuth.authState.subscribe(user => {
-                  this.authUser = user;
-              })
+             
           }
    getToken() {
    // let token;
@@ -134,24 +129,5 @@ authUser : AuthUser;
 
   }
 
-  // Firebase SignInWithPopup
-
-
-// Firebase Google Sign-in
-SigninWithGoogle():Promise<any> {
-  return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
-  .then((res) => {
-      console.log(res);
-  }).catch((error) => {
-     console.log(error);
-  })
-}
-
-// Firebase Logout 
-SignOut() {
-    return this.afAuth.auth.signOut().then(() => {
-       // this.router.navigate(['login']);
-    })
-}
 
 }
