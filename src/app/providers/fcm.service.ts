@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@angular/core';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { auth } from 'firebase/app';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { TrackingService } from './tracking.service';
 import { QueryParams } from 'src/app/models/QueryParams';

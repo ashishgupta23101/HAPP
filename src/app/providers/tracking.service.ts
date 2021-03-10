@@ -616,9 +616,15 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
     trackingAPI = trackingAPI.replace('@Description', _queryParam.Description === null || _queryParam.Description === undefined ? '' : _queryParam.Description );
     trackingAPI = trackingAPI.replace('@DeviceNo', _queryParam.DeviceNo);
     trackingAPI = trackingAPI.replace('@RegistrationId', uuid());
-    return this.http.post(SessionData.apiURL + trackingAPI, null, {
-    headers: new HttpHeaders()
+    let _token = localStorage.getItem('AuthToken');
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
     .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
+    return this.http.post(SessionData.apiURL + trackingAPI, null, {
+    headers: _header
   });
   }
   catch (exc) {
