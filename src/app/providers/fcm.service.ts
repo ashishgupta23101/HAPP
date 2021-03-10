@@ -1,4 +1,3 @@
-import { FCM } from '@ionic-native/fcm/ngx';
 import { Inject, Injectable } from '@angular/core';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { Platform } from '@ionic/angular';
