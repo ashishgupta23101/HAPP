@@ -79,11 +79,13 @@ export class AppComponent implements OnInit{
               console.log(error);
               localStorage.setItem('AuthToken', null);
               localStorage.setItem('IsLogin', 'false');
-              //localStorage.setItem('user', null);
+              localStorage.setItem('user', null);
              // this.navCtrl.navigateForward('login');
             });
         }else{
-          localStorage.setItem('IsLogin', 'false');
+          localStorage.setItem('AuthToken', null);
+              localStorage.setItem('IsLogin', 'false');
+              localStorage.setItem('user', null);
           this.loadingController.presentToast('info','You are logged out. Please login');
         }
     this.statusBar.overlaysWebView(false);
