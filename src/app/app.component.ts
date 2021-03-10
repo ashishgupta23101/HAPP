@@ -5,16 +5,15 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { Network } from '@ionic-native/network/ngx';
 import { LoaderService } from './providers/loader.service';
-import { QueryParams } from './models/QueryParams';
 import { FcmService } from './providers/fcm.service';
 import { TrackingService } from './providers/tracking.service';
-import { inject } from '@angular/core/testing';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit{
+  cusHome :any;
   constructor(
     @Inject(NavController) private navCtrl: NavController,
     @Inject(SplashScreen) private splashScreen: SplashScreen,
@@ -28,14 +27,14 @@ export class AppComponent implements OnInit{
   ) {
     //localStorage.setItem('IsLogin', 'true');
     localStorage.setItem('currPage', 'tp');
-    const cusHome = localStorage.getItem('cusHome');
-    if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
+    this.cusHome = localStorage.getItem('cusHome');
+    if (this.cusHome === null || this.cusHome === 'null' || this.cusHome === undefined || this.cusHome === '') {
       localStorage.setItem('cusHome', 'tp');
       // this.navCtrl.navigateForward('/home');
      }
     this.initializeApp();
    // const cusHome = localStorage.getItem('cusHome');
-    switch (cusHome) {
+    switch (this.cusHome) {
           case 'tp':
             case 'sp':
               this.navCtrl.navigateForward(`/home`);
@@ -58,15 +57,14 @@ export class AppComponent implements OnInit{
   }
   initializeApp() {
     const exptime = new Date(localStorage.getItem('expires'));
-    let _token = localStorage.getItem('AuthToken');
-
         const curtime = new Date();
-        if (curtime > exptime && _token !== null && _token !== 'null' && _token !== undefined && _token !== '') {
+        if (curtime <= exptime) {
           this.trackService.refreshToken().subscribe(data => {
             if (data.Error === true){ 
                 localStorage.setItem('AuthToken', null);
                   localStorage.setItem('IsLogin', 'false');
-                  //localStorage.setItem('user', null);
+                  localStorage.setItem('user', null);
+          this.loadingController.presentToast('info','You are logged out. Please login');
                   return;
                 }
             if (data && data.ResponseData.AccessToken) {
@@ -80,7 +78,7 @@ export class AppComponent implements OnInit{
               localStorage.setItem('AuthToken', null);
               localStorage.setItem('IsLogin', 'false');
               localStorage.setItem('user', null);
-             // this.navCtrl.navigateForward('login');
+          this.loadingController.presentToast('info','You are logged out. Please login');
             });
         }else{
           localStorage.setItem('AuthToken', null);
