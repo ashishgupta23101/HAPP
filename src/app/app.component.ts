@@ -9,7 +9,6 @@ import { QueryParams } from './models/QueryParams';
 import { FcmService } from './providers/fcm.service';
 import { TrackingService } from './providers/tracking.service';
 import { inject } from '@angular/core/testing';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',

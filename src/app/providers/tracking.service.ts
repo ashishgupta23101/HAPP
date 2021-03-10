@@ -347,7 +347,7 @@ export class TrackingService {
         else {
           this.ReportOTP.data[1] ++;
         }
-        if(element.ResultData.Status?.toLowerCase().includes('deliver')){
+        if(element.ResultData.Status?.toLowerCase().includes('delivered')){
           this.PackageSummary.data[0] ++;
           this.ReportOTP.data[0] ++;
         }
@@ -368,6 +368,7 @@ export class TrackingService {
           this.ReportOTP.data[1] ++;
         }
        });
+       this.ReportOTP.total = this.ReportOTP.data[0] + this.ReportOTP.data[1] + this.ReportOTP.data[2];
     });
   }
      /// refresh for all package

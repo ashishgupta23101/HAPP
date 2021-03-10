@@ -27,9 +27,8 @@ selectedVendors : VendorAccount;
   getAllVendors(){
     this.trackService.getAllVendors().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      this.loadingController.dismiss();
       this.vendors = data.ResponseData;
-      
+      this.loadingController.dismiss();
     },
     error => {
       this.loadingController.dismiss();
