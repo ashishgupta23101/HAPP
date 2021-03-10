@@ -65,6 +65,7 @@ export class LoginPage implements OnInit {
                   this.fun.navigate('welcome', false);
                 }
                 else {
+                  localStorage.setItem('IsLogin', 'true');
                   this.fun.presentToast('Invalid Credentials! Please try with valid login credentials.', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                 }

@@ -34,6 +34,23 @@ export class AppComponent implements OnInit{
       // this.navCtrl.navigateForward('/home');
      }
     this.initializeApp();
+   // const cusHome = localStorage.getItem('cusHome');
+    switch (cusHome) {
+          case 'tp':
+            case 'sp':
+              this.navCtrl.navigateForward(`/home`);
+              break;
+              case 'ap':
+                case 'hp':
+                  this.navCtrl.navigateForward(`/listing`);
+                  break;
+                  case 'gr':
+                      this.navCtrl.navigateForward(`/splash`);
+                      break;
+                      default:
+                          this.navCtrl.navigateForward(`/home`);
+                          break;
+    }
   }
 
   ngOnInit() {
@@ -41,8 +58,10 @@ export class AppComponent implements OnInit{
   }
   initializeApp() {
     const exptime = new Date(localStorage.getItem('expires'));
+    let _token = localStorage.getItem('AuthToken');
+
         const curtime = new Date();
-        if (curtime > exptime) {
+        if (curtime > exptime && _token !== null && _token !== 'null' && _token !== undefined && _token !== '') {
           this.trackService.refreshToken().subscribe(data => {
             if (data.Error === true){ 
                 localStorage.setItem('AuthToken', null);
@@ -63,6 +82,9 @@ export class AppComponent implements OnInit{
               //localStorage.setItem('user', null);
              // this.navCtrl.navigateForward('login');
             });
+        }else{
+          localStorage.setItem('IsLogin', 'false');
+          this.loadingController.presentToast('info','You are logged out. Please login');
         }
     this.statusBar.overlaysWebView(false);
     // set status bar to white

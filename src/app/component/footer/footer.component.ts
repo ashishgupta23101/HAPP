@@ -9,8 +9,9 @@ import * as $ from 'jquery';
 export class FooterComponent implements OnInit {
 
   constructor(@Inject(NavController) private navCtrl: NavController) { }
+  username = localStorage.getItem('user');
 
-  tabreg: string = localStorage.getItem('IsLogin') === 'true' ? 'welcome' : 'not-register';
+  tabreg: string = (this.username === null || this.username === 'null' || this.username === undefined || this.username === '') ? 'not-register' : 'welcome';
   ngOnInit() {
     this.setActiveClass();
   }

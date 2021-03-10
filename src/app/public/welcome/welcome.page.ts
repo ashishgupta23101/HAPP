@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-welcome',
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./welcome.page.scss'],
 })
 export class WelcomePage implements OnInit {
+  goBack() {
+    this.navCtrl.back();
+  }
+  constructor(@Inject(NavController) private navCtrl: NavController,) { }
+
   username ='Not Available';
-  constructor() { }
 
   ngOnInit() {
     this.username = localStorage.getItem('user');

@@ -50,7 +50,6 @@ export class ListingRetailerPage implements OnInit {
           }
         },
         error => {
-         localStorage.setItem('IsLogin', 'false');
          this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
         });
 
@@ -60,7 +59,6 @@ export class ListingRetailerPage implements OnInit {
     error => {
       if(error.status === 401)
       {
-        localStorage.setItem('IsLogin', 'false');
         localStorage.setItem('accessToken', 'NA');
         this.fun.presentToast('Unauthenticated Request!', true, 'bottom', 2100);
         this.goBack();

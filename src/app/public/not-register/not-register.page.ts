@@ -7,12 +7,18 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./not-register.page.scss'],
 })
 export class NotRegisterPage implements OnInit {
-
-  constructor(@Inject(NavController) private navCtrl: NavController,) { }
   goBack() {
     this.navCtrl.back();
   }
+  constructor(@Inject(NavController) private navCtrl: NavController,) { }
+
+  username ='Not Available';
+
   ngOnInit() {
+    this.username = localStorage.getItem('user');
+    if (this.username === null || this.username === 'null' || this.username === undefined || this.username === '') {
+      this.username = "Not Available";
+     }
   }
 
 }
