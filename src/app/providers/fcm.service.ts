@@ -16,7 +16,7 @@ export class FcmService {
 authUser : AuthUser;
   constructor(
     @Inject(TrackingService) private trackService : TrackingService,
-              @Inject(FCM) private firebase: FCM,
+              @Inject(Firebase) private firebase: Firebase,
               @Inject(Storage) private storage : Storage,
               @Inject(AngularFirestore) private afs: AngularFirestore,
               @Inject(Device) private uniqueDeviceID: Device, 
@@ -32,7 +32,7 @@ authUser : AuthUser;
           this.firebase.getToken().then(token =>{
             if (this.platform.is('ios')) {
               // token =  this.firebase.getToken();
-                 this.firebase.hasPermission();
+                 this.firebase.grantPermission();
              }
              //this.trackService.logError(JSON.stringify(token), 'getToken()');
              if (!token) return;
@@ -69,11 +69,11 @@ authUser : AuthUser;
   }
 
   subscribetoMessage(topic){
-    this.firebase.subscribeToTopic(topic);
+    this.firebase.subscribe(topic);
   }
 
   unsubscribetoMessage(topic){
-    this.firebase.unsubscribeFromTopic(topic);
+    this.firebase.unsubscribe(topic);
   }
 
   refreshToken(){
@@ -81,7 +81,7 @@ authUser : AuthUser;
   }
 
   onNotifications() {
-    return this.firebase.onNotification();
+    return this.firebase.onNotificationOpen();
   }
 
   public notificationSetup() {
