@@ -3,7 +3,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { formatDate } from '@angular/common';
 import { NavController, AlertController, MenuController } from '@ionic/angular';
-import { ActivePackages, SessionData } from 'src/app/models/active-packages';
+import { ActivePackages, Packages, SessionData } from 'src/app/models/active-packages';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { QueryParams } from 'src/app/models/QueryParams';
@@ -698,6 +698,7 @@ refreshList(showLoader: boolean = false) {
  }, 800);
 }
 segmentChanged() {
+  SessionData.packages = new  Packages();
   this.activeItems = [];
   switch (this.segmentModel) {
     case 'active':
@@ -713,6 +714,7 @@ segmentChanged() {
      });
       break;
     case 'history':
+      
       this.storage.get('_archivePackages').then((value) => {
         if (value !== '' && value !== undefined && value !== null){
         this.trackService.setarchivePackagestoSession(value);
