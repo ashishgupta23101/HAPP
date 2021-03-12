@@ -61,6 +61,7 @@ export class LoginPage implements OnInit {
                   localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
                   // localStorage.setItem('pass', usr.password);
                   this.fun.dismissLoader();
+                  this.trackService.setLatestPackages();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
                 }
