@@ -58,7 +58,7 @@ export class AppComponent implements OnInit{
   initializeApp() {
     const exptime = new Date(localStorage.getItem('expires'));
         const curtime = new Date();
-        if (curtime <= exptime) {
+        if (curtime >= exptime) {
           this.trackService.refreshToken().subscribe(data => {
             if (data.Error === true){ 
                 localStorage.setItem('AuthToken', null);
