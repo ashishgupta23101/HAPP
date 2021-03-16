@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
     @Inject(Network) private network: Network
   ) {
     //localStorage.setItem('IsLogin', 'true');
-    localStorage.setItem('currPage', 'tp');
+    localStorage.setItem('isScanned', 'false');
     this.cusHome = localStorage.getItem('cusHome');
     if (this.cusHome === null || this.cusHome === 'null' || this.cusHome === undefined || this.cusHome === '') {
       localStorage.setItem('cusHome', 'tp');

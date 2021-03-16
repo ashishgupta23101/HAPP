@@ -1,14 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import * as $ from 'jquery';
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-
-  constructor(@Inject(NavController) private navCtrl: NavController) { }
+  currentRoute : any
+  constructor(
+    @Inject(NavController) private navCtrl: NavController,
+    @Inject(Location) private location: Location) {
+    
+    
+     }
   username = localStorage.getItem('user');
 
   tabreg: string = (this.username === null || this.username === 'null' || this.username === undefined || this.username === '') ? 'not-register' : 'welcome';
@@ -16,42 +22,36 @@ export class FooterComponent implements OnInit {
     this.setActiveClass();
   }
   setActiveClass() {
-    const currPage = localStorage.getItem('currPage');
+    const currPage = this.location.path();
     switch (currPage) {
-        case 'tp':
+        case '/home':
               $('.home_tab_icon').addClass('tab-selected');
               $('.dropbox_tab_icon').removeClass('tab-selected');
               $('.report_tab_icon').removeClass('tab-selected');
               $('.setting_tab_icon').removeClass('tab-selected');
               break;
-                case 'lp':
+                case '/listing':
                   $('.home_tab_icon').removeClass('tab-selected');
                   $('.dropbox_tab_icon').addClass('tab-selected');
                   $('.report_tab_icon').removeClass('tab-selected');
                   $('.setting_tab_icon').removeClass('tab-selected');
                   break;
-                  case 'rp':
+                  case '/splash':
                       $('.home_tab_icon').removeClass('tab-selected');
                       $('.dropbox_tab_icon').removeClass('tab-selected');
                       $('.report_tab_icon').addClass('tab-selected');
                       $('.setting_tab_icon').removeClass('tab-selected');
                       break;
-                      case 'sp':
+                      case '/not-register':
+                        case '/welcome':
                         $('.setting_tab_icon').addClass('tab-selected');
                         $('.home_tab_icon').removeClass('tab-selected');
                         $('.dropbox_tab_icon').removeClass('tab-selected');
                         $('.report_tab_icon').removeClass('tab-selected');
                         $('.setting_tab_icon').addClass('tab-selected');
-                        break;
-                        case 'ml':
-                        $('.mail_tab_icon').addClass('tab-selected');
-                        $('.home_tab_icon').removeClass('tab-selected');
-                        $('.dropbox_tab_icon').removeClass('tab-selected');
-                        $('.report_tab_icon').removeClass('tab-selected');
-                        $('.mail_tab_icon').addClass('tab-selected');
                         break;
                       default:
-                        $('.home_tab_icon').addClass('tab-selected');
+                        $('.home_tab_icon').removeClass('tab-selected');
                         $('.dropbox_tab_icon').removeClass('tab-selected');
                         $('.report_tab_icon').removeClass('tab-selected');
                         $('.setting_tab_icon').removeClass('tab-selected');
@@ -60,31 +60,25 @@ export class FooterComponent implements OnInit {
   NavMethod(nav: string) {
     switch(nav) {
           case 'home':
-            localStorage.setItem('currPage', 'tp');
             this.homePageRedirect();
               break;
               case 'listing':
-                  localStorage.setItem('currPage', 'lp');
                   this.setActiveClass();
                   this.navCtrl.navigateForward(`/listing`);
                   break;
                   case 'splash':
-                      localStorage.setItem('currPage', 'rp');
                       this.setActiveClass();
                       this.navCtrl.navigateForward(`/splash`);
                       break;
                       case 'not-register':
-                          localStorage.setItem('currPage', 'sp');
                           this.setActiveClass();
                           this.navCtrl.navigateForward(`/not-register`);
                           break;
                           case 'welcome':
-                            localStorage.setItem('currPage', 'sp');
                             this.setActiveClass();
                             this.navCtrl.navigateForward(`/welcome`);
                             break;
                             case 'mail':
-                              localStorage.setItem('currPage', 'ml');
                               this.setActiveClass();
                               this.navCtrl.navigateForward(`/listing-retailer`);
                               break;
