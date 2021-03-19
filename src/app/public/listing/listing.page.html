@@ -72,9 +72,9 @@
           <ion-label>
             <h2>{{item.ProductName}} </h2>
             <p class="status">Status: <span [ngClass]="{
-              'delivered': item?.Status.toLowerCase().includes('deliver'),
-              'exception': item?.Status.toLowerCase().includes('exception') ,
-              'inTransit' : item?.Status.toLowerCase().includes('transit') 
+              'delivered': item?.Status?.toLowerCase().includes('deliver'),
+              'exception': item?.Status?.toLowerCase().includes('exception') ,
+              'inTransit' : item?.Status?.toLowerCase().includes('transit') 
           }" >{{item.Status}}</span></p>
             <br>
             <p class="Tracking">Tracking #: <span>{{item.TrackingNo}} </span></p>
@@ -102,7 +102,7 @@
        </div>
         <ion-item-options side="end">
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="archive(item.Key)"><div class="itemOptionB"><ion-icon title="Archive" name="archive"></ion-icon></div></ion-item-option>
-          <!-- <ion-item-option color="tertiary" *ngIf="segmentModel === 'active'" (click)="MarkasDelievered(item.Key)"><ion-icon title="Mark Delivered" name="checkmark-circle-outline"></ion-icon></ion-item-option> -->
+          <ion-item-option color="light" *ngIf="segmentModel === 'history'" (click)="revert(item.Key)"><ion-icon name="repeat"></ion-icon></ion-item-option>
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="share()" ><app-social-sharing [Key]="item"></app-social-sharing></ion-item-option>
           <!-- <ion-item-option color="tertiary" *ngIf="segmentModel === 'active'" (click)="editPackages(item.Key)"><ion-icon  title="Edit"  name="create"></ion-icon></ion-item-option> -->
           <ion-item-option color="light" (click)="delete(item.Key)"><div class="itemOptionB"><ion-icon title="Remove"  name="trash"></ion-icon></div></ion-item-option>

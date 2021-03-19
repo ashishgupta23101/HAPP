@@ -56,8 +56,6 @@ authUser : AuthUser;
     if (!token) return;
     this.storage.set('deviceToken', token);
     const devicesRef = this.afs.collection('devices');
-   // this.trackService.logError('Token'+ token , 'SaveToken');
-   // alert(token);
     const data = {
       token,
       userId: 'testUserId'
@@ -86,7 +84,11 @@ authUser : AuthUser;
      this.platform.ready().then(() => {
     this.getToken();
     this.refreshToken().subscribe(token => {
-      console.log(token);
+      this.storage.set('deviceToken', token);
+      this.storage.get('AuthToken').then(devToken => {
+        if (devToken !== null && devToken !== undefined && devToken !== '' && devToken !== 'null'){
+          this.trackService.saveToken();
+        }});
     });
 
     this.subscribetoMessage(this.uniqueDeviceID);

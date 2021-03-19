@@ -21,20 +21,7 @@ export class UrlChangerPage implements OnInit {
               @Inject(LoaderService) public loadingController: LoaderService,
               @Inject(FcmService) private fcm: FcmService,
               @Inject(Storage) private storage: Storage) {
-    this.storage.get('deviceID').then(id => {
-      if (id !== null && id !== undefined && id !== '') {
-        this.loadingController.presentToast('alert', 'DeviceId - ' + id);
-      } else {
-        this.trackService.GenerateDeviceID();
-      }
-    });
-    this.storage.get('deviceToken').then(id => {
-      if (id !== null && id !== undefined && id !== '') {
-        this.loadingController.presentToast('alert', 'DeviceToken - ' + id);
-      } else {
-        this.fcm.notificationSetup();
-      }
-    });
+
     this.apiType = SessionData.apiType;
     this.apiUrl = SessionData.apiURL;
     this.CurrapiUrl = SessionData.apiURL;
@@ -48,7 +35,7 @@ export class UrlChangerPage implements OnInit {
       this.apiUrl = this.apiUrl ;
       this.apiType = 'C';
      }
-    this.trackService.saveToken();
+    
   }
   onTypeChange(){
     if (this.apiType === 'P'){
@@ -72,9 +59,11 @@ export class UrlChangerPage implements OnInit {
           });
           SessionData.apiURL = this.apiUrl ;
           SessionData.apiType = this.apiType;
-          this.trackService.saveToken();
+          localStorage.setItem('AuthToken', null);
+          localStorage.setItem('IsLogin', 'false');
+          localStorage.setItem('user', null);
           this.loadingController.presentToast('alert', 'API url successfully updated.');
-          this.navCtrl.pop();
+          this.navCtrl.navigateForward('/login')
      }
   }catch (Exception){
 

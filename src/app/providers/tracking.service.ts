@@ -40,6 +40,23 @@ export class TrackingService {
       headers: _header
     });
   }
+  undoarchivePackage(arg0: string,arg1:string)  : Observable<any> {
+    const data = {
+      DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
+      TrackingNo: arg0,
+      Carrier:arg1
+    }
+    let _token = localStorage.getItem('AuthToken');
+    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+    new HttpHeaders()
+    .set('Content-Type', 'application/json'):
+    new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer '+_token);
+    return this.http.post(SessionData.apiURL + environment.archivePackage ,data, {
+      headers: _header
+    });
+  }
   MarkDeliveredPackage(arg0: string, arg1: string) : Observable<any> {
     return this.http.get(SessionData.apiURL + environment.getAllVendors , {
       headers: new HttpHeaders()
@@ -63,6 +80,8 @@ export class TrackingService {
       headers: _header
     });
   }
+  acData : Array<any>;
+  arData : Array<any>;
   PackageSummary: Report = {
     labels : ['Delivered','Exceptions','LateDelivery','ShippingError','InTransit' ],
     data : [0,0,0,0,0],
@@ -268,43 +287,31 @@ export class TrackingService {
     debugger;
     this.storage.set('_activePackages', []);
     this.storage.set('_archivePackages', []);
+    this.acData = [];
+    this.arData = [];
     this.storage.get('deviceID').then(id => {
     if (id !== '' && id !== null && id !== undefined ){
     this.getAllActivePackages(id).subscribe(data => {
       // tslint:disable-next-line: no-debugger
       data.ResponseData.forEach(element => {
-       let itemKey = element.Trackingheader.TrackingNo.trim() + '-' + element.Trackingheader.CarrierCode.trim();
+       let itemKey = element.ResultData.TrackingNo.trim() + '-' + element.ResultData.CarrierCode.trim();
        if(element.ResultData.Archived === '' || element.ResultData.Archived === null || element.ResultData.Archived === undefined){
-        this.storage.get('_activePackages').then(tData => {
-            if (tData == null) {tData = []; }
-            localStorage.setItem('SCAC', '');
-            // tslint:disable-next-line: max-line-length
-            const index = tData.findIndex(item => item.trackingNo === itemKey);
-            if (index >= 0) {tData.splice(index, 1); }
             const record: any = element;
             record.trackingNo = itemKey;
-            record.ResultData.Description = element.Trackingheader.Description;
+            record.ResultData.Description = element.ResultData.Description;
             record.ResultData.Residential = 'false';
-            tData.push(record);
-            //this.storage.set('_latePackages',tData)
-            this.storage.set('_activePackages', tData);
-          });
+              this.acData.push(record);
        }else{
-        this.storage.get('_archivePackages').then(tData => {
-            if (tData == null) {tData = []; }
-            // tslint:disable-next-line: max-line-length
-            const index = tData.findIndex(item => item.trackingNo === itemKey);
-            if (index >= 0) {tData.splice(index, 1); }
             const record: any = element;
             record.trackingNo = itemKey;
-            record.ResultData.Description = element.Trackingheader.Description;
+            record.ResultData.Description = element.ResultData.Description;
             record.ResultData.Residential = 'false';
-            tData.push(record);
-            this.storage.set('_archivePackages', tData);
-          });
+              this.arData.push(record);
        }
 
       });
+      this.storage.set('_activePackages', this.acData);
+      this.storage.set('_archivePackages', this.arData);
     },error => { console.log(error); });
   } else {
     this.loadingController.presentToast('alert', 'Invalid Request');
@@ -534,7 +541,7 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
                       this.logError('Error - No device ID', 'saveDeviceID');
                       return;
                     }
-                });
+          });
         } else {
           this.logError('Error - No device token', 'saveDeviceID');
           return;
@@ -563,10 +570,16 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
     });
   }
   /// Save device id
-  saveDeviceID(gsmDetails: any): Observable<any> {
+  saveDeviceID(gsmDetails: any): Observable<any> { let _token = localStorage.getItem('AuthToken');
+  let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+  new HttpHeaders()
+  .set('Content-Type', 'application/json'):
+  new HttpHeaders()
+  .set('Content-Type', 'application/json')
+  .set('Authorization', 'Bearer '+_token);
+
     return this.http.put(SessionData.apiURL + environment.saveDeviceID, gsmDetails, {
-      headers: new HttpHeaders()
-      .set('Content-Type', 'application/json')
+      headers: _header
     });
   }
   /// track package

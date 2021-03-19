@@ -59,6 +59,7 @@ export class RegisterPage implements OnInit {
                   localStorage.setItem('user', usr.email);
                   localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
                   this.fun.dismissLoader();
+                  this.trackService.saveToken();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
                 }

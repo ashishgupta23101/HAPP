@@ -40,17 +40,6 @@ export class HomePage implements OnInit {
               @Inject(TrackingService) private trackService: TrackingService,
               @Inject(NavController) private navCtrl: NavController) {
 
-      // this.storage.get('deviceID').then(id => {
-      //   if (id === null || id === undefined || id === '') {
-      //     this.trackService.GenerateDeviceID();
-      //   }
-      // });
-      // this.storage.get('deviceToken').then(id => {
-      //   if (id === null || id === undefined || id === '') {
-      //     this.fcm.notificationSetup();
-      //   }
-      // });
-      // this.trackService.saveToken();
   }
   onSearchChange(searchValue: string): void {
     this.trackNo = searchValue;

@@ -24,31 +24,32 @@ export class AppComponent implements OnInit{
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
-  ) {
-    //localStorage.setItem('IsLogin', 'true');
+   ){
     localStorage.setItem('isScanned', 'false');
     this.cusHome = localStorage.getItem('cusHome');
     if (this.cusHome === null || this.cusHome === 'null' || this.cusHome === undefined || this.cusHome === '') {
       localStorage.setItem('cusHome', 'tp');
-      // this.navCtrl.navigateForward('/home');
-     }
+    }
     this.initializeApp();
-   // const cusHome = localStorage.getItem('cusHome');
     switch (this.cusHome) {
           case 'tp':
-            case 'sp':
+          case 'sp':
+              localStorage.setItem('currPage', 'tp');
               this.navCtrl.navigateForward(`/home`);
-              break;
-              case 'ap':
-                case 'hp':
-                  this.navCtrl.navigateForward(`/listing`);
-                  break;
-                  case 'gr':
-                      this.navCtrl.navigateForward(`/splash`);
-                      break;
-                      default:
-                          this.navCtrl.navigateForward(`/home`);
-                          break;
+          break;
+          case 'ap':
+          case 'hp':
+            localStorage.setItem('currPage', 'lp');
+              this.navCtrl.navigateForward(`/listing`);
+          break;
+          case 'gr':
+            localStorage.setItem('currPage', 'rp');
+              this.navCtrl.navigateForward(`/splash`);
+          break;
+          default:
+            localStorage.setItem('currPage', 'tp');
+              this.navCtrl.navigateForward(`/home`);
+          break;
     }
   }
 
@@ -59,28 +60,29 @@ export class AppComponent implements OnInit{
     const exptime = new Date(localStorage.getItem('expires'));
         const curtime = new Date();
         if (curtime >= exptime) {
-          this.trackService.refreshToken().subscribe(data => {
-            if (data.Error === true){ 
-                localStorage.setItem('AuthToken', null);
-                  localStorage.setItem('IsLogin', 'false');
-                  localStorage.setItem('user', null);
-          this.loadingController.presentToast('info','You are logged out. Please login');
-                  return;
-                }
-            if (data && data.ResponseData.AccessToken) {
-                  localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-                  localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
-                  localStorage.setItem('IsLogin', 'true');
-                }
-           },
-            error => {
-              console.log(error);
-              localStorage.setItem('AuthToken', null);
-              localStorage.setItem('IsLogin', 'false');
-              localStorage.setItem('user', null);
-          this.loadingController.presentToast('info','You are logged out. Please login');
-            });
-        }else{
+        //   debugger;
+        //   this.trackService.refreshToken().subscribe(data => {
+        //     if (data.Error === true){ 
+        //         localStorage.setItem('AuthToken', null);
+        //           localStorage.setItem('IsLogin', 'false');
+        //           localStorage.setItem('user', null);
+        //   this.loadingController.presentToast('info','You are logged out. Please login');
+        //           return;
+        //         }
+        //     if (data && data.ResponseData.AccessToken) {
+        //           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
+        //           localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
+        //           localStorage.setItem('IsLogin', 'true');
+        //         }
+        //    },
+        //     error => {
+        //       console.log(error);
+        //       localStorage.setItem('AuthToken', null);
+        //       localStorage.setItem('IsLogin', 'false');
+        //       localStorage.setItem('user', null);
+        //   this.loadingController.presentToast('info','You are logged out. Please login');
+        //     });
+        // }else{
           localStorage.setItem('AuthToken', null);
               localStorage.setItem('IsLogin', 'false');
               localStorage.setItem('user', null);
@@ -97,6 +99,7 @@ export class AppComponent implements OnInit{
         }
       });
       this.platform.pause.subscribe(async () => {
+        localStorage.setItem('currPage', 'tp');
         this.navCtrl.navigateForward('/home');
       });
       if (this.platform.is('cordova')) {
@@ -114,16 +117,17 @@ export class AppComponent implements OnInit{
           this.loadingController.presentToast('dark', 'Internet is Now Connected');
         }, 2000);
       });
-      this.statusBar.styleDefault();
-      this.fcm.notificationSetup();
       this.trackService.GenerateDeviceID();
-
+      this.statusBar.styleDefault();
+      this.storage.get('deviceToken').then(devToken => {
+        if (devToken === null || devToken === undefined || devToken === '' || devToken === 'null'){
+          this.fcm.notificationSetup();
+        }});
     }else{
-      this.fcm.notificationSetup();
+      //this.fcm.notificationSetup();
       this.storage.set('deviceID', 'browser');
     }
       this.trackService.setLatestPackages();
-      this.trackService.saveToken();
       this.splashScreen.hide();
     }).catch(() => {
        this.splashScreen.hide();
