@@ -82,6 +82,7 @@ export class TrackingService {
   }
   acData : Array<any>;
   arData : Array<any>;
+  allData : Array<any>;
   PackageSummary: Report = {
     labels : ['Delivered','Exceptions','LateDelivery','ShippingError','InTransit' ],
     data : [0,0,0,0,0],
@@ -287,31 +288,34 @@ export class TrackingService {
     debugger;
     this.storage.set('_activePackages', []);
     this.storage.set('_archivePackages', []);
+    this.storage.set('_allPackages', []);
     this.acData = [];
     this.arData = [];
+    this.allData = [];
     this.storage.get('deviceID').then(id => {
     if (id !== '' && id !== null && id !== undefined ){
     this.getAllActivePackages(id).subscribe(data => {
       // tslint:disable-next-line: no-debugger
+
       data.ResponseData.forEach(element => {
        let itemKey = element.ResultData.TrackingNo.trim() + '-' + element.ResultData.CarrierCode.trim();
+       const record: any = element;
        if(element.ResultData.Archived === '' || element.ResultData.Archived === null || element.ResultData.Archived === undefined){
-            const record: any = element;
             record.trackingNo = itemKey;
             record.ResultData.Description = element.ResultData.Description;
             record.ResultData.Residential = 'false';
               this.acData.push(record);
        }else{
-            const record: any = element;
             record.trackingNo = itemKey;
             record.ResultData.Description = element.ResultData.Description;
             record.ResultData.Residential = 'false';
               this.arData.push(record);
        }
-
+       this.allData.push(record);
       });
       this.storage.set('_activePackages', this.acData);
       this.storage.set('_archivePackages', this.arData);
+      this.storage.set('_allPackages', this.allData);
     },error => { console.log(error); });
   } else {
     this.loadingController.presentToast('alert', 'Invalid Request');
@@ -320,7 +324,7 @@ export class TrackingService {
   }
   getReportsData(){
     
-    this.storage.get('_activePackages').then(tData => {
+    this.storage.get('_allPackages').then(tData => {
        if (tData == null) {
         tData = [];
         return;
@@ -657,8 +661,14 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
       pack.Status = element.ResultData.Status === '' || element.ResultData.Status === null ? 'NA' : element.ResultData.Status;
       pack.Carrier = element.Trackingheader.CarrierCode;
       pack.DateCreated = element.ResultData.Created === '' || element.ResultData.Created === null ? 'NA' : element.ResultData.Created;
-      pack.ExpectedDate = element.Trackingheader.EstDeliveryDate === ''
-      || element.ResultData.EstDeliveryDate === null ? 'NA' : element.Trackingheader.EstDeliveryDate;
+      debugger;
+      if(pack.Status.toLowerCase().includes('deliver')){
+        pack.ExpectedDate = element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
+      }else{
+        pack.ExpectedDate = element.ResultData.EstDeliveryDate === null ? 'NA' : element.ResultData.EstDeliveryDate;
+      }
+
+      
       pack.LastUpdated = element.ResultData.Updated === '' || element.ResultData.Updated === null ? 'NA' : element.ResultData.Updated;
       pack.Key = element.trackingNo;
       pack.ImgUrl = pack.Status.toLowerCase().includes('delivered') ? '../../../assets/slicing/deliveredontime.png' :

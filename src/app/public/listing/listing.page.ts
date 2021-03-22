@@ -35,7 +35,7 @@ constructor(
       }else{
         this.segmentModel = 'active';
       }
-     this.segmentChanged();
+     // this.segmentChanged();
   }
   defaultSelectedRadio = "radio_2";
   //Get value on ionChange on IonRadioGroup
@@ -83,7 +83,7 @@ Date = {
   lastmonth: false
 };
 ngOnInit() {
-
+  this.segmentChanged();
 }
 
 menu(b){
@@ -118,8 +118,9 @@ radio_list = [
   {name:'Carrier',value:'carr'},
   {name:'Status',value:'stat'},
   {name:'Date',value:'dat'},
-  {name:'Retailer',value:'retail'},
-  {name:'Category',value:'cate'}
+  {name:'None',value:'none'}
+ // {name:'Retailer',value:'retail'},
+ // {name:'Category',value:'cate'}
 ]
 clearall(){
   this.IsFilter = false;
@@ -159,6 +160,7 @@ radioGroupChange(event) {
 
 
 radioSelect(event) {
+  debugger;
   console.log("radioSelect",event.detail);
   this.selectedRadioItem = event.detail;
 }
@@ -905,7 +907,7 @@ menuback(){
   this.dateMenu = false;
 }
 ionViewWillEnter(){
-  this.segmentChanged() ;
+ // this.segmentChanged() ;
 }
 doRefresh(event) {
   if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){
@@ -956,6 +958,9 @@ refreshList(showLoader: boolean = false) {
     this.loading.dismiss();
  }, 800);
 }
+ionViewDidEnter(){
+  this.segmentChanged();
+}
 segmentChanged() {
   SessionData.packages = new  Packages();
   this.activeItems = [];
@@ -995,6 +1000,7 @@ segmentChanged() {
 
 }
 sortedBy() {
+  debugger;
  try{
   switch (this.sortBy) {
     case 'carr':

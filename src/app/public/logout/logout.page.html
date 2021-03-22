@@ -3,6 +3,13 @@
     <div class="pageSdwStart"> </div>
     <div class="pageSdwStart_Bck"> </div>
   </div>  
+  <div class="header-action-icon text-left"> 
+    <div class="back_arrow fleft" (click)="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="82.394" height="62.785" viewBox="0 0 82.394 62.785">
+      <path id="reply" d="M83.994,67.533S73.809,22.986,33.642,22.986V4.751L1.6,34.839,33.642,65.462V45.519c21.8-.006,38.982,1.928,50.352,22.017Z" transform="translate(-1.6 -4.751)" fill="#63c9ef"/>
+      </svg> 
+    </div> 
+   </div> 
 </ion-header>
 
 <ion-content class="lightGray"> 
@@ -17,10 +24,10 @@
 
     <div class="logoutBtn mt50">
       <ion-row>
-        <ion-col size="6">
+        <!-- <ion-col size="6">
           <ion-button type="submit" expand="block" fill="outline" class="cusBorderBtn" (click)="goBack()">No Thanks</ion-button>
-        </ion-col>
-        <ion-col size="6">
+        </ion-col> -->
+        <ion-col size="12">
           <ion-button type="submit" expand="block" fill="solid" class="submitBtn" (click)="logout()">Logout</ion-button>
         </ion-col> 
       </ion-row>

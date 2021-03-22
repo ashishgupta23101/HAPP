@@ -19,7 +19,7 @@ selectedVendors : VendorAccount;
   @Inject(TrackingService) public trackService: TrackingService,
   @Inject(LoaderService) public loadingController: LoaderService) {
     this.loadingController.present('Fetching Retailers..');
-    this.getAllVendors();
+    
    }
   goBack() {
     this.navCtrl.back();
@@ -36,6 +36,7 @@ selectedVendors : VendorAccount;
     });
   }
   ngOnInit() {
+    this.getAllVendors();
     this.selectedVendors = new VendorAccount();
     this.selectedVendors.Username = localStorage.getItem('user');
     //this.getAllVendors();

@@ -44,9 +44,15 @@ export class FunctionsService {
   }
 
   validateEmail(email) {
-    return true;
+   
     //const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     //return re.test(String(email).toLowerCase());
+    const regexpEmail: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email === '' || !regexpEmail.test(email)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   async showloader(msgdata: string) {
