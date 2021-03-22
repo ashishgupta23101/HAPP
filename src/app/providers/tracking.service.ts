@@ -23,11 +23,12 @@ import { VendorAccount } from '../models/vendorAccount';
   providedIn: 'root'
 })
 export class TrackingService {
-  archivePackage(arg0: string,arg1:string)  : Observable<any> {
+  archivePackage(arg0: string,arg1:string,arg2:boolean)  : Observable<any> {
     const data = {
       DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
       TrackingNo: arg0,
-      Carrier:arg1
+      Carrier:arg1,
+      Undo:arg2
     }
     let _token = localStorage.getItem('AuthToken');
     let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
@@ -40,23 +41,7 @@ export class TrackingService {
       headers: _header
     });
   }
-  undoarchivePackage(arg0: string,arg1:string)  : Observable<any> {
-    const data = {
-      DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
-      TrackingNo: arg0,
-      Carrier:arg1
-    }
-    let _token = localStorage.getItem('AuthToken');
-    let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
-    new HttpHeaders()
-    .set('Content-Type', 'application/json'):
-    new HttpHeaders()
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'Bearer '+_token);
-    return this.http.post(SessionData.apiURL + environment.archivePackage ,data, {
-      headers: _header
-    });
-  }
+
   MarkDeliveredPackage(arg0: string, arg1: string) : Observable<any> {
     return this.http.get(SessionData.apiURL + environment.getAllVendors , {
       headers: new HttpHeaders()

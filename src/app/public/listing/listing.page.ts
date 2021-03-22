@@ -1136,7 +1136,7 @@ const alert = await this.alertController.create({
                   // tslint:disable-next-line: max-line-length
                   const index = tData.findIndex(item => item.trackingNo === key.trim());
                   if (index >= 0) {
-                    this.trackService.undoarchivePackage(keyItem[0],keyItem[1]).subscribe(data => {
+                    this.trackService.archivePackage(keyItem[0],keyItem[1],false).subscribe(data => {
                       // tslint:disable-next-line: no-shadowed-variable
                     const record: any = tData.find(item => item.trackingNo === key.trim());
                     tData.splice(index, 1);
@@ -1168,7 +1168,7 @@ const alert = await this.alertController.create({
                     // tslint:disable-next-line: max-line-length
                     const index = tData.findIndex(item => item.trackingNo === key.trim());
                     if (index >= 0) {
-                      this.trackService.undoarchivePackage(keyItem[0],keyItem[1]).subscribe(data => {
+                      this.trackService.archivePackage(keyItem[0],keyItem[1],true).subscribe(data => {
                         // tslint:disable-next-line: no-shadowed-variable
                       const record: any = tData.find(item => item.trackingNo === key.trim());
                       tData.splice(index, 1);
