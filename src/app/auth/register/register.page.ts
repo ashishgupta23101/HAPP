@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { User } from 'src/app/models/user';
+import { FcmService } from 'src/app/providers/fcm.service';
 import { FunctionsService } from 'src/app/providers/functions.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
 @Component({
@@ -13,7 +14,7 @@ import { TrackingService } from 'src/app/providers/tracking.service';
 })
 export class RegisterPage implements OnInit {
   registerForm: FormGroup;
-  constructor(   @Inject(Router) private router: Router,
+  constructor(  @Inject(FcmService) private fcm: FcmService,
                  @Inject(FormBuilder) public fb: FormBuilder,
                  @Inject(Platform) private platform: Platform,
                  @Inject(FunctionsService) public fun: FunctionsService,
@@ -48,7 +49,7 @@ export class RegisterPage implements OnInit {
               // tslint:disable-next-line: no-debugger
               this.zone.run(() => {
                 if (data.Error === true)
-                { localStorage.setItem('IsLogin', 'false');
+                { //localStorage.setItem('IsLogin', 'false');
                   this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                   return;
@@ -59,7 +60,7 @@ export class RegisterPage implements OnInit {
                   localStorage.setItem('user', usr.email);
                   localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
                   this.fun.dismissLoader();
-                  this.trackService.saveToken();
+                  this.fcm.notificationSetup();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
                 }
@@ -70,7 +71,8 @@ export class RegisterPage implements OnInit {
             });
             },
             error => {
-             localStorage.setItem('IsLogin', 'false');
+              //localStorage.setItem('user', 'demo');
+             //localStorage.setItem('IsLogin', 'false');
              this.fun.dismissLoader();
              this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
             });

@@ -6,6 +6,10 @@ export const environment = {
   api_gmail : 'https://gmail.googleapis.com/gmail/v1/users/me/',
   api_google_key : 'AIzaSyCCoQU-9vtEeL-MsI-nYRfUXMGh42HrFQo',
   noOfMail: 50,
+  oneSignal:{
+    appid:'6b292c6d-1bee-48e5-9b72-c00b091c4d45',
+    restApikey:'NDQ0NTQ0YjYtY2RmZC00ZWI3LTljZjQtNjZiOGE2OWI4MDc0',
+  },
   savePreferances: 'SavePreferences',
   logErrorMessage: 'LogErrorMessage',
   tncApi: 'Tracking/Classifier',

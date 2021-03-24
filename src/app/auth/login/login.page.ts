@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { User } from 'src/app/models/user';
+import { FcmService } from 'src/app/providers/fcm.service';
 import { FunctionsService } from 'src/app/providers/functions.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
 
@@ -20,6 +21,7 @@ export class LoginPage implements OnInit {
     @Inject(FunctionsService) public fun: FunctionsService,
     @Inject(TrackingService) public trackService: TrackingService,
     @Inject(NgZone) private zone: NgZone,
+    @Inject(FcmService) private fcm: FcmService,
     @Inject(NavController) private navCtrl: NavController) {
       this.loginForm = this.fb.group({
         email: new FormControl('', Validators.required),
@@ -49,7 +51,7 @@ export class LoginPage implements OnInit {
               // tslint:disable-next-line: no-debugger
               this.zone.run(() => {
                 if (data.Error === true)
-                { localStorage.setItem('IsLogin', 'false');
+                { //localStorage.setItem('IsLogin', 'false');
                   this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                   return;
@@ -62,13 +64,12 @@ export class LoginPage implements OnInit {
                   // localStorage.setItem('pass', usr.password);
                   this.fun.dismissLoader();
                   this.trackService.setLatestPackages();
-                  
-                  this.trackService.saveToken();
+                  this.fcm.notificationSetup();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
                 }
                 else {
-                  localStorage.setItem('IsLogin', 'true');
+                  //localStorage.setItem('IsLogin', 'true');
                   this.fun.presentToast('Invalid Credentials! Please try with valid login credentials.', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                 }

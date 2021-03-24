@@ -5,15 +5,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { Network } from '@ionic-native/network/ngx';
 import { LoaderService } from './providers/loader.service';
-import { FcmService } from './providers/fcm.service';
 import { TrackingService } from './providers/tracking.service';
+import { FcmService } from './providers/fcm.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit{
-  cusHome :any;
   constructor(
     @Inject(NavController) private navCtrl: NavController,
     @Inject(SplashScreen) private splashScreen: SplashScreen,
@@ -25,73 +24,77 @@ export class AppComponent implements OnInit{
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
    ){
-    localStorage.setItem('isScanned', 'false');
-    this.cusHome = localStorage.getItem('cusHome');
-    if (this.cusHome === null || this.cusHome === 'null' || this.cusHome === undefined || this.cusHome === '') {
-      localStorage.setItem('cusHome', 'tp');
-    }
-    this.initializeApp();
-    switch (this.cusHome) {
-          case 'tp':
-          case 'sp':
-              localStorage.setItem('currPage', 'tp');
-              this.navCtrl.navigateForward(`/home`);
-          break;
-          case 'ap':
-          case 'hp':
-            localStorage.setItem('currPage', 'lp');
-              this.navCtrl.navigateForward(`/listing`);
-          break;
-          case 'gr':
-            localStorage.setItem('currPage', 'rp');
-              this.navCtrl.navigateForward(`/splash`);
-          break;
-          default:
-            localStorage.setItem('currPage', 'tp');
-              this.navCtrl.navigateForward(`/home`);
-          break;
-    }
-  }
+    this.platform.ready().then(() => {
+    
 
+    let fixUserId =localStorage.getItem('AuthToken');
+    if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
+        this.register();
+    }
+    localStorage.setItem('isScanned', 'false');
+   
+  }).catch(() => {
+    this.splashScreen.hide();
+ });
+
+  }
+  register(){
+    this.trackService.demoregister().subscribe(data => {
+      // tslint:disable-next-line: no-debugger
+      this.fcm.notificationSetup();
+        if (data.Error === true)
+        { 
+          localStorage.setItem('AuthToken', null);
+          localStorage.setItem('IsLogin', 'false');
+          localStorage.setItem('user', null);
+          this.loadingController.presentToast('info','unable to login');
+          this.initializeApp();
+          localStorage.setItem('currPage', 'rp');
+          this.navCtrl.navigateForward(`/login`);
+          this.splashScreen.hide();
+          
+        }
+        if (data && data.ResponseData.AccessToken) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
+          localStorage.setItem('user', 'demo');
+          localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
+          localStorage.setItem('IsLogin', 'true');
+          this.initializeApp();
+          this.trackService.setLatestPackages();
+         
+        }
+        else {
+          this.initializeApp();
+          localStorage.setItem('AuthToken', null);
+          localStorage.setItem('IsLogin', 'false');
+          localStorage.setItem('user', null);
+          this.loadingController.presentToast('info','unable to login');
+          localStorage.setItem('currPage', 'rp');
+          this.navCtrl.navigateForward(`/login`);
+          this.splashScreen.hide();
+        }
+    },
+    error => {
+      localStorage.setItem('AuthToken', null);
+      localStorage.setItem('IsLogin', 'false');
+      localStorage.setItem('user', null);
+      this.initializeApp();
+      localStorage.setItem('currPage', 'rp');
+      this.navCtrl.navigateForward(`/login`);
+      this.splashScreen.hide();
+     this.loadingController.presentToast('info','unable to login');
+    });
+  }
   ngOnInit() {
   
   }
   initializeApp() {
-    const exptime = new Date(localStorage.getItem('expires'));
-        const curtime = new Date();
-        if (curtime >= exptime) {
-        //   debugger;
-        //   this.trackService.refreshToken().subscribe(data => {
-        //     if (data.Error === true){ 
-        //         localStorage.setItem('AuthToken', null);
-        //           localStorage.setItem('IsLogin', 'false');
-        //           localStorage.setItem('user', null);
-        //   this.loadingController.presentToast('info','You are logged out. Please login');
-        //           return;
-        //         }
-        //     if (data && data.ResponseData.AccessToken) {
-        //           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-        //           localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
-        //           localStorage.setItem('IsLogin', 'true');
-        //         }
-        //    },
-        //     error => {
-        //       console.log(error);
-        //       localStorage.setItem('AuthToken', null);
-        //       localStorage.setItem('IsLogin', 'false');
-        //       localStorage.setItem('user', null);
-        //   this.loadingController.presentToast('info','You are logged out. Please login');
-        //     });
-        // }else{
-          localStorage.setItem('AuthToken', null);
-              localStorage.setItem('IsLogin', 'false');
-              localStorage.setItem('user', null);
-          this.loadingController.presentToast('info','You are logged out. Please login');
-        }
+
     this.statusBar.overlaysWebView(false);
     // set status bar to white
     this.statusBar.styleLightContent();
-    this.platform.ready().then(() => {
+    
       this.platform.resume.subscribe(async () => {
         const trackNo = localStorage.getItem('intent');
         if (trackNo !== null && trackNo !== undefined && trackNo !== '') {
@@ -117,25 +120,21 @@ export class AppComponent implements OnInit{
           this.loadingController.presentToast('dark', 'Internet is Now Connected');
         }, 2000);
       });
-      this.trackService.GenerateDeviceID();
+      
       this.statusBar.styleDefault();
-      this.storage.get('deviceToken').then(devToken => {
-        if (devToken === null || devToken === undefined || devToken === '' || devToken === 'null'){
-          this.fcm.notificationSetup();
-        }});
+
     }else{
-      //this.fcm.notificationSetup();
       this.storage.set('deviceID', 'browser');
     }
-      this.trackService.setLatestPackages();
-      this.splashScreen.hide();
-    }).catch(() => {
-       this.splashScreen.hide();
-    });
+
+
   }
-  openUrl() {
-    this.platform.ready().then(() => {
-       // const browser = this.iab.create('https://shipmatrix.com/');
-    });
+  setPushAlerts() {
+    this.storage.get('deviceToken').then(devToken => {
+      if (devToken === null || devToken === undefined || devToken === '' || devToken === 'null'){
+        this.fcm.notificationSetup();
+      }});
+    
+    
   }
 }

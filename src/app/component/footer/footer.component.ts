@@ -17,7 +17,7 @@ export class FooterComponent implements OnInit {
      }
   username = localStorage.getItem('user');
 
-  tabreg: string = (this.username === null || this.username === 'null' || this.username === undefined || this.username === '') ? 'not-register' : 'welcome';
+  tabreg: string = (this.username === 'demo' || this.username === null || this.username === 'null' || this.username === undefined || this.username === '') ? 'not-register' : 'welcome';
   ngOnInit() {
     this.setActiveClass();
   }

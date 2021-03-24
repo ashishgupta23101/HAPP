@@ -197,6 +197,9 @@ export class TrackingService {
       result.lastDate = last.toDate();
       return result;
     }
+    async delay(ms: number) {
+      await new Promise<void>(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+  }
     /// get Tracking details for package
   getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
 
@@ -254,7 +257,7 @@ export class TrackingService {
 
   }
 
-  getAllActivePackages(deviceid:any): Observable<any> {
+   getAllActivePackages(deviceid:any): Observable<any> {
     let params = new HttpParams().set('deviceId', deviceid);
     let _token = localStorage.getItem('AuthToken');
     let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
@@ -301,11 +304,43 @@ export class TrackingService {
       this.storage.set('_activePackages', this.acData);
       this.storage.set('_archivePackages', this.arData);
       this.storage.set('_allPackages', this.allData);
-    },error => { console.log(error); });
+      this.gotocustomePAGE();
+    },error => { 
+      this.gotocustomePAGE();
+      this.loadingController.presentToast('alert', 'Unable to fetch record');
+     });
   } else {
-    this.loadingController.presentToast('alert', 'Invalid Request');
+    this.gotocustomePAGE();
+    this.loadingController.presentToast('alert', 'Unable to fetch record');
   }
 });
+  }
+  gotocustomePAGE(){
+    let cusHome = localStorage.getItem('cusHome');
+    alert(cusHome);
+    if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
+      localStorage.setItem('cusHome', 'tp');
+    }
+    switch (cusHome) {
+      case 'tp':
+      case 'sp':
+          localStorage.setItem('currPage', 'tp');
+          this.navCtrl.navigateForward(`/home`);
+      break;
+      case 'ap':
+      case 'hp':
+        localStorage.setItem('currPage', 'lp');
+          this.navCtrl.navigateForward(`/listing`);
+      break;
+      case 'gr':
+        localStorage.setItem('currPage', 'rp');
+          this.navCtrl.navigateForward(`/splash`);
+      break;
+      default:
+        localStorage.setItem('currPage', 'tp');
+          this.navCtrl.navigateForward(`/home`);
+      break;
+    }
   }
   getReportsData(){
     
@@ -462,6 +497,25 @@ getMessagebyId(_token: string, _id: string): Observable<any> {
     .set('Authorization', 'Bearer '+_token)
   });
 }
+
+demoregister(): Observable<any> {
+let user =  localStorage.getItem('user');
+let devid = this.uniqueDeviceID.uuid?this.uniqueDeviceID.uuid:'browser';
+if(user === 'demo'){
+  const request = {Email: devid+'@dummy.user' , Password: 'dummyUser'};
+  return this.http.post(SessionData.apiURL + environment.login, request, {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/json')
+  });
+}else{
+  
+  const request = {Email: devid+'@dummy.user' , Password: 'dummyUser' , ConfirmPassword:  'dummyUser', DeviceId: devid, AuthService: ''};
+  return this.http.post(SessionData.apiURL + environment.register, request, {
+    headers: new HttpHeaders()
+    .set('Content-Type', 'application/json')
+  });
+}
+}
 // tslint:disable-next-line: variable-name
 register(_email: string , _password: string, _confirm: string): Observable<any> {
   const request = {Email: _email , Password: _password , ConfirmPassword: _confirm, DeviceId: this.uniqueDeviceID.uuid?this.uniqueDeviceID.uuid:'browser', AuthService: ''};
@@ -503,39 +557,21 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
     {
             this.storage.set('deviceID', this.uniqueDeviceID.uuid);
     }
-    saveToken(){
-      this.storage.get('deviceToken').then(devToken => {
-
-        if (devToken !== null && devToken !== undefined && devToken !== ''){
-         // alert('DeviceToken = ' + devToken);
-          this.storage.get('deviceID').then(devID => {
-
-            if (devID !== null && devID !== undefined && devID !== ''){
-                   //  alert('DeviceID' + devID);
-                      const gsmDetails = {
-                        DeviceId: devID,
-                        DeviceType: 'IOS',
-                        DeviceToken: devToken,
-                        RegistrationId: uuid()
-                      };
-                      this.saveDeviceID(gsmDetails).subscribe(data => {
-                        if (data.Error){
-                          this.logError('Error - ' + JSON.stringify(data.Message), 'saveDeviceID');
-                        }
-                      },
-                      error => {
-                        this.logError('Error - ' + JSON.stringify(error), 'saveDeviceID');
-                      });
-                    } else {
-                      this.logError('Error - No device ID', 'saveDeviceID');
-                      return;
-                    }
-          });
-        } else {
-          this.logError('Error - No device token', 'saveDeviceID');
-          return;
+    saveToken(devToken){
+      const gsmDetails = {
+        DeviceId: this.uniqueDeviceID.uuid,
+        DeviceType: 'IOS',
+        DeviceToken: devToken,
+        RegistrationId: uuid()
+      };
+      this.saveDeviceID(gsmDetails).subscribe(data => {
+        if (data.Error){
+          this.logError('Error - ' + JSON.stringify(data.Message), 'saveDeviceID');
         }
-    });
+      },
+      error => {
+        this.logError('Error - ' + JSON.stringify(error), 'saveDeviceID');
+      });
     }
     saveError(errorData: ErrorDetails): Observable<any> {
       return this.http.put(SessionData.apiURL + environment.logErrorMessage , errorData, {

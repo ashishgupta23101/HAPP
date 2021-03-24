@@ -885,9 +885,11 @@ apply(){
   }else{
     this.activeItems =[];
     this.searchItems.forEach(arry=>{
-      arry.forEach(element=>{
-        this.activeItems.push(element);
-      });
+      if(arry.length >0){
+        arry.forEach(element=>{
+          this.activeItems.push(element);
+        });
+      }
     });
     
     this.IsFilter = true;
