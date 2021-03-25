@@ -18,7 +18,7 @@ export class LogoutPage implements OnInit {
   }
   logout(){
     
-    localStorage.setItem('user', 'demo');
+    localStorage.setItem('user', 'dummyUser');
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
         if (data.Error === true)
@@ -33,7 +33,7 @@ export class LogoutPage implements OnInit {
         if (data && data.ResponseData.AccessToken) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-          localStorage.setItem('user', 'demo');
+          localStorage.setItem('user', 'dummyUser');
           localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
           localStorage.setItem('IsLogin', 'true');
           this.trackService.setLatestPackages();

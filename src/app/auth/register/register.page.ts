@@ -71,7 +71,7 @@ export class RegisterPage implements OnInit {
             });
             },
             error => {
-              //localStorage.setItem('user', 'demo');
+              //localStorage.setItem('user', 'dummyUser');
              //localStorage.setItem('IsLogin', 'false');
              this.fun.dismissLoader();
              this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);

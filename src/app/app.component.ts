@@ -25,8 +25,6 @@ export class AppComponent implements OnInit{
     @Inject(Network) private network: Network
    ){
     this.platform.ready().then(() => {
-    
-
     let fixUserId =localStorage.getItem('AuthToken');
     if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
         this.register();
@@ -35,10 +33,9 @@ export class AppComponent implements OnInit{
       this.trackService.setLatestPackages();
     }
     localStorage.setItem('isScanned', 'false');
-   
-  }).catch(() => {
+   }).catch(() => {
     this.splashScreen.hide();
- });
+  });
 
   }
   register(){
@@ -60,7 +57,7 @@ export class AppComponent implements OnInit{
         if (data && data.ResponseData.AccessToken) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-          localStorage.setItem('user', 'demo');
+          localStorage.setItem('user', 'dummyUser');
           localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
           localStorage.setItem('IsLogin', 'true');
           this.initializeApp();

@@ -283,7 +283,7 @@ export class TrackingService {
   }
 
   setLatestPackages(){
-    debugger;
+    this.loadingController.presentToast('info','Welcome '+localStorage.getItem('user'));
     this.storage.set('_activePackages', []);
     this.storage.set('_archivePackages', []);
     this.storage.set('_allPackages', []);
@@ -327,7 +327,6 @@ export class TrackingService {
   }
   gotocustomePAGE(){
     let cusHome = localStorage.getItem('cusHome');
-    alert(cusHome);
     if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
       localStorage.setItem('cusHome', 'tp');
     }
@@ -511,7 +510,7 @@ getMessagebyId(_token: string, _id: string): Observable<any> {
 demoregister(): Observable<any> {
 let user =  localStorage.getItem('user');
 let devid = this.devid;
-if(user === 'demo'){
+if(user === 'dummyUser'){
   const request = {Email: devid+'@dummy.user' , Password: 'dummyUser'};
   return this.http.post(SessionData.apiURL + environment.login, request, {
     headers: new HttpHeaders()
