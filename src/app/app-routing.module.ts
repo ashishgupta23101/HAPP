@@ -16,11 +16,11 @@ const routes: Routes = [
     loadChildren: () => import('./public/product-activity/product-activity.module').then( m => m.ProductActivityPageModule)
   },
   {
-    path: 'home',
+    path: 'home',canActivate: [AuthGuard],
     loadChildren: () => import('./public/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'welcome',
+    path: 'welcome',canActivate: [AuthGuard],
     loadChildren: () => import('./public/welcome/welcome.module').then( m => m.WelcomePageModule)
   },
   {
@@ -32,15 +32,15 @@ const routes: Routes = [
     loadChildren: () => import('./public/link-email-ac/link-email-ac.module').then( m => m.LinkEmailAcPageModule)
   },
   {
-    path: 'pkg-add-success/:any',
+    path: 'pkg-add-success/:any',canActivate: [AuthGuard],
     loadChildren: () => import('./public/pkg-add-success/pkg-add-success.module').then( m => m.PkgAddSuccessPageModule)
   },
   {
-    path: 'listing',
+    path: 'listing',canActivate: [AuthGuard],
     loadChildren: () => import('./public/listing/listing.module').then( m => m.ListingPageModule)
   },
   {
-    path: 'accountcreated',
+    path: 'accountcreated',canActivate: [AuthGuard],
     loadChildren: () => import('./public/accountcreated/accountcreated.module').then( m => m.AccountcreatedPageModule)
   },
   {
@@ -136,7 +136,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/url-changer/url-changer.module').then( m => m.UrlChangerPageModule)
   },
   {
-    path: 'splash',
+    path: 'splash',canActivate: [AuthGuard],
     loadChildren: () => import('./public/etreports/etreports.module').then( m => m.ETReportsPageModule)
   },
   {

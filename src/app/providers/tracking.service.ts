@@ -283,7 +283,6 @@ export class TrackingService {
   }
 
   setLatestPackages(){
-    this.loadingController.presentToast('info','Welcome '+localStorage.getItem('user'));
     this.storage.set('_activePackages', []);
     this.storage.set('_archivePackages', []);
     this.storage.set('_allPackages', []);
