@@ -60,7 +60,7 @@ export class RegisterPage implements OnInit {
                   localStorage.setItem('user', usr.email);
                   localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
                   this.fun.dismissLoader();
-                  this.fcm.notificationSetup();
+                  this.fcm.oneSignalNotificationSetup();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
                 }

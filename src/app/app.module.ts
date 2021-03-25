@@ -22,10 +22,11 @@ import { Network } from '@ionic-native/network/ngx';
 import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 //import { fancyAnimation } from './animations';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AuthGuard } from './auth-guard';
-//cordova plugin add cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.619491163084-e2gc4lrhvdm0psjtjmfdsim5mrmo7vpf
-//npm install --save @ionic-native/google-plus
+// ionic cordova plugin add cordova-plugin-firebasex
+// npm install @ionic-native/firebase-x
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -50,7 +51,7 @@ import { AuthGuard } from './auth-guard';
     BarcodeScanner,
     SocialSharing,
     Device,
-    SplashScreen,
+    SplashScreen,FirebaseX,
     NativeGeocoder,OneSignal,
     AuthGuard,
     Network,

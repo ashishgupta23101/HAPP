@@ -25,6 +25,7 @@ export class AppComponent implements OnInit{
     @Inject(Network) private network: Network
    ){
     this.platform.ready().then(() => {
+      this.fcm.FirebasenotificationSetup();
     let fixUserId =localStorage.getItem('AuthToken');
     if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
         this.register();
@@ -41,7 +42,8 @@ export class AppComponent implements OnInit{
   register(){
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      this.fcm.notificationSetup();
+      
+      this.fcm.oneSignalNotificationSetup();
         if (data.Error === true)
         { 
           localStorage.setItem('AuthToken', null);
@@ -132,7 +134,7 @@ export class AppComponent implements OnInit{
   setPushAlerts() {
     this.storage.get('deviceToken').then(devToken => {
       if (devToken === null || devToken === undefined || devToken === '' || devToken === 'null'){
-        this.fcm.notificationSetup();
+        this.fcm.oneSignalNotificationSetup();
       }});
     
     
