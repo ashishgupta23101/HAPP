@@ -9,7 +9,7 @@ import { formatDate } from '@angular/common';
 import { EditPackage } from 'src/app/models/EditPackage';
 import { environment } from 'src/environments/environment';
 import { ActivePackages, SessionData, Packages, CusDates, Report } from 'src/app/models/active-packages';
-import { NavController} from '@ionic/angular';
+import { NavController, Platform} from '@ionic/angular';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { Configuration } from 'src/app/models/configuration';
 import { ErrorDetails } from 'src/app/models/error';
@@ -23,9 +23,10 @@ import { VendorAccount } from '../models/vendorAccount';
   providedIn: 'root'
 })
 export class TrackingService {
+  
   archivePackage(arg0: string,arg1:string,arg2:boolean)  : Observable<any> {
     const data = {
-      DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
+      DeviceId: this.devid,
       TrackingNo: arg0,
       Carrier:arg1,
       Undo:arg2
@@ -50,7 +51,7 @@ export class TrackingService {
   }
   deletePackage(arg0: string,arg1:string)  : Observable<any> {
     const data = {
-      DeviceId: this.uniqueDeviceID.uuid === null? 'browser':this.uniqueDeviceID.uuid,
+      DeviceId: this.devid,
       TrackingNo: arg0,
       Carrier:arg1
     }
@@ -65,6 +66,7 @@ export class TrackingService {
       headers: _header
     });
   }
+  devid : any;
   acData : Array<any>;
   arData : Array<any>;
   allData : Array<any>;
@@ -159,8 +161,16 @@ export class TrackingService {
     @Inject(Device) private uniqueDeviceID: Device,
     @Inject(LoaderService) public loadingController: LoaderService,
     @Inject(Storage) private storage: Storage,
+    @Inject(Platform) private platform: Platform,
     @Inject(HelperService) private helper: HelperService,
     @Inject(NavController) private navCtrl: NavController) {
+      this.platform.ready().then(() => {
+        if (this.platform.is('cordova')) {
+          this.devid = this.uniqueDeviceID.uuid;
+        }else{
+          this.devid = 'browser';
+        }
+      });
     }
     filterItems(items: any , searchTerm) {
       if (searchTerm === null || searchTerm === undefined || searchTerm === '') {
@@ -500,7 +510,7 @@ getMessagebyId(_token: string, _id: string): Observable<any> {
 
 demoregister(): Observable<any> {
 let user =  localStorage.getItem('user');
-let devid = this.uniqueDeviceID.uuid?this.uniqueDeviceID.uuid:'browser';
+let devid = this.devid;
 if(user === 'demo'){
   const request = {Email: devid+'@dummy.user' , Password: 'dummyUser'};
   return this.http.post(SessionData.apiURL + environment.login, request, {
@@ -518,7 +528,7 @@ if(user === 'demo'){
 }
 // tslint:disable-next-line: variable-name
 register(_email: string , _password: string, _confirm: string): Observable<any> {
-  const request = {Email: _email , Password: _password , ConfirmPassword: _confirm, DeviceId: this.uniqueDeviceID.uuid?this.uniqueDeviceID.uuid:'browser', AuthService: ''};
+  const request = {Email: _email , Password: _password , ConfirmPassword: _confirm, DeviceId: this.devid, AuthService: ''};
   return this.http.post(SessionData.apiURL + environment.register, request, {
     headers: new HttpHeaders()
     .set('Content-Type', 'application/json')
@@ -555,11 +565,11 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
     }
     GenerateDeviceID()
     {
-            this.storage.set('deviceID', this.uniqueDeviceID.uuid);
+            this.storage.set('deviceID', this.devid);
     }
     saveToken(devToken){
       const gsmDetails = {
-        DeviceId: this.uniqueDeviceID.uuid,
+        DeviceId: this.devid,
         DeviceType: 'IOS',
         DeviceToken: devToken,
         RegistrationId: uuid()

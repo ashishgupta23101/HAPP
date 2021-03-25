@@ -30,6 +30,9 @@ export class AppComponent implements OnInit{
     let fixUserId =localStorage.getItem('AuthToken');
     if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
         this.register();
+    }else{
+      this.initializeApp();
+      this.trackService.setLatestPackages();
     }
     localStorage.setItem('isScanned', 'false');
    
