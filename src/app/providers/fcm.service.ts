@@ -58,6 +58,9 @@ authUser : AuthUser;
           }
         
           public FirebasenotificationSetup() {
+            this.platform.ready().then(() => {
+
+              if (this.platform.is('cordova')) {
             this.getToken();
             this.refreshToken().subscribe(token => {
               console.log(token);
@@ -97,6 +100,7 @@ authUser : AuthUser;
                 });
         
                 this.unsubscribetoMessage(this.uniqueDeviceID);
+              }});
           }
           public oneSignalNotificationSetup() {
             this.storage.get('deviceToken').then(devToken => {
