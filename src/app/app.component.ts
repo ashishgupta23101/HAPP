@@ -30,8 +30,14 @@ export class AppComponent implements OnInit{
     if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
         this.register();
     }else{
-      this.initializeApp();
-      this.trackService.setLatestPackages();
+        const exptime = new Date(localStorage.getItem('expires'));
+        const curtime = new Date();
+        if (curtime <= exptime){
+          this.initializeApp();
+          this.trackService.setLatestPackages();
+        }else{
+          this.register();
+        }
     }
     localStorage.setItem('isScanned', 'false');
    }).catch(() => {
