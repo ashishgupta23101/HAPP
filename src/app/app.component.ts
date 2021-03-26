@@ -36,7 +36,7 @@ export class AppComponent implements OnInit{
           this.initializeApp();
           this.trackService.setLatestPackages();
         }else{
-          localStorage.setItem('user', 'dummyUser');
+         // localStorage.setItem('user', 'dummyUser');
           this.loadingController.presentToast('info','Your login expired. Please login.');
           this.register();
         }
