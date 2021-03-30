@@ -35,6 +35,7 @@ export class AppComponent implements OnInit{
         if (curtime <= exptime){
           this.initializeApp();
           this.trackService.setLatestPackages();
+          this.splashScreen.hide();
         }else{
          // localStorage.setItem('user', 'dummyUser');
           this.loadingController.presentToast('info','Your login expired. Please login.');
@@ -72,7 +73,7 @@ export class AppComponent implements OnInit{
           localStorage.setItem('IsLogin', 'true');
           this.initializeApp();
           this.trackService.setLatestPackages();
-         
+          this.splashScreen.hide();
         }
         else {
           this.initializeApp();
