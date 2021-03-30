@@ -48,6 +48,7 @@ export class AppComponent implements OnInit{
         this.splashScreen.hide();
       });
     }catch(ex){
+      this.splashScreen.hide();
 console.log(JSON.stringify(ex));
     }
 
