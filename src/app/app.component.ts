@@ -24,28 +24,32 @@ export class AppComponent implements OnInit{
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
    ){
-    this.platform.ready().then(() => {
-      this.fcm.FirebasenotificationSetup();
-    let fixUserId =localStorage.getItem('AuthToken');
-    if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
-        this.register();
-    }else{
-        const exptime = new Date(localStorage.getItem('expires'));
-        const curtime = new Date();
-        if (curtime <= exptime){
-          this.initializeApp();
-          this.trackService.setLatestPackages();
-          this.splashScreen.hide();
-        }else{
-         // localStorage.setItem('user', 'dummyUser');
-          this.loadingController.presentToast('info','Your login expired. Please login.');
+     try{
+      this.platform.ready().then(() => {
+        this.fcm.FirebasenotificationSetup();
+      let fixUserId =localStorage.getItem('AuthToken');
+      if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
           this.register();
-        }
+      }else{
+          const exptime = new Date(localStorage.getItem('expires'));
+          const curtime = new Date();
+          if (curtime <= exptime){
+            this.initializeApp();
+            this.trackService.setLatestPackages();
+            this.splashScreen.hide();
+          }else{
+          // localStorage.setItem('user', 'dummyUser');
+            this.loadingController.presentToast('info','Your login expired. Please login.');
+            this.register();
+          }
+      }
+      localStorage.setItem('isScanned', 'false');
+      }).catch(() => {
+        this.splashScreen.hide();
+      });
+    }catch(ex){
+console.log(JSON.stringify(ex));
     }
-    localStorage.setItem('isScanned', 'false');
-   }).catch(() => {
-    this.splashScreen.hide();
-  });
 
   }
   register(){
