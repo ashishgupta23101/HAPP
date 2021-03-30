@@ -13,6 +13,7 @@ import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 export class FcmService {
   queryParam: QueryParams;
 authUser : AuthUser;
+token: any;
   constructor(
               @Inject(TrackingService) private trackService : TrackingService,
               @Inject(FirebaseX) private firebase: FirebaseX,
@@ -25,19 +26,18 @@ authUser : AuthUser;
           }
 
           async getToken() {
-            let token;
-        
+
             if (this.platform.is('android')) {
-              token = await this.firebase.getToken();
+              this.token = await this.firebase.getToken();
             }
         
             if (this.platform.is('ios')) {
-              token = await this.firebase.getToken();
+              this.token = await this.firebase.getToken();
               await this.firebase.grantPermission();
             }
-            if (!token) return;
-            this.storage.set('deviceToken', token);
-            this.trackService.saveToken(token);
+            if (!this.token) return;
+            this.storage.set('deviceToken', this.token);
+            this.trackService.saveToken(this.token);
           }
         
         
@@ -66,7 +66,7 @@ authUser : AuthUser;
               console.log(token);
             });
         
-            this.subscribetoMessage(this.uniqueDeviceID);
+            this.subscribetoMessage(this.token);
                
             this.onNotifications().subscribe(msg => {
         
@@ -97,11 +97,12 @@ authUser : AuthUser;
                        // this.loadingController.presentToast('Error', JSON.stringify(Exception));
                       }
                     }
-                });
+              });
         
-                this.unsubscribetoMessage(this.uniqueDeviceID);
+            this.unsubscribetoMessage(this.token);
               }});
           }
+          
           public oneSignalNotificationSetup() {
             this.storage.get('deviceToken').then(devToken => {
               if (devToken === null || devToken === undefined || devToken === '' || devToken === 'null'){
