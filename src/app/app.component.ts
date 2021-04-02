@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
    ){
      try{
       this.platform.ready().then(() => {
-        this.fcm.FirebasenotificationSetup();
+        //this.fcm.FirebasenotificationSetup();
       let fixUserId =localStorage.getItem('AuthToken');
       if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
           this.register();
@@ -60,7 +60,7 @@ console.log(JSON.stringify(ex));
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
       this.loadingController.presentToast('info', 'AfterDemoRegistering');
-      //this.fcm.oneSignalNotificationSetup();
+      //this.fcm.FirebasenotificationSetup();
         if (data == null || data.Error === true)
         { 
           this.loadingController.presentToast('info','inNULLData');
@@ -154,7 +154,7 @@ console.log(JSON.stringify(ex));
   setPushAlerts() {
     this.storage.get('deviceToken').then(devToken => {
       if (devToken === null || devToken === undefined || devToken === '' || devToken === 'null'){
-        this.fcm.oneSignalNotificationSetup();
+        this.fcm.FirebasenotificationSetup();
       }});
     
     

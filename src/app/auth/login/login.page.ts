@@ -64,7 +64,7 @@ export class LoginPage implements OnInit {
                   // localStorage.setItem('pass', usr.password);
                   this.fun.dismissLoader();
                   this.trackService.setLatestPackages();
-                  this.fcm.oneSignalNotificationSetup();
+                  this.fcm.FirebasenotificationSetup();
                   localStorage.setItem('IsLogin', 'true');
                   this.fun.navigate('welcome', false);
                 }
