@@ -45,32 +45,37 @@ export class AppComponent implements OnInit{
       }
       localStorage.setItem('isScanned', 'false');
       }).catch(() => {
+        this.loadingController.presentToast('info', 'NotReady');
         this.splashScreen.hide();
       });
     }catch(ex){
+      this.loadingController.presentToast('info', 'errorInTry');
       this.splashScreen.hide();
 console.log(JSON.stringify(ex));
     }
 
   }
   register(){
+    var appStarted = false;
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      
-      this.fcm.oneSignalNotificationSetup();
-        if (data.Error === true)
+      this.loadingController.presentToast('info', 'AfterDemoRegistering');
+      //this.fcm.oneSignalNotificationSetup();
+        if (data == null || data.Error === true)
         { 
+          this.loadingController.presentToast('info','inNULLData');
           localStorage.setItem('AuthToken', null);
           localStorage.setItem('IsLogin', 'false');
           localStorage.setItem('user', null);
-          this.loadingController.presentToast('info','unable to login');
           this.initializeApp();
           localStorage.setItem('currPage', 'rp');
           this.navCtrl.navigateForward(`/login`);
+          appStarted = true;
           this.splashScreen.hide();
           
         }
         if (data && data.ResponseData.AccessToken) {
+          this.loadingController.presentToast('info','InIf');
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
           localStorage.setItem('user', 'dummyUser');
@@ -81,29 +86,30 @@ console.log(JSON.stringify(ex));
           this.splashScreen.hide();
         }
         else {
+          this.loadingController.presentToast('info','inElse');
           this.initializeApp();
           localStorage.setItem('AuthToken', null);
           localStorage.setItem('IsLogin', 'false');
           localStorage.setItem('user', null);
-          this.loadingController.presentToast('info','unable to login');
           localStorage.setItem('currPage', 'rp');
           this.navCtrl.navigateForward(`/login`);
+          appStarted = true;
           this.splashScreen.hide();
         }
-    },
-    error => {
-      localStorage.setItem('AuthToken', null);
-      localStorage.setItem('IsLogin', 'false');
-      localStorage.setItem('user', null);
-      this.initializeApp();
-      localStorage.setItem('currPage', 'rp');
-      this.navCtrl.navigateForward(`/login`);
-      this.splashScreen.hide();
-     this.loadingController.presentToast('info','unable to login');
-    });
+      },
+      error => {
+        this.loadingController.presentToast('info', 'In Error:');
+        localStorage.setItem('AuthToken', null);
+        localStorage.setItem('IsLogin', 'false');
+        localStorage.setItem('user', null);
+        this.initializeApp();
+        localStorage.setItem('currPage', 'rp');
+        this.navCtrl.navigateForward(`/login`);
+        appStarted = true;
+        this.splashScreen.hide();
+      });
   }
   ngOnInit() {
-  
   }
   initializeApp() {
 

@@ -23,7 +23,7 @@ import { TabsPageModule } from './tabs/tabs.module';
 import { SharedModule } from './public/shared/shared.module';
 //import { fancyAnimation } from './animations';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+//import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AuthGuard } from './auth-guard';
 // ionic cordova plugin add cordova-plugin-firebasex
 // npm install @ionic-native/firebase-x
@@ -51,8 +51,10 @@ import { AuthGuard } from './auth-guard';
     BarcodeScanner,
     SocialSharing,
     Device,
-    SplashScreen,FirebaseX,
-    NativeGeocoder,OneSignal,
+    SplashScreen,
+    FirebaseX,
+    NativeGeocoder,
+    //OneSignal,
     AuthGuard,
     Network,
     SplashScreen, TrackingService, FunctionsService, FcmService,
