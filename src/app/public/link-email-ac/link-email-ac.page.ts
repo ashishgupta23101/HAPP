@@ -3,7 +3,9 @@ import { NavController, Platform } from '@ionic/angular';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { EmailAccount, Provider } from 'src/app/models/Providers';
 import { TrackingService } from 'src/app/providers/tracking.service';
-
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase';
 @Component({
   selector: 'app-link-email-ac',
   templateUrl: './link-email-ac.page.html',
@@ -20,6 +22,8 @@ export class LinkEmailAcPage implements OnInit {
   constructor(@Inject(NavController) private navCtrl: NavController,
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
+  @Inject(GooglePlus) private google:GooglePlus,
+  @Inject(AngularFireAuth) private fireAuth: AngularFireAuth,
   @Inject(Platform) private platform: Platform) {
     this.loading.present('Fetching Accounts..');
     this.getallProviders();
@@ -57,32 +61,28 @@ export class LinkEmailAcPage implements OnInit {
   }
   googleSignIn() {
     this.platform.ready().then(() => {
-      const googleLoginOptions = {
-        scope: 'https://www.googleapis.com/auth/gmail.readonly'
-      }; 
-      // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
-      //  this.authService.initState.subscribe((isinit) => {
-      //    if(isinit === true){
-          // this.fcm.SigninWithGoogle().then(res =>{
-          //   this.accessToken = res.credential.accessToken;
-          //   localStorage.setItem('accessToken',this.accessToken);
-          //   this.emailAccount.Username = localStorage.getItem('user');
-          //   this.emailAccount.AuthToken = this.accessToken;
-          //   this.emailAccount.ProviderName = this.proCode;
-          //   this.emailAccount.Password = '';
-          //   this.loading.present('Linking Account.');
-          //   this.LinkAccount();
+
+      this.google.login({})
+      .then((res) => {
+        alert('response: ' + JSON.stringify(res));
+       // const { idToken, accessToken } = response;
+             this.accessToken = res.credential.accessToken;
+             localStorage.setItem('accessToken',this.accessToken);
+             this.emailAccount.Username = localStorage.getItem('user');
+             this.emailAccount.AuthToken = this.accessToken;
+             this.emailAccount.ProviderName = this.proCode;
+             this.emailAccount.Password = '';
+             this.loading.present('Linking Account.');
+             this.LinkAccount();
             
-          //   console.log(JSON.stringify(this.accessToken));
-          //   this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
-          //   this.navCtrl.navigateForward(`/listing-retailer`);
-          // }).catch(err =>{
-          //   localStorage.setItem('accessToken','NA');
-          //   this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
-          //   this.loading.presentToast('error','Unable to Link Account!')
-          // });
-      //    }else{this.loading.presentToast('info','Provider no ready!')}
-      //  });
+             console.log(JSON.stringify(this.accessToken));
+             this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
+             this.navCtrl.navigateForward(`/listing-retailer`);
+           }).catch(err =>{
+             localStorage.setItem('accessToken','NA');
+             this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
+             this.loading.presentToast('error','Unable to Link Account!')
+           });
 
     });
 
@@ -111,4 +111,15 @@ export class LinkEmailAcPage implements OnInit {
     // });
     //localStorage.setItem('accessId','0');
   }
+  // onLoginSuccess(accessToken, accessSecret) {
+  //   const credential = accessSecret ? firebase.auth.GoogleAuthProvider
+  //       .credential(accessToken, accessSecret) : firebase.auth.GoogleAuthProvider
+  //           .credential(accessToken);
+  //   this.fireAuth.authState.signInWithCredential(credential)
+  //     .then((response) => {
+  //       //this.router.navigate(["/profile"]);
+  //       //this.loading.dismiss();
+  //     })
+
+  // }
 }

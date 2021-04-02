@@ -25,8 +25,12 @@ import { SharedModule } from './public/shared/shared.module';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 //import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AuthGuard } from './auth-guard';
-// ionic cordova plugin add cordova-plugin-firebasex
-// npm install @ionic-native/firebase-x
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+// ionic cordova plugin add cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.837283281198-iq0n5mae2mgbjdervci03kr79rndr0j6
+// npm install --save @ionic-native/google-plus
+// npm install firebase @angular/fire --save
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -38,7 +42,8 @@ import { AuthGuard } from './auth-guard';
     IonicStorageModule.forRoot({
     name: '__mydb',
     driverOrder: ['indexeddb', 'sqlite', 'websql']
-  }),
+  }),AngularFireModule.initializeApp(environment.firebase),
+  AngularFireAuthModule,
     ReactiveFormsModule, IonicModule.forRoot({
      // navAnimation: fancyAnimation
     }),
@@ -53,6 +58,7 @@ import { AuthGuard } from './auth-guard';
     Device,
     SplashScreen,
     FirebaseX,
+    GooglePlus,
     NativeGeocoder,
     //OneSignal,
     AuthGuard,

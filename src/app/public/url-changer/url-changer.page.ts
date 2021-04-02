@@ -63,6 +63,7 @@ export class UrlChangerPage implements OnInit {
           localStorage.setItem('IsLogin', 'false');
           localStorage.setItem('user', null);
           this.loadingController.presentToast('alert', 'API url successfully updated.');
+         // this.fcm.FirebasenotificationSetup();
           this.navCtrl.navigateForward('/login')
      }
   }catch (Exception){

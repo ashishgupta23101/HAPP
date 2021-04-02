@@ -6,7 +6,6 @@ import { TrackingService } from './tracking.service';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { SessionData } from 'src/app/models/active-packages';
 import { AuthUser } from '../models/user';
-import { environment } from 'src/environments/environment';
 import { Device } from '@ionic-native/device/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 @Injectable()

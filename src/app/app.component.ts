@@ -45,11 +45,11 @@ export class AppComponent implements OnInit{
       }
       localStorage.setItem('isScanned', 'false');
       }).catch(() => {
-        this.loadingController.presentToast('info', 'NotReady');
+        //this.loadingController.presentToast('info', 'NotReady');
         this.splashScreen.hide();
       });
     }catch(ex){
-      this.loadingController.presentToast('info', 'errorInTry');
+      //this.loadingController.presentToast('info', 'errorInTry');
       this.splashScreen.hide();
 console.log(JSON.stringify(ex));
     }
@@ -59,11 +59,11 @@ console.log(JSON.stringify(ex));
     var appStarted = false;
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      this.loadingController.presentToast('info', 'AfterDemoRegistering');
-      //this.fcm.FirebasenotificationSetup();
+      //this.loadingController.presentToast('info', 'AfterDemoRegistering');
+        this.fcm.FirebasenotificationSetup();
         if (data == null || data.Error === true)
         { 
-          this.loadingController.presentToast('info','inNULLData');
+          //this.loadingController.presentToast('info','inNULLData');
           localStorage.setItem('AuthToken', null);
           localStorage.setItem('IsLogin', 'false');
           localStorage.setItem('user', null);
@@ -75,7 +75,7 @@ console.log(JSON.stringify(ex));
           
         }
         if (data && data.ResponseData.AccessToken) {
-          this.loadingController.presentToast('info','InIf');
+          //this.loadingController.presentToast('info','InIf');
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
           localStorage.setItem('user', 'dummyUser');
@@ -86,7 +86,7 @@ console.log(JSON.stringify(ex));
           this.splashScreen.hide();
         }
         else {
-          this.loadingController.presentToast('info','inElse');
+          //this.loadingController.presentToast('info','inElse');
           this.initializeApp();
           localStorage.setItem('AuthToken', null);
           localStorage.setItem('IsLogin', 'false');
@@ -98,7 +98,7 @@ console.log(JSON.stringify(ex));
         }
       },
       error => {
-        this.loadingController.presentToast('info', 'In Error:');
+       // this.loadingController.presentToast('info', 'In Error:');
         localStorage.setItem('AuthToken', null);
         localStorage.setItem('IsLogin', 'false');
         localStorage.setItem('user', null);
