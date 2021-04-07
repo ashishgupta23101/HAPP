@@ -64,22 +64,21 @@ export class LinkEmailAcPage implements OnInit {
 
       this.google.login({})
       .then((res) => {
-        alert('response: ' + JSON.stringify(res));
+       // alert('response: ' + JSON.stringify(res));
        // const { idToken, accessToken } = response;
-             this.accessToken = res.credential.accessToken;
+             this.accessToken = res.accessToken;
              localStorage.setItem('accessToken',this.accessToken);
-             this.emailAccount.Username = localStorage.getItem('user');
+             this.emailAccount.Username = res.email;
              this.emailAccount.AuthToken = this.accessToken;
              this.emailAccount.ProviderName = this.proCode;
              this.emailAccount.Password = '';
              this.loading.present('Linking Account.');
              this.LinkAccount();
-            
-             console.log(JSON.stringify(this.accessToken));
-             this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
-             this.navCtrl.navigateForward(`/listing-retailer`);
+             //this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
+             
            }).catch(err =>{
              localStorage.setItem('accessToken','NA');
+             this.proCode = '';
              this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
              this.loading.presentToast('error','Unable to Link Account!')
            });
@@ -93,9 +92,12 @@ export class LinkEmailAcPage implements OnInit {
       // tslint:disable-next-line: no-debugger
       this.loading.dismiss();
       this.loading.presentToast('info', 'Account linked Successfully.');
+      this.navCtrl.navigateForward(`/welcome`);
     },
     error => {
       this.loading.dismiss();
+      this.proCode = '';
+      this.trackService.logError(JSON.stringify(error), 'googleSignIn()');
       this.loading.presentToast('error', 'Unable to link Account.');
     });
   }

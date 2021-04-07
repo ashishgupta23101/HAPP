@@ -36,7 +36,6 @@ export class AppComponent implements OnInit{
           if (curtime <= exptime){
             this.initializeApp();
             this.trackService.setLatestPackages();
-            this.splashScreen.hide();
           }else{
           // localStorage.setItem('user', 'dummyUser');
             this.loadingController.presentToast('info','Your login expired. Please login.');
@@ -46,17 +45,15 @@ export class AppComponent implements OnInit{
       localStorage.setItem('isScanned', 'false');
       }).catch(() => {
         //this.loadingController.presentToast('info', 'NotReady');
-        this.splashScreen.hide();
+        this.gotoLogin();
       });
     }catch(ex){
       //this.loadingController.presentToast('info', 'errorInTry');
-      this.splashScreen.hide();
-console.log(JSON.stringify(ex));
+      this.gotoLogin();
     }
 
   }
   register(){
-    var appStarted = false;
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
       //this.loadingController.presentToast('info', 'AfterDemoRegistering');
@@ -64,14 +61,7 @@ console.log(JSON.stringify(ex));
         if (data == null || data.Error === true)
         { 
           //this.loadingController.presentToast('info','inNULLData');
-          localStorage.setItem('AuthToken', null);
-          localStorage.setItem('IsLogin', 'false');
-          localStorage.setItem('user', null);
-          this.initializeApp();
-          localStorage.setItem('currPage', 'rp');
-          this.navCtrl.navigateForward(`/login`);
-          appStarted = true;
-          this.splashScreen.hide();
+          this.gotoLogin();
           
         }
         if (data && data.ResponseData.AccessToken) {
@@ -83,33 +73,26 @@ console.log(JSON.stringify(ex));
           localStorage.setItem('IsLogin', 'true');
           this.initializeApp();
           this.trackService.setLatestPackages();
-          this.splashScreen.hide();
         }
         else {
           //this.loadingController.presentToast('info','inElse');
-          this.initializeApp();
-          localStorage.setItem('AuthToken', null);
-          localStorage.setItem('IsLogin', 'false');
-          localStorage.setItem('user', null);
-          localStorage.setItem('currPage', 'rp');
-          this.navCtrl.navigateForward(`/login`);
-          appStarted = true;
-          this.splashScreen.hide();
+          this.gotoLogin();
         }
       },
       error => {
        // this.loadingController.presentToast('info', 'In Error:');
-        localStorage.setItem('AuthToken', null);
-        localStorage.setItem('IsLogin', 'false');
-        localStorage.setItem('user', null);
-        this.initializeApp();
-        localStorage.setItem('currPage', 'rp');
-        this.navCtrl.navigateForward(`/login`);
-        appStarted = true;
-        this.splashScreen.hide();
+        this.gotoLogin();
       });
   }
   ngOnInit() {
+  }
+  gotoLogin(){
+    this.initializeApp();
+    localStorage.setItem('AuthToken', null);
+    localStorage.setItem('IsLogin', 'false');
+    localStorage.setItem('user', null);
+    localStorage.setItem('currPage', 'rp');
+    this.navCtrl.navigateForward(`/login`);
   }
   initializeApp() {
 
@@ -144,9 +127,10 @@ console.log(JSON.stringify(ex));
       });
       
       this.statusBar.styleDefault();
-
+      this.splashScreen.hide();
     }else{
       this.storage.set('deviceID', 'browser');
+      this.splashScreen.hide();
     }
 
 
