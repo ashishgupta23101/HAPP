@@ -43,12 +43,9 @@ export class AppComponent implements OnInit{
           }
       }
       localStorage.setItem('isScanned', 'false');
-      }).catch(() => {
-        //this.loadingController.presentToast('info', 'NotReady');
-        this.gotoLogin();
       });
     }catch(ex){
-      //this.loadingController.presentToast('info', 'errorInTry');
+      this.loadingController.presentToast('info', 'errorInTry');
       this.gotoLogin();
     }
 
@@ -56,16 +53,16 @@ export class AppComponent implements OnInit{
   register(){
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      //this.loadingController.presentToast('info', 'AfterDemoRegistering');
+      this.loadingController.presentToast('info', 'AfterDemoRegistering');
         this.fcm.FirebasenotificationSetup();
         if (data == null || data.Error === true)
         { 
-          //this.loadingController.presentToast('info','inNULLData');
+          this.loadingController.presentToast('info','inNULLData');
           this.gotoLogin();
           
         }
         if (data && data.ResponseData.AccessToken) {
-          //this.loadingController.presentToast('info','InIf');
+          this.loadingController.presentToast('info','InIf');
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
           localStorage.setItem('user', 'dummyUser');
@@ -75,12 +72,12 @@ export class AppComponent implements OnInit{
           this.trackService.setLatestPackages();
         }
         else {
-          //this.loadingController.presentToast('info','inElse');
+          this.loadingController.presentToast('info','inElse');
           this.gotoLogin();
         }
       },
       error => {
-       // this.loadingController.presentToast('info', 'In Error:');
+        this.loadingController.presentToast('info', 'In Error:');
         this.gotoLogin();
       });
   }
