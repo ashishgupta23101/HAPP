@@ -7,6 +7,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { LoaderService } from './providers/loader.service';
 import { TrackingService } from './providers/tracking.service';
 import { FcmService } from './providers/fcm.service';
+import { SessionData } from './models/active-packages';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -25,6 +26,12 @@ export class AppComponent implements OnInit{
     @Inject(Network) private network: Network
    ){
      try{
+      this.storage.get('apiData').then(aData => {
+        if (aData !== null && aData !== undefined) {
+           SessionData.apiURL = aData.apiURL ; 
+           SessionData.apiType = aData.apiType; 
+          }});
+if (this.platform.is('cordova')) {
       this.platform.ready().then(() => {
         //this.fcm.FirebasenotificationSetup();
       let fixUserId =localStorage.getItem('AuthToken');
@@ -38,14 +45,17 @@ export class AppComponent implements OnInit{
             this.trackService.setLatestPackages();
           }else{
           // localStorage.setItem('user', 'dummyUser');
-            this.loadingController.presentToast('info','Your login expired. Please login.');
+            //this.loadingController.presentToast('info','Your login expired. Please login.');
             this.register();
           }
       }
       localStorage.setItem('isScanned', 'false');
       });
+    }else{
+      this.initializeApp();
+    }
     }catch(ex){
-      this.loadingController.presentToast('info', 'errorInTry');
+     // this.loadingController.presentToast('info', 'errorInTry');
       this.gotoLogin();
     }
 
@@ -53,16 +63,15 @@ export class AppComponent implements OnInit{
   register(){
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-      this.loadingController.presentToast('info', 'AfterDemoRegistering');
-        this.fcm.FirebasenotificationSetup();
+      //this.loadingController.presentToast('info', 'AfterDemoRegistering');
         if (data == null || data.Error === true)
         { 
-          this.loadingController.presentToast('info','inNULLData');
+          //this.loadingController.presentToast('info','inNULLData');
           this.gotoLogin();
           
         }
         if (data && data.ResponseData.AccessToken) {
-          this.loadingController.presentToast('info','InIf');
+         // this.loadingController.presentToast('info','InIf');
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
           localStorage.setItem('user', 'dummyUser');
@@ -72,12 +81,12 @@ export class AppComponent implements OnInit{
           this.trackService.setLatestPackages();
         }
         else {
-          this.loadingController.presentToast('info','inElse');
+          //this.loadingController.presentToast('info','inElse');
           this.gotoLogin();
         }
       },
       error => {
-        this.loadingController.presentToast('info', 'In Error:');
+       // this.loadingController.presentToast('info', 'In Error:');
         this.gotoLogin();
       });
   }
@@ -92,7 +101,7 @@ export class AppComponent implements OnInit{
     this.navCtrl.navigateForward(`/login`);
   }
   initializeApp() {
-
+    this.fcm.FirebasenotificationSetup();
     this.statusBar.overlaysWebView(false);
     // set status bar to white
     this.statusBar.styleLightContent();
