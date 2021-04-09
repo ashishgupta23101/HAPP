@@ -41,8 +41,8 @@ if (this.platform.is('cordova')) {
           const exptime = new Date(localStorage.getItem('expires'));
           const curtime = new Date();
           if (curtime <= exptime){
-            this.initializeApp();
             this.trackService.setLatestPackages();
+            this.initializeApp();
           }else{
           // localStorage.setItem('user', 'dummyUser');
             //this.loadingController.presentToast('info','Your login expired. Please login.');
@@ -77,8 +77,8 @@ if (this.platform.is('cordova')) {
           localStorage.setItem('user', 'dummyUser');
           localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
           localStorage.setItem('IsLogin', 'true');
-          this.initializeApp();
           this.trackService.setLatestPackages();
+          this.initializeApp();
         }
         else {
           //this.loadingController.presentToast('info','inElse');

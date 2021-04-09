@@ -17,8 +17,7 @@ export class LinkEmailAcPage implements OnInit {
   proCode: any = '';
   emailAccount : EmailAccount = new EmailAccount();
   loggedIn : boolean;
-  accessToken : string;
-  providers : Array<Provider> = []
+  providers : Array<Provider> = [];
   constructor(@Inject(NavController) private navCtrl: NavController,
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
@@ -62,24 +61,23 @@ export class LinkEmailAcPage implements OnInit {
   googleSignIn() {
     this.platform.ready().then(() => {
       this.loading.present('Linking Account.');
-      this.google.login({})
+      this.google.login({'scopes': 'https://www.googleapis.com/auth/gmail.readonly'})
       .then((res) => {
        // alert('response: ' + JSON.stringify(res));
        // const { idToken, accessToken } = response;
-             this.accessToken = res.accessToken;
-             localStorage.setItem('accessToken',this.accessToken);
+           
+             localStorage.setItem('accessToken',res.accessToken);
              this.emailAccount.Username = res.email;
-             this.emailAccount.AuthToken = this.accessToken;
+             this.emailAccount.AuthToken = res.accessToken;
              this.emailAccount.ProviderName = this.proCode;
              this.emailAccount.Password = '';
-             
-             this.LinkAccount();
+             this.proCode = ''; 
+             this.LinkAccount(this.emailAccount);
              //this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
              
            }).catch(err =>{
             this.loading.dismiss();
              localStorage.setItem('accessToken','NA');
-             this.proCode = '';
              this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
              this.loading.presentToast('error','Unable to Link Account!')
            });
@@ -88,12 +86,14 @@ export class LinkEmailAcPage implements OnInit {
 
 
   }
-  LinkAccount(){
-    this.trackService.saveEmailAccount(this.emailAccount).subscribe(data => {
+  LinkAccount(_emailAccount :EmailAccount){
+    this.trackService.saveEmailAccount(_emailAccount).subscribe(data => {
+      this.loggedIn = true;
+      this.proCode = '';
       // tslint:disable-next-line: no-debugger
       this.loading.dismiss();
       this.loading.presentToast('info', 'Account linked Successfully.');
-      this.navCtrl.navigateForward(`/welcome`);
+      //this.navCtrl.navigateForward(`/welcome`);
     },
     error => {
       this.loading.dismiss();
@@ -105,7 +105,10 @@ export class LinkEmailAcPage implements OnInit {
   signOut() {
     this.loggedIn = false;
     localStorage.setItem('accessToken','NA');
-    this.loading.presentToast('info','Account De-Linked Successfully')
+    this.loading.presentToast('info','Account De-Linked Successfully');
+    this.google.logout().then(()=>{
+      localStorage.setItem('accessToken','NA');
+    });
     // this.authService.signOut(true).then(data =>{
     //   alert(JSON.stringify(data));
     // }).catch(err =>{
