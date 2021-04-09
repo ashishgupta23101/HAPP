@@ -61,7 +61,7 @@ export class LinkEmailAcPage implements OnInit {
   }
   googleSignIn() {
     this.platform.ready().then(() => {
-
+      this.loading.present('Linking Account.');
       this.google.login({})
       .then((res) => {
        // alert('response: ' + JSON.stringify(res));
@@ -72,11 +72,12 @@ export class LinkEmailAcPage implements OnInit {
              this.emailAccount.AuthToken = this.accessToken;
              this.emailAccount.ProviderName = this.proCode;
              this.emailAccount.Password = '';
-             this.loading.present('Linking Account.');
+             
              this.LinkAccount();
              //this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
              
            }).catch(err =>{
+            this.loading.dismiss();
              localStorage.setItem('accessToken','NA');
              this.proCode = '';
              this.trackService.logError(JSON.stringify(err), 'googleSignIn()');
