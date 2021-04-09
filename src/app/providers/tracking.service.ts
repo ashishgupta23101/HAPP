@@ -508,6 +508,9 @@ getMessagebyId(_token: string, _id: string): Observable<any> {
 
 demoregister(): Observable<any> {
 let user =  localStorage.getItem('user');
+if (user === null || user === undefined || user === '' || user === 'null'){
+  user = 'dummyUser';
+}
 let devid = this.devid;
 if(user === 'dummyUser'){
   const request = {Email: devid+'@dummy.user' , Password: 'dummyUser'};
