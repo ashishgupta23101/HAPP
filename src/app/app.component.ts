@@ -100,7 +100,7 @@ if (this.platform.is('cordova')) {
     localStorage.setItem('AuthToken', null);
     localStorage.setItem('IsLogin', 'false');
     localStorage.setItem('user', null);
-    localStorage.setItem('currPage', 'rp');
+    localStorage.setItem('currPage', 'wp');
     this.navCtrl.navigateForward(`/login`);
   }
   initializeApp() {
