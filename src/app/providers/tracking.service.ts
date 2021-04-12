@@ -18,6 +18,7 @@ import { __param } from 'tslib';
 import { HelperService } from './helper.service';
 import { EmailAccount } from '../models/Providers';
 import { VendorAccount } from '../models/vendorAccount';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -163,6 +164,7 @@ export class TrackingService {
     @Inject(Storage) private storage: Storage,
     @Inject(Platform) private platform: Platform,
     @Inject(HelperService) private helper: HelperService,
+    @Inject(SplashScreen) private splashScreen: SplashScreen,
     @Inject(NavController) private navCtrl: NavController) {
       this.platform.ready().then(() => {
         if (this.platform.is('cordova')) {
@@ -329,6 +331,7 @@ export class TrackingService {
     if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
       localStorage.setItem('cusHome', 'tp');
     }
+    this.splashScreen.hide();
     switch (cusHome) {
       case 'tp':
       case 'sp':

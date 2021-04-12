@@ -41,8 +41,9 @@ if (this.platform.is('cordova')) {
           const exptime = new Date(localStorage.getItem('expires'));
           const curtime = new Date();
           if (curtime <= exptime){
-            this.trackService.setLatestPackages();
+            
             this.initializeApp();
+            this.trackService.setLatestPackages();
           }else{
           // localStorage.setItem('user', 'dummyUser');
             //this.loadingController.presentToast('info','Your login expired. Please login.');
@@ -53,6 +54,7 @@ if (this.platform.is('cordova')) {
       });
     }else{
       this.initializeApp();
+      this.splashScreen.hide();
     }
     }catch(ex){
      // this.loadingController.presentToast('info', 'errorInTry');
@@ -77,8 +79,8 @@ if (this.platform.is('cordova')) {
           localStorage.setItem('user', 'dummyUser');
           localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
           localStorage.setItem('IsLogin', 'true');
-          this.trackService.setLatestPackages();
           this.initializeApp();
+          this.trackService.setLatestPackages();
         }
         else {
           //this.loadingController.presentToast('info','inElse');
@@ -94,6 +96,7 @@ if (this.platform.is('cordova')) {
   }
   gotoLogin(){
     this.initializeApp();
+    this.splashScreen.hide();
     localStorage.setItem('AuthToken', null);
     localStorage.setItem('IsLogin', 'false');
     localStorage.setItem('user', null);
@@ -133,10 +136,10 @@ if (this.platform.is('cordova')) {
       });
       
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      
     }else{
       this.storage.set('deviceID', 'browser');
-      this.splashScreen.hide();
+      
     }
 
 
