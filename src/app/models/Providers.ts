@@ -1,6 +1,7 @@
 export class Provider {
     ProviderName : string;
     Url : string;
+    IsLinked : boolean;
 }
 
 export class EmailAccount {

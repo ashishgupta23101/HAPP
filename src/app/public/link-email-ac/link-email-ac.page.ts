@@ -33,29 +33,29 @@ export class LinkEmailAcPage implements OnInit {
   getallProviders(){
     this.trackService.getAllProviders().subscribe(data => {
       // tslint:disable-next-line: no-debugger
-
+      this.proCode ='';
       this.providers = data.ResponseData;
       this.loading.dismiss();
     },
     error => {
+      this.proCode ='';
       this.loading.presentToast('error', 'No Account Available.');
       this.loading.dismiss();
       this.goBack();
     });
   }
   ngOnInit() {
-    var tok = localStorage.getItem('accessToken');
-    if( tok === undefined || tok === null || tok === '' || tok === 'NA'){
-       this.loggedIn = false;
-    }
-    else{
-      this.loggedIn = true;
-    }
+    
   }
   proChange(){
-    if(this.proCode === 'Google'){
-      this.googleSignIn();
-    }
+    if(this.providers.filter(item => {return item.ProviderName === this.proCode && item.IsLinked === true}).length > 0){
+      this.loggedIn = true;
+    }else{
+      this.loggedIn = false;
+      if(this.proCode === 'Google'){
+        this.googleSignIn();
+      }
+  }
    //alert(this.proCode);
   }
   googleSignIn() {
@@ -63,9 +63,7 @@ export class LinkEmailAcPage implements OnInit {
       this.loading.present('Linking Account.');
       this.google.login({'scopes': 'https://www.googleapis.com/auth/gmail.readonly'})
       .then((res) => {
-       // alert('response: ' + JSON.stringify(res));
-       // const { idToken, accessToken } = response;
-           
+
              localStorage.setItem('accessToken',res.accessToken);
              this.emailAccount.Username = res.email;
              this.emailAccount.AuthToken = res.accessToken;
