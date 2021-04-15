@@ -230,16 +230,25 @@ export class TrackingService {
             this.storage.get('_activePackages').then(tData => {
                 if (tData == null) {tData = []; }
                 localStorage.setItem('SCAC', '');
+                this.storage.get('_allPackages').then(allData => {
+                    if (allData == null) {allData = []; }
+
                 // tslint:disable-next-line: max-line-length
                 const index = tData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
                 if (index >= 0) {
                   tData.splice(index, 1);
                 }
+                const index1 = allData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
+                if (index1 >= 0) {
+                  allData.splice(index1, 1);
+                }
                 const record: any = data.objResponse;
                 record.trackingNo = queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim();
                 record.ResultData.Description = queryParam.Description;
                 record.ResultData.Residential = queryParam.Residential;
+                allData.push(record);
                 tData.push(record);
+                this.storage.set('_allPackages', allData);
                 this.storage.set('_activePackages', tData);
                 this.loadingController.dismiss();
                 switch (nav) {
@@ -254,6 +263,7 @@ export class TrackingService {
                         break;
                 }
                // this.getReportsData();
+              });
               });
           },
           error => {
@@ -344,7 +354,6 @@ export class TrackingService {
     }
   }
   getReportsData(){
-    
     this.storage.get('_allPackages').then(tData => {
        if (tData == null) {
         tData = [];
@@ -359,49 +368,53 @@ export class TrackingService {
        this.PackagebyCarrier.data = [0,0,0,0,0,0];
        this.ReportOTP.data = [0,0,0];
        tData.forEach(element => {
-        this.PackageSummary.total ++;
-        this.PackagebyCarrier.total ++;
-        if(element.Trackingheader.CarrierCode === 'A'){
-          this.PackagebyCarrier.data[0] ++;
-        }
-        else if(element.Trackingheader.CarrierCode === 'U'){
-          this.PackagebyCarrier.data[1] ++;
-        }
-        else if(element.Trackingheader.CarrierCode === 'F' || element.Trackingheader.CarrierCode === 'R'){
-          this.PackagebyCarrier.data[2] ++;
-        }
-        else if(element.Trackingheader.CarrierCode === 'S'){
-          this.PackagebyCarrier.data[3] ++;
-        }
-        else if(element.Trackingheader.CarrierCode === 'D'){
-          this.PackagebyCarrier.data[4] ++;
-        }
-        else {
-          this.ReportOTP.data[1] ++;
-        }
-        if(element.ResultData.Status?.toLowerCase().includes('delivered')){
-          this.PackageSummary.data[0] ++;
-          this.ReportOTP.data[0] ++;
-        }
-        else if(element.ResultData.Status?.toLowerCase().includes('exception')){
-          this.PackageSummary.data[1] ++;
-        }
-        else if(element.ResultData.Status?.toLowerCase().includes('late')){
-          this.PackageSummary.data[2] ++;
-        }
-        else if(element.ResultData.Status?.toLowerCase().includes('manifest error')){
-          this.PackageSummary.data[3] ++;
-        }
-        else if(element.ResultData.Status?.toLowerCase().includes('transit')){
-          this.PackageSummary.data[4] ++;
-          this.ReportOTP.data[2] ++;
-        }
-        else if(element.ResultData.Status?.toLowerCase().includes('return')){
-          this.ReportOTP.data[1] ++;
-        }
+        this.setreport(element);
        });
        this.ReportOTP.total = this.ReportOTP.data[0] + this.ReportOTP.data[1] + this.ReportOTP.data[2];
     });
+  }
+
+  setreport(element: any){
+    this.PackageSummary.total ++;
+    this.PackagebyCarrier.total ++;
+    if(element.Trackingheader.CarrierCode === 'A'){
+      this.PackagebyCarrier.data[0] ++;
+    }
+    else if(element.Trackingheader.CarrierCode === 'U'){
+      this.PackagebyCarrier.data[1] ++;
+    }
+    else if(element.Trackingheader.CarrierCode === 'F' || element.Trackingheader.CarrierCode === 'R'){
+      this.PackagebyCarrier.data[2] ++;
+    }
+    else if(element.Trackingheader.CarrierCode === 'S'){
+      this.PackagebyCarrier.data[3] ++;
+    }
+    else if(element.Trackingheader.CarrierCode === 'D'){
+      this.PackagebyCarrier.data[4] ++;
+    }
+    else {
+      this.ReportOTP.data[1] ++;
+    }
+    if(element.ResultData.Status?.toLowerCase().includes('delivered')){
+      this.PackageSummary.data[0] ++;
+      this.ReportOTP.data[0] ++;
+    }
+    else if(element.ResultData.Status?.toLowerCase().includes('exception')){
+      this.PackageSummary.data[1] ++;
+    }
+    else if(element.ResultData.Status?.toLowerCase().includes('late')){
+      this.PackageSummary.data[2] ++;
+    }
+    else if(element.ResultData.Status?.toLowerCase().includes('manifest error')){
+      this.PackageSummary.data[3] ++;
+    }
+    else if(element.ResultData.Status?.toLowerCase().includes('transit')){
+      this.PackageSummary.data[4] ++;
+      this.ReportOTP.data[2] ++;
+    }
+    else if(element.ResultData.Status?.toLowerCase().includes('return')){
+      this.ReportOTP.data[1] ++;
+    }
   }
      /// refresh for all package
    refreshTrackingDetails(arrayPackage: Array<ActivePackages>) {
