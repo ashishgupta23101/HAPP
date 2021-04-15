@@ -31,6 +31,7 @@ export class AppComponent implements OnInit{
            SessionData.apiURL = aData.apiURL ; 
            SessionData.apiType = aData.apiType; 
           }});
+          this.trackService.GenerateDeviceID();
 if (this.platform.is('cordova')) {
       this.platform.ready().then(() => {
         //this.fcm.FirebasenotificationSetup();
@@ -53,8 +54,7 @@ if (this.platform.is('cordova')) {
       localStorage.setItem('isScanned', 'false');
       });
     }else{
-      this.initializeApp();
-      this.splashScreen.hide();
+      this.register();
     }
     }catch(ex){
      // this.loadingController.presentToast('info', 'errorInTry');

@@ -67,7 +67,7 @@ export class TrackingService {
       headers: _header
     });
   }
-  devid : any;
+  devid : any = 'browser';
   acData : Array<any>;
   arData : Array<any>;
   allData : Array<any>;
@@ -172,6 +172,7 @@ export class TrackingService {
         }else{
           this.devid = 'browser';
         }
+        this.GenerateDeviceID();
       });
     }
     filterItems(items: any , searchTerm) {
@@ -215,14 +216,12 @@ export class TrackingService {
     /// get Tracking details for package
   getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
 
-    this.storage.get('deviceID').then(id => {
-      if (id !== '' && id !== null && id !== undefined ){
-            queryParam.DeviceNo = id;
+            queryParam.DeviceNo = this.devid;
             this.loadingController.present('Tracking package....');
             this.trackPackages(queryParam).subscribe(data => {
             // tslint:disable-next-line: no-debugger
             if (data.Error === true) {
-              console.log('Error = ' +  data.Message);
+              this.logError('Error - ' + JSON.stringify(data.Message), 'getTrackingDetails');
               this.loadingController.dismiss();
               this.loadingController.presentToast('Error', 'Invalid Response.');
               return false;
@@ -262,10 +261,8 @@ export class TrackingService {
             this.loadingController.presentToast('error', 'Could not be tracked by '+ this.helper.GetCarrierName(queryParam.Carrier));
             this.logError('Error - ' + JSON.stringify(error), 'Tracking');
           });
-      } else {
-        this.loadingController.presentToast('alert', 'Invalid Request');
-      }
-    });
+
+
 
   }
 
@@ -291,11 +288,8 @@ export class TrackingService {
     this.acData = [];
     this.arData = [];
     this.allData = [];
-    this.storage.get('deviceID').then(id => {
-    if (id !== '' && id !== null && id !== undefined ){
-    this.getAllActivePackages(id).subscribe(data => {
+    this.getAllActivePackages(this.devid).subscribe(data => {
       // tslint:disable-next-line: no-debugger
-
       data.ResponseData.forEach(element => {
        let itemKey = element.ResultData.TrackingNo.trim() + '-' + element.ResultData.CarrierCode.trim();
        const record: any = element;
@@ -319,12 +313,7 @@ export class TrackingService {
     },error => { 
       this.gotocustomePAGE();
       this.loadingController.presentToast('alert', 'Unable to fetch record');
-     });
-  } else {
-    this.gotocustomePAGE();
-    this.loadingController.presentToast('alert', 'Unable to fetch record');
-  }
-});
+    });
   }
   gotocustomePAGE(){
     let cusHome = localStorage.getItem('cusHome');
@@ -415,8 +404,7 @@ export class TrackingService {
   }
      /// refresh for all package
    refreshTrackingDetails(arrayPackage: Array<ActivePackages>) {
-    this.storage.get('deviceID').then(id => {
-      if (id !== '' && id !== null && id !== undefined ){
+
     this.loadingController.presentToast('alert', 'Retracking active packages.');
     let isSuccess = 0;
     let i = 1;
@@ -428,7 +416,7 @@ export class TrackingService {
         const queryParam = new QueryParams();
         queryParam.TrackingNo = element.TrackingNo;
         queryParam.Carrier = element.Carrier;
-        queryParam.DeviceNo = id;
+        queryParam.DeviceNo = this.devid;
         queryParam.Description = '';
         queryParam.Residential = 'false';
         this.trackPackages(queryParam).subscribe(data => {
@@ -479,10 +467,7 @@ export class TrackingService {
    // error => {
      
    // });
-    } else {
-      this.loadingController.presentToast('alert', 'Invalid Request');
-    }
-  });
+
 }
 // tslint:disable-next-line: variable-name
 login(_email: string , _password: string): Observable<any> {
@@ -569,7 +554,12 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
     }
     GenerateDeviceID()
     {
-            this.storage.set('deviceID', this.devid);
+      if(this.devid === undefined || this.devid === null || this.devid === '' ){
+        this.storage.set('deviceID', 'browser' );
+      }else{
+        this.storage.set('deviceID', this.devid );
+      }
+
     }
     saveToken(devToken){
       const gsmDetails = {
