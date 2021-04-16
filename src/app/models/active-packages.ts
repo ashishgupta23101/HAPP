@@ -38,6 +38,10 @@ export class CusDates {
     firstDate: any;
     lastDate: any;
 }
+export class AllData{
+    Response: Array<any>;
+    Type: string;
+}
 export class SessionData {
     static packages: Packages = new Packages();
     static filteringDates: FilteringDates = new FilteringDates();

@@ -45,6 +45,7 @@ constructor(
 public searchTerm = '';
 // tslint:disable-next-line: variable-name
 mainMenu = true;
+_data : Array<any>;
 carrierMenu = false;
 statusMenu = false;
 dateMenu = false;
@@ -83,7 +84,8 @@ Date = {
   lastmonth: false
 };
 ngOnInit() {
-  this.segmentChanged();
+  this.activeItems = [];
+ // this.segmentChanged();
 }
 
 menu(b){
@@ -965,41 +967,31 @@ ionViewDidEnter(){
 }
 segmentChanged() {
   SessionData.packages = new  Packages();
+  this._data =[];
   this.activeItems = [];
-  switch (this.segmentModel) {
-    case 'active':
-      this.storage.get('_activePackages').then((value) => {
-        if (value !== '' && value !== undefined && value !== null){
-        this.trackService.setPackagestoSession(value);
-        this.sessionData = SessionData;
-        if(this.IsFilter){
-          this.apply();
-        }else{
-          this.activeItems = SessionData.packages.All;
-        }
-        this.sortedBy();
-        }
-        this.readyToLoad = true;
-     });
-      break;
-    case 'history':
+  this.storage.get('_allPackages').then((value) => {
+    if (value !== '' && value !== undefined && value !== null){
       
-      this.storage.get('_archivePackages').then((value) => {
-        if (value !== '' && value !== undefined && value !== null){
-        this.trackService.setarchivePackagestoSession(value);
-        this.sessionData = SessionData;
-        if(this.IsFilter){
-          this.apply();
-        }else{
-          this.activeItems = SessionData.packages.All;
-        }
-        this.sortedBy();
-        }
-        this.readyToLoad = true;
-     });
-      break;
-  }
-
+      switch (this.segmentModel) {
+        case 'active':
+          this._data = value.filter(u =>u.type === 'act');
+          this.trackService.setPackagestoSession(this._data);
+          break;
+        case 'history':
+          this._data = value.filter(u =>u.type === 'arc');
+          this.trackService.setarchivePackagestoSession(this._data);
+          break;
+      }
+    this.sessionData = SessionData;
+    if(this.IsFilter){
+      this.apply();
+    }else{
+      this.activeItems = SessionData.packages.All;
+    }
+    this.sortedBy();
+    }
+    this.readyToLoad = true;
+ });
 }
 sortedBy() {
   debugger;
@@ -1088,8 +1080,7 @@ delete(key: string) {
 this.presentConfirm(key, 'Delete', 'Do you want to delete the package?', 'del');
 }
 locate(key: string) {
-this.storage.get('_activePackages').then(aData => {
-  const val1 = aData.find(item => item.trackingNo === key);
+  const val1 = this._data.find(item => item.trackingNo === key);
   if (val1 !== undefined && val1 !== '' && val1 !== null && val1.scans.length > 0) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -1100,7 +1091,6 @@ this.storage.get('_activePackages').then(aData => {
   } else {
     this.loading.presentToast('Warning', 'No Scans to Locate.');
   }
-});
 }
 
 MarkasDelievered(key: string) {
@@ -1132,28 +1122,20 @@ const alert = await this.alertController.create({
         {
           case 'arc':
               this.loading.present('Archiving...');
-              this.storage.get('_activePackages').then(tData => {
+              this.storage.get('_allPackages').then(tData => {
                   if (tData == null) {
                   tData = []; }
                   // tslint:disable-next-line: max-line-length
                   const index = tData.findIndex(item => item.trackingNo === key.trim());
                   if (index >= 0) {
                     this.trackService.archivePackage(keyItem[0],keyItem[1],false).subscribe(data => {
-                      // tslint:disable-next-line: no-shadowed-variable
+                    // tslint:disable-next-line: no-shadowed-variable
                     const record: any = tData.find(item => item.trackingNo === key.trim());
                     tData.splice(index, 1);
-                    this.storage.set('_activePackages', tData);
-                    this.storage.get('_archivePackages').then(aData => {
-                        if (aData == null) {
-                        aData = []; }
-                        const index1 = aData.findIndex(item => item.trackingNo === key.trim());
-                        if (index1 >= 0) { aData.splice(index1, 1); }
-                        aData.push(record);
-                        this.storage.set('_archivePackages', aData).then(() => {
-                        // this.loading.dismiss();
-                        this.refreshList();
-                     });
-                   });
+                    record.type = 'arc';
+                    tData.push(record);
+                    this.storage.set('_allPackages', tData);
+                    this.refreshList();
                      },
                       error => {
                         this.loading.presentToast('error', 'Unable to Archive!');
@@ -1164,7 +1146,7 @@ const alert = await this.alertController.create({
               break;
               case 'undo':
                 this.loading.present('undo...');
-                this.storage.get('_archivePackages').then(tData => {
+                this.storage.get('_allPackages').then(tData => {
                     if (tData == null) {
                     tData = []; }
                     // tslint:disable-next-line: max-line-length
@@ -1174,20 +1156,13 @@ const alert = await this.alertController.create({
                         // tslint:disable-next-line: no-shadowed-variable
                       const record: any = tData.find(item => item.trackingNo === key.trim());
                       tData.splice(index, 1);
-                      this.storage.set('_archivePackages', tData);
-                      this.storage.get('_activePackages').then(aData => {
-                          if (aData == null) {
-                          aData = []; }
-                          const index1 = aData.findIndex(item => item.trackingNo === key.trim());
-                          if (index1 >= 0) { aData.splice(index1, 1); }
-                          aData.push(record);
-                          this.storage.set('_activePackages', aData).then(() => {
-                          // this.loading.dismiss();
-                          this.refreshList();
-                       });
-                     });
+                      record.type = 'act';
+                      tData.push(record);
+                      this.storage.set('_allPackages', tData);
+                      this.refreshList();
                        },
                         error => {
+                          this.loading.dismiss();
                           this.loading.presentToast('error', 'Unable to undo Archived package!');
                         });
                       
@@ -1196,7 +1171,7 @@ const alert = await this.alertController.create({
                 break;
               case 'del':
                   this.loading.present('Deleting...');
-                  this.storage.get('_activePackages').then(tData => {
+                  this.storage.get('_allPackages').then(tData => {
                       if (tData == null) {
                       tData = []; }
                       // tslint:disable-next-line: max-line-length
@@ -1204,7 +1179,7 @@ const alert = await this.alertController.create({
                       if (index >= 0) {
                         this.trackService.deletePackage(keyItem[0],keyItem[1]).subscribe(data => {
                         tData.splice(index, 1);
-                        this.storage.set('_activePackages', tData).then(() => {
+                        this.storage.set('_allPackages', tData).then(() => {
                           // this.loading.dismiss();
                           this.refreshList();
                        });
@@ -1218,7 +1193,7 @@ const alert = await this.alertController.create({
                   break;
                   case 'masd':
                       this.loading.present('Processing...');
-                      this.storage.get('_activePackages').then(tData => {
+                      this.storage.get('_allPackages').then(tData => {
                           if (tData == null) {
                           tData = []; }
                           // tslint:disable-next-line: max-line-length
@@ -1229,7 +1204,7 @@ const alert = await this.alertController.create({
                             tData.splice(index, 1);
                             record.ResultData.Status = 'Delivered';
                             tData.push(record);
-                            this.storage.set('_activePackages', tData).then(() => {
+                            this.storage.set('_allPackages', tData).then(() => {
                               // this.loading.dismiss();
                               this.refreshList();
                            });

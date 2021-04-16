@@ -1107,7 +1107,7 @@ export class ReportOtpPage implements OnInit {
   }
   segmentChanged() {
     this.activeItems = [];
-    this.storage.get('_activePackages').then((value) => {
+    this.storage.get('_allPackages').then((value) => {
       if (value !== '' && value !== undefined && value !== null){
       value = value.filter(val => val.ResultData.Status.toLowerCase().includes('return'));
       this.trackService.setPackagestoSession(value);

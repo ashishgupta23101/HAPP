@@ -68,8 +68,6 @@ export class TrackingService {
     });
   }
   devid : any = 'browser';
-  acData : Array<any>;
-  arData : Array<any>;
   allData : Array<any>;
   PackageSummary: Report = {
     labels : ['Delivered','Exceptions','LateDelivery','ShippingError','InTransit' ],
@@ -227,29 +225,21 @@ export class TrackingService {
               return false;
             }
             // Tracking Response
-            this.storage.get('_activePackages').then(tData => {
+            this.storage.get('_allPackages').then(tData => {
                 if (tData == null) {tData = []; }
                 localStorage.setItem('SCAC', '');
-                this.storage.get('_allPackages').then(allData => {
-                    if (allData == null) {allData = []; }
-
                 // tslint:disable-next-line: max-line-length
                 const index = tData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
                 if (index >= 0) {
                   tData.splice(index, 1);
                 }
-                const index1 = allData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
-                if (index1 >= 0) {
-                  allData.splice(index1, 1);
-                }
                 const record: any = data.objResponse;
                 record.trackingNo = queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim();
                 record.ResultData.Description = queryParam.Description;
                 record.ResultData.Residential = queryParam.Residential;
-                allData.push(record);
+                record.type = 'act';
                 tData.push(record);
-                this.storage.set('_allPackages', allData);
-                this.storage.set('_activePackages', tData);
+                this.storage.set('_allPackages', tData);
                 this.loadingController.dismiss();
                 switch (nav) {
                   case 'pkgadded':
@@ -263,7 +253,6 @@ export class TrackingService {
                         break;
                 }
                // this.getReportsData();
-              });
               });
           },
           error => {
@@ -292,11 +281,7 @@ export class TrackingService {
   }
 
   setLatestPackages(){
-    this.storage.set('_activePackages', []);
-    this.storage.set('_archivePackages', []);
     this.storage.set('_allPackages', []);
-    this.acData = [];
-    this.arData = [];
     this.allData = [];
     this.getAllActivePackages(this.devid).subscribe(data => {
       // tslint:disable-next-line: no-debugger
@@ -307,17 +292,15 @@ export class TrackingService {
             record.trackingNo = itemKey;
             record.ResultData.Description = element.ResultData.Description;
             record.ResultData.Residential = 'false';
-              this.acData.push(record);
+            record.type = 'act';
        }else{
             record.trackingNo = itemKey;
             record.ResultData.Description = element.ResultData.Description;
             record.ResultData.Residential = 'false';
-              this.arData.push(record);
+            record.type = 'arc';
        }
        this.allData.push(record);
       });
-      this.storage.set('_activePackages', this.acData);
-      this.storage.set('_archivePackages', this.arData);
       this.storage.set('_allPackages', this.allData);
       this.gotocustomePAGE();
     },error => { 
@@ -443,7 +426,7 @@ export class TrackingService {
             } else { i++; }
           } else {
           // Tracking Response
-          this.storage.get('_activePackages').then(tData => {
+          this.storage.get('_allPackages').then(tData => {
               if (tData == null) {tData = []; }
               // tslint:disable-next-line: max-line-length
               const index = tData.findIndex(item => item.trackingNo === queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim());
@@ -452,8 +435,9 @@ export class TrackingService {
               record.trackingNo = queryParam.TrackingNo.trim() + '-' + queryParam.Carrier.trim();
               record.ResultData.Description = queryParam.Description;
               record.ResultData.Residential = queryParam.Residential;
+              record.type = 'act';
               tData.push(record);
-              this.storage.set('_activePackages', tData);
+              this.storage.set('_allPackages', tData);
               isSuccess++;
               if (arrayPackage.length === i) {
                 this.loadingController.presentToast('alert', 'Tracked Successfully : ' + isSuccess + ', Failed : ' + isFailed);
@@ -693,6 +677,7 @@ register(_email: string , _password: string, _confirm: string): Observable<any> 
     SessionData.packages = new  Packages();
     let pack: ActivePackages;
     tData.forEach(element => {
+      //alert(element.type);
       pack = new ActivePackages();
       pack.TrackingNo = element.Trackingheader.TrackingNo;
       pack.ProductName = element.Trackingheader.TrackingNo;

@@ -25,13 +25,11 @@ export class ListDetailPage implements OnInit {
               @Inject(NavController) private navCtrl: NavController) {}
 hasData: any = false;
 item: ActivePackages;
-isActive = false;
-isArchive = false;
+
 trackingScans: Array<TrackingScans> = [];
 trackingResult: TrackingResult;
 trackingheader: TrackingHeader;
 trackNo: any ;
-packType: any = '_activePackages' ;
 selectedData: any;
 @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
 // async presentPopover(ev: any) {
@@ -79,11 +77,10 @@ ionViewWillEnter(){
   this.trackingheader = new TrackingHeader();
   this.trackingResult = new TrackingResult();
   this.trackingScans = new Array<TrackingScans>();
-  this.storage.get('_activePackages').then(tData => {
+  this.storage.get('_allPackages').then(tData => {
 const val = tData.find(item => item.trackingNo === this.trackNo);
 if (val !== undefined && val !== '' && val !== null){
-this.isActive = true;
-this.isArchive = false;
+
 this.trackingScans = val.scans;
 this.trackingResult = val.ResultData;
 this.trackingheader = val.Trackingheader;
@@ -92,32 +89,11 @@ this.item.Carrier = val.Trackingheader.CarrierCode;
 this.item.Status = val.ResultData.Status;
 this.hasData = true;
 // this.loading.dismiss();
-} else {
-this.storage.get('_archivePackages').then(aData => {
-const val1 = aData.find(item => item.trackingNo === this.trackNo);
-if (val1 !== undefined && val1 !== '' && val1 !== null) {
-this.isActive = false;
-this.isArchive = true;
-this.trackingScans = val1.scans;
-this.trackingResult = val1.ResultData;
-this.trackingheader = val1.Trackingheader;
-this.item.TrackingNo = val1.Trackingheader.TrackingNo;
-this.item.Carrier = val1.Trackingheader.CarrierCode;
-this.item.Status = val1.ResultData.Status;
-this.hasData = true;
-// this.loading.dismiss();
 } else{
 this.hasData = false;
 // this.loading.dismiss();
 }
-if (this.isActive){
-this.packType = '_activePackages';
-}
-if (this.isArchive){
-this.packType = '_archivePackages';
-}
-});
-}
+
 });
 }
 share() {
@@ -127,13 +103,7 @@ goBack() {
   this.gotoActivePackages();
 }
 gotoActivePackages() {
-// this.loading.dismiss();
-if (this.isActive){
 this.navCtrl.navigateForward('/listing');
-}
-if (this.isArchive){
-this.navCtrl.navigateForward('/listing');
-}
 }
 
 archive() {
@@ -182,6 +152,7 @@ this.presentConfirm(this.trackNo, 'Re-Track', 'Do you want to Re-Track the packa
 // tslint:disable-next-line: variable-name
 async presentConfirm(key: string , _header: string, _message: string, _opration: string) {
 try{
+  let keyItem = key.split('-');
 const alert = await this.alertController.create({
 header: _header,
 message: _message,
@@ -200,38 +171,37 @@ buttons: [
     {
       case 'arc':
           this.loading.present('Archived...');
-          this.storage.get('_activePackages').then(tData => {
+          this.storage.get('_allPackages').then(tData => {
               if (tData == null) {
               tData = []; }
               // tslint:disable-next-line: max-line-length
               const index = tData.findIndex(item => item.trackingNo === key.trim());
               if (index >= 0) {
+                this.trackService.archivePackage(keyItem[0],keyItem[1],false).subscribe(data => {
+                // tslint:disable-next-line: no-shadowed-variable
                 const record: any = tData.find(item => item.trackingNo === key.trim());
                 tData.splice(index, 1);
-                this.storage.set('_activePackages', tData);
-                this.storage.get('_archivePackages').then(aData => {
-                    if (aData == null) {
-                    aData = []; }
-                    const index1 = aData.findIndex(item => item.trackingNo === key.trim());
-                    if (index1 >= 0) {aData.splice(index1, 1); }
-                    aData.push(record);
-                    this.storage.set('_archivePackages', aData).then(() => {
-                      this.gotoActivePackages();
-                   });
+                record.type = 'arc';
+                tData.push(record);
+                this.storage.set('_allPackages', tData);
+                 },
+                  error => {
+                    this.loading.presentToast('error', 'Unable to Archive!');
                   });
-               }
+                
+              }
             });
           break;
           case 'del':
               this.loading.present('Deleting...');
-              this.storage.get(this.packType).then(tData => {
+              this.storage.get('_allPackages').then(tData => {
                   if (tData == null) {
                   tData = []; }
                   // tslint:disable-next-line: max-line-length
                   const index = tData.findIndex(item => item.trackingNo === key.trim());
                   if (index >= 0) {
                     tData.splice(index, 1);
-                    this.storage.set(this.packType, tData).then(() => {
+                    this.storage.set('_allPackages', tData).then(() => {
                         this.gotoActivePackages();
                      });
                    }
@@ -239,7 +209,7 @@ buttons: [
               break;
               case 'masd':
                   this.loading.present('Processing...');
-                  this.storage.get('_activePackages').then(tData => {
+                  this.storage.get('_allPackages').then(tData => {
                       if (tData == null) {
                       tData = []; }
                       // tslint:disable-next-line: max-line-length
@@ -249,7 +219,7 @@ buttons: [
                         tData.splice(index, 1);
                         record.ResultData.Status = 'Delivered';
                         tData.push(record);
-                        this.storage.set('_activePackages', tData).then(() => {
+                        this.storage.set('_allPackages', tData).then(() => {
                           this.gotoActivePackages();
                        });
                       }
@@ -257,7 +227,7 @@ buttons: [
                   break;
                   case 'rtrck':
                    // this.loading.present('Re-Tracking...');
-                    this.storage.get('_archivePackages').then(tData => {
+                    this.storage.get('_allPackages').then(tData => {
                         if (tData == null) {
                         tData = []; }
                         // tslint:disable-next-line: max-line-length
@@ -265,7 +235,7 @@ buttons: [
                         if (index >= 0) {
                           const record: any = tData.find(item => item.trackingNo === key.trim());
                           tData.splice(index, 1);
-                          this.storage.set('_archivePackages', tData).then(() => {
+                          this.storage.set('_allPackages', tData).then(() => {
                           const queryParam = new QueryParams();
                           queryParam.TrackingNo = record.Trackingheader.TrackingNo;
                           queryParam.Carrier = record.Trackingheader.CarrierCode;
