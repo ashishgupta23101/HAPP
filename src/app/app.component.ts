@@ -63,6 +63,7 @@ if (this.platform.is('cordova')) {
 
   }
   register(){
+    this.splashScreen.show();
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
       //this.loadingController.presentToast('info', 'AfterDemoRegistering');
