@@ -22,15 +22,15 @@
       <img src="../assets/images/haveAQuestion.svg">
     </div> 
 
-  <form class="mt10" #form="ngForm" >  
+  <form class="mt10" #form="ngForm" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" >  
     <div>
-      <ion-input name="name" type="name" placeholder="Name" class="form-control" required></ion-input>
+      <ion-input name="name" type="name" placeholder="Name" class="form-control"  formControlName="name"  required></ion-input>
     </div>
     <div>
-      <ion-input name="email" type="email" placeholder="Email" class="form-control" required></ion-input>
+      <ion-input name="email" type="email" placeholder="Email" class="form-control"  formControlName="email"  required></ion-input>
     </div>
     <div> 
-      <ion-textarea rows="4" placeholder="Type Question Here" class="form-control"></ion-textarea>   
+      <ion-textarea rows="4" placeholder="Type Question Here" class="form-control"  formControlName="message"  required></ion-textarea>   
     </div>
     
     <div class="btnBlock mt15 text-center">

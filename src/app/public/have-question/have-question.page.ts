@@ -1,5 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, Inject, NgZone, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NavController, Platform } from '@ionic/angular';
+import { User } from 'src/app/models/user';
+import { FcmService } from 'src/app/providers/fcm.service';
+import { FunctionsService } from 'src/app/providers/functions.service';
+import { TrackingService } from 'src/app/providers/tracking.service';
 
 @Component({
   selector: 'app-have-question',
@@ -7,12 +13,66 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./have-question.page.scss'],
 })
 export class HaveQuestionPage implements OnInit {
-
-  constructor(@Inject(NavController) private navCtrl: NavController,) { }
+  loginForm: FormGroup;
+  token: string;
+  constructor(
+    @Inject(Router) private router: Router,
+    @Inject(FormBuilder) public fb: FormBuilder,
+    @Inject(Platform) private platform: Platform,
+    @Inject(FunctionsService) public fun: FunctionsService,
+    @Inject(TrackingService) public trackService: TrackingService,
+    @Inject(NavController) private navCtrl: NavController) {
+    this.loginForm = this.fb.group({
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      message: new FormControl('', Validators.required)
+    });
+   }
   goBack() {
     this.navCtrl.back();
   }
   ngOnInit() {
   }
+  login(form: any){
+    if (!this.loginForm.valid) {
+      return false;
+    } else {
+     
+      this.fun.showloader('Verifying User...');
+      if (this.fun.validateEmail(form.email)) {
+        const postreq = {
+          Name:form.name , 
+          Email: form.email,
+          Message: form.message
+        }
+             this.trackService.saveSupport(postreq).subscribe(data => {
+              // tslint:disable-next-line: no-debugger
+                if (data.Error === true)
+                { //localStorage.setItem('IsLogin', 'false');
+                  this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
+                  this.fun.dismissLoader();
+                  return;
+                }
+                if (data && data.ResponseData.AccessToken) {
+                  // store user details and jwt token in local storage to keep user logged in between page refreshes
+                
+                  this.fun.dismissLoader();
+                  this.navCtrl.navigateForward('/helpconfirm');
+                }
+                else {
+                  //localStorage.setItem('IsLogin', 'true');
+                  this.fun.presentToast('Invalid Email! Please try with valid email.', true, 'bottom', 2100);
+                  this.fun.dismissLoader();
+                }
 
+            },
+            error => {
+             this.fun.dismissLoader();
+            });
+          } else {
+            this.fun.dismissLoader();
+            this.fun.presentToast('Wrong Input!', true, 'bottom', 2100);
+          }
+   }
+  }
 }

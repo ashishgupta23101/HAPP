@@ -34,16 +34,12 @@ export class NotificationsPage implements OnInit {
     try {
       this.loadingController.present('Saving Configuration.');
       let _config = new Configuration();
-      this.storage.get('deviceID').then(id => {
-         if (id !== null && id !== undefined && id !== '') {
-          _config.deviceid = id;
-          _config.days = value.archiveDays;
-          _config.delivered = value.Delivered;
-          _config.pickUpscan = value.PickUp;
-          _config.outforDelivery = value.OutforDelivery;
-          _config.nofinaldeliveredstatus = value.NFDeliveryStaus;
-          _config.isDamaged = value.Damages ? 1 : 0;
-          _config.isWeatherDelay = value.Weather ? 1 : 0;
+          _config.DeliveredScan = value.Delivered;
+          _config.PickUpScan = value.PickUp;
+          _config.OutForDeliveryScan = value.OutforDelivery;
+          _config.NoFinalDelivery = value.NFDeliveryStaus;
+          _config.Damages = value.Damages ? 1 : 0;
+          _config.WeatherDelay = value.Weather ? 1 : 0;
           this.trackService.saveDeviceConfiguration(_config).subscribe(data => {
             // tslint:disable-next-line: no-debugger
             if(data.Error === true)
@@ -63,11 +59,7 @@ export class NotificationsPage implements OnInit {
             this.loadingController.presentToast('Error', 'Something went wrong in API request');
             this.loadingController.dismiss();
           });
-        } else {
-          this.loadingController.presentToast('Error', 'No device id found.');
-          this.loadingController.dismiss();
-        }
-      });
+
 
     } catch (Exception) {
       this.trackService.logError(JSON.stringify(Exception),'saveSettings');
@@ -78,13 +70,12 @@ export class NotificationsPage implements OnInit {
 
   refresh(config = new Configuration()) {
       this.setting_Form = this.formBuilder.group({
-      PickUp: new FormControl(config.pickUpscan),
-      OutforDelivery: new FormControl(config.outforDelivery),
-      Delivered : new FormControl(config.delivered),
-      NFDeliveryStaus: new FormControl(config.nofinaldeliveredstatus),
-      Damages: new FormControl(config.isDamaged === 1 ? true : false),
-      Weather: new FormControl(config.isWeatherDelay === 1 ? true : false),
-      archiveDays: new FormControl(config.days)
+      PickUp: new FormControl(config.PickUpScan),
+      OutforDelivery: new FormControl(config.OutForDeliveryScan),
+      Delivered : new FormControl(config.DeliveredScan),
+      NFDeliveryStaus: new FormControl(config.NoFinalDelivery),
+      Damages: new FormControl(config.Damages === 1 ? true : false),
+      Weather: new FormControl(config.WeatherDelay === 1 ? true : false)
     });
   }
   fillForm() {

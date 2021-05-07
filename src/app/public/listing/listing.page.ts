@@ -970,8 +970,7 @@ segmentChanged() {
   this._data =[];
   this.activeItems = [];
   this.storage.get('_allPackages').then((value) => {
-    if (value !== '' && value !== undefined && value !== null){
-      
+    if (value !== undefined && value !== '' && value !== null){
       switch (this.segmentModel) {
         case 'active':
           this._data = value.filter(u =>u.type === 'act');

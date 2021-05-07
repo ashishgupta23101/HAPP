@@ -23,17 +23,22 @@
       <img src="../assets/images/forgotPass.svg">
     </div> 
 
-  <form class="mt35" #form="ngForm" > 
+  <form class="mt35" #form="ngForm" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)"> 
     <p class="GraphicInfo text-center">Enter the registered email address and we will send you a reset link.</p>
 
     <div>
-      <ion-input name="email" type="email" placeholder="Email" class="form-control" required></ion-input>
+      <ion-input name="email" type="email" placeholder="Email" class="form-control"  formControlName="email"  required></ion-input>
     </div>
      
     <div class="btnBlock text-center mt30">
-      <ion-button type="submit" [disabled]="form.invalid" fill="solid" class="submitBtn">Submit</ion-button>
+      <ion-button type="submit" [disabled]="form.invalid"  fill="solid" class="submitBtn">Submit</ion-button>
+    </div> 
+    <div id="registerLink" class=" text-center mt15">
+      <a href="#" class="user-links" [routerLink]="['/login']">Login here</a>
+      <a href="#" class="user-links" [routerLink]="['/register']">Not registered? Click Here</a><br>
     </div> 
   </form> 
+
 </div>
 </ion-content><ion-footer class="ion-no-border"><ion-toolbar><app-footer></app-footer></ion-toolbar>
   <div class="powerBy"><span>Powered by 

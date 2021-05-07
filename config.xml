@@ -20,6 +20,8 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="WKWebViewOnly" value="true" />
      <preference name="Orientation" value="portrait" />
+     <preference name="FadeSplashScreen" value="false"/>
+     <preference name="AutoHideSplashScreen" value="false"/>
     <feature name="CDVWKWebViewEngine">`
                                                                                                                                                                                                                        <param name="ios-package" value="CDVWKWebViewEngine" />
 </feature>
@@ -52,6 +54,7 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
         <icon height="29" src="resources/ios/icon/icon-small.png" width="29" />

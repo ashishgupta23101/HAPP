@@ -20,13 +20,14 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { TabsPageModule } from './tabs/tabs.module';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SharedModule } from './public/shared/shared.module';
 //import { fancyAnimation } from './animations';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 //import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AuthGuard } from './auth-guard';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
+//import { AngularFireAuthModule } from '@angular/fire/auth';
+//import { AngularFireModule } from '@angular/fire';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 // ionic cordova plugin add cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.837283281198-iq0n5mae2mgbjdervci03kr79rndr0j6
 // npm install --save @ionic-native/google-plus
@@ -42,8 +43,9 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     IonicStorageModule.forRoot({
     name: '__mydb',
     driverOrder: ['indexeddb', 'sqlite', 'websql']
-  }),AngularFireModule.initializeApp(environment.firebase),
-  AngularFireAuthModule,
+  }),
+  //AngularFireModule.initializeApp(environment.firebase),
+  //AngularFireAuthModule,
     ReactiveFormsModule, IonicModule.forRoot({
      // navAnimation: fancyAnimation
     }),
@@ -54,6 +56,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     StatusBar,
     LoaderService,
     BarcodeScanner,
+    EmailComposer,
     SocialSharing,
     Device,
     SplashScreen,

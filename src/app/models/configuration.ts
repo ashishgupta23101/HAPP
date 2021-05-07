@@ -1,12 +1,10 @@
 export class Configuration {
-    days = 30;
-    deviceid: string;
-    pickUpscan = true;
-    outforDelivery = true;
-    delivered = true;
-    nofinaldeliveredstatus = true;
-    isDamaged = 1;
-    isWeatherDelay = 1;
+    PickUpScan = true;
+    OutForDeliveryScan = true;
+    DeliveredScan = true;
+    NoFinalDelivery = true;
+    Damages = 1;
+    WeatherDelay = 1;
 }
 export class HomeScreen {
     Track = true;

@@ -38,5 +38,6 @@ export class TrackingResult
   Tracked: string;
   TrackingNo: string;
   Updated: string;
-  Zone: string; 
+  Zone: string;
+  VendorName: string;
 }

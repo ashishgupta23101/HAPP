@@ -4,8 +4,6 @@ import { LoaderService } from 'src/app/providers/loader.service';
 import { EmailAccount, Provider } from 'src/app/models/Providers';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase';
 @Component({
   selector: 'app-link-email-ac',
   templateUrl: './link-email-ac.page.html',
@@ -22,7 +20,6 @@ export class LinkEmailAcPage implements OnInit {
   @Inject(LoaderService) private loading: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService,
   @Inject(GooglePlus) private google:GooglePlus,
-  @Inject(AngularFireAuth) private fireAuth: AngularFireAuth,
   @Inject(Platform) private platform: Platform) {
     this.loading.present('Fetching Accounts..');
     this.getallProviders();
@@ -90,8 +87,8 @@ export class LinkEmailAcPage implements OnInit {
       this.proCode = '';
       // tslint:disable-next-line: no-debugger
       this.loading.dismiss();
-      this.loading.presentToast('info', 'Account linked Successfully.');
-      //this.navCtrl.navigateForward(`/welcome`);
+      //this.loading.presentToast('info', 'Account linked Successfully.');
+      this.navCtrl.navigateForward(`/account-link`);
     },
     error => {
       this.loading.dismiss();
@@ -103,7 +100,7 @@ export class LinkEmailAcPage implements OnInit {
   signOut() {
     this.loggedIn = false;
     localStorage.setItem('accessToken','NA');
-    this.loading.presentToast('info','Account De-Linked Successfully');
+    this.navCtrl.navigateForward(`/account-unlink`);
     this.google.logout().then(()=>{
       localStorage.setItem('accessToken','NA');
     });

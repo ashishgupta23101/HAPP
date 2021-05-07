@@ -44,13 +44,16 @@
 
   <div class="main-container spendingSmryPage"> 
 
-      <div class="Canvas_area text-center">
-            Canvas Coming Soon....
-      </div>
+    <div  class="Canvas_area text-center">
+      <canvas *ngIf="reportData.total > 0" #pieChart width="1000" height="1000"></canvas>
+      <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
+      *ngIf="reportData.total === 0" src="../../../assets/images/no-record-found.png">
+    </div>
 
-      <div class="totalPkg_info mt30">
-        <label>Total Packages: <span>147</span></label>
-      </div>
+
+    <div class="totalPkg_info mt30">
+      <label>Total Packages: <span>{{reportData.total}}</span></label>
+    </div>
 
       <div class="shadowBox mt15 p15 pr10"> 
         <h3 class="main-heading text-center mt0">Top Spend Categories</h3> 
