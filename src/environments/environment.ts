@@ -8,6 +8,7 @@ export const environment = {
   api_Url_Prod: 'http://10.1.10.76:8010/api/',
   api_Url_Beta: 'http://10.1.10.46:8010/api/',
   api_gmail : 'https://gmail.googleapis.com/gmail/v1/users/me/',
+  resetLink: 'http://10.1.10.76/resetpass/index.html?rst=@rst',
   api_google_key : 'AIzaSyCCoQU-9vtEeL-MsI-nYRfUXMGh42HrFQo',
   noOfMail: 50,
   oneSignal:{

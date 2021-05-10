@@ -12,30 +12,9 @@
     </div> 
 
     <div class="ss_head text-center">
-      <h3 class="main-heading">Package Summary</h3> 
+      <h3 class="main-heading">Spending Summary</h3> 
       <h5 class="title">Last 30 Days</h5>
     </div>
-  </div>
-  
-  <div class="headerSelectFiled">
-    <ion-row>
-      <ion-col size="6">
-        <ion-select placeholder="Filter by"  [value]="filtBy"  [(ngModel)]="filtBy"  (ionChange)="filterBy()" class="form-control selectFiled mb0">
-          <ion-select-option value="Retailer">Retailer</ion-select-option>
-          <ion-select-option value="Status">Status</ion-select-option> 
-          <ion-select-option value="Category">Category</ion-select-option> 
-        </ion-select>
-      </ion-col>
-      <ion-col size="6">
-        <ion-select placeholder="Sort by" [value]="daySelect"  [(ngModel)]="daySelect"  (ionChange)="sortedBy()" class="form-control selectFiled mb0">
-          <ion-select-option value="All">All Time</ion-select-option>
-          <ion-select-option value="Today">Today</ion-select-option> 
-          <ion-select-option value="Yesterday">Yesterday</ion-select-option>
-          <ion-select-option value="ThisWeek">This Week</ion-select-option> 
-          <ion-select-option value="LastWeek">Last Week</ion-select-option> 
-        </ion-select>
-      </ion-col>
-    </ion-row>
   </div>
 </ion-header>
 
@@ -43,14 +22,11 @@
 <ion-content class="lightGray"> 
 
   <div class="main-container spendingSmryPage"> 
-
     <div  class="Canvas_area text-center">
       <canvas *ngIf="reportData.total > 0" #pieChart width="1000" height="1000"></canvas>
       <img style="align-items: center;width: 180px; margin-left: auto; margin-right: auto;display: block;" 
       *ngIf="reportData.total === 0" src="../../../assets/images/no-record-found.png">
     </div>
-
-
     <div class="totalPkg_info mt30">
       <label>Total Packages: <span>{{reportData.total}}</span></label>
     </div>
@@ -59,11 +35,14 @@
         <h3 class="main-heading text-center mt0">Top Spend Categories</h3> 
         <div class="reportInfoSSec mt15">
           <div class="reportInfoBlock">
-            <ul>
-              <li><span class="text">Electronics</span> <span class="number">$930</span></li>
-              <li><span class="text">Clothing</span> <span class="number">$525</span></li>
-              <li><span class="text">Grocery</span> <span class="number">$300</span></li>
-              <li><span class="text">Personal Care</span> <span class="number">$100</span></li> 
+            <ul *ngIf="reportData.total > 0">
+              <li *ngFor="let item of reportData.labels; let i = index" [attr.data-index]="i">
+                <span class="text" >{{reportData.labels[i]}}</span>
+                 <span class="number">${{reportData.data[i]}}</span>
+                </li>
+            </ul>
+            <ul *ngIf="reportData.total === 0">
+              <li><span class="text" >No data available</span></li>
             </ul>
           </div>
         </div>

@@ -353,8 +353,11 @@ gotocustomePAGE(){
   }
 }
 getReportsData(){
+  debugger;
   this.spendingSummary().subscribe(data =>{
-  this.SpendingSummary = data;
+    if(data.Error === false && data.ResponseData.Total > 0){
+      this.SpendingSummary = data.ResponseData;
+    }
   },error => {
    this.logError(JSON.stringify(error),'getReportsData');
   });

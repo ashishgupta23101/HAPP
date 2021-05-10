@@ -24,14 +24,9 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SharedModule } from './public/shared/shared.module';
 //import { fancyAnimation } from './animations';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
-//import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AuthGuard } from './auth-guard';
-//import { AngularFireAuthModule } from '@angular/fire/auth';
-//import { AngularFireModule } from '@angular/fire';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-// ionic cordova plugin add cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.837283281198-iq0n5mae2mgbjdervci03kr79rndr0j6
-// npm install --save @ionic-native/google-plus
-// npm install firebase @angular/fire --save
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

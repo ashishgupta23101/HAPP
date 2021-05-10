@@ -7,12 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { SpendingSummaryPageRoutingModule } from './spending-summary-routing.module';
 
 import { SpendingSummaryPage } from './spending-summary.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule,SharedModule,
     SpendingSummaryPageRoutingModule
   ],
   declarations: [SpendingSummaryPage]

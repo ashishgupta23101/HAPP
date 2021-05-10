@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { FcmService } from 'src/app/providers/fcm.service';
+import { environment } from 'src/environments/environment';
 import { FunctionsService } from 'src/app/providers/functions.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
@@ -16,6 +17,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 export class ForgotPassPage implements OnInit {
   loginForm: FormGroup;
   token: string;
+  resetLink = environment.resetLink;
   constructor(
     @Inject(Router) private router: Router,
     @Inject(FormBuilder) public fb: FormBuilder,
@@ -52,6 +54,7 @@ export class ForgotPassPage implements OnInit {
                 if (data && data.ResponseData.AccessToken) {
                   // store user details and jwt token in local storage to keep user logged in between page refreshes
                   this.token = data.ResponseData.AccessToken.Token;
+                  this.resetLink = this.resetLink.replace('@rst',this.token);
                   this.sendMail(form.email);
                   this.fun.dismissLoader();
                 }
@@ -82,7 +85,7 @@ export class ForgotPassPage implements OnInit {
               let email = {
                 to: emailid,
                 subject: 'Change Password Link',
-                body: 'Hi , Please click on below link to change password!',
+                body: 'Hi ,<br /> Please <a href="'+this.resetLink+'">click here</a> to Reset password! ',
                 isHtml: true
               }
               // Send a text message using default options

@@ -10,7 +10,6 @@ import { TrackingService } from 'src/app/providers/tracking.service';
 import * as $ from 'jquery';
 import { Chart } from 'chart.js';
 import { InfoModelComponent } from 'src/app/component/info-model/info-model.component';
-declare var $: any;
 @Component({
   selector: 'app-package-carriers-report',
   templateUrl: './package-carriers-report.page.html',
