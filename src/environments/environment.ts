@@ -30,7 +30,7 @@ export const environment = {
   saveEmailAccount : 'EmailProvider/Account/Save',
   getAllPackages: 'Package/All',
   refreshToken:'User/Password/ResetToken',
-  saveSupport:'savehelp',
+  saveSupport:'HelpSupport/LogMessage',
   demoregister: 'User/DemoRegister',
   trackingAPI: 'Tracking?TrackingNo=@TrackingNo&Carrier=@Carrier&Description=@Description&Residential=@Residential&DeviceNo=@DeviceNo&AppUser=ShipMatrixApp&AppPwd=ShipMatrixApp&RegistrationId=@RegistrationId',
   firebase: {

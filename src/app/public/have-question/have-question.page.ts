@@ -53,18 +53,8 @@ export class HaveQuestionPage implements OnInit {
                   this.fun.dismissLoader();
                   return;
                 }
-                if (data && data.ResponseData.AccessToken) {
-                  // store user details and jwt token in local storage to keep user logged in between page refreshes
-                
                   this.fun.dismissLoader();
                   this.navCtrl.navigateForward('/helpconfirm');
-                }
-                else {
-                  //localStorage.setItem('IsLogin', 'true');
-                  this.fun.presentToast('Invalid Email! Please try with valid email.', true, 'bottom', 2100);
-                  this.fun.dismissLoader();
-                }
-
             },
             error => {
              this.fun.dismissLoader();

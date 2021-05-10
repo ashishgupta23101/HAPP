@@ -37,7 +37,6 @@ export class ForgotPassPage implements OnInit {
     
   }
   login(form: any){
-    this.sendMail('vaibhavit80@gmail.com');
     if (!this.loginForm.valid) {
       return false;
     } else {
