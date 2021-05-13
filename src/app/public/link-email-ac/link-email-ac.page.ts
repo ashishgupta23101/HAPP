@@ -63,7 +63,7 @@ export class LinkEmailAcPage implements OnInit {
 
              localStorage.setItem('accessToken',res.accessToken);
              this.emailAccount.Username = res.email;
-             this.emailAccount.AuthToken = res.accessToken;
+             this.emailAccount.AuthToken = res.serverAuthCode;
              this.emailAccount.ProviderName = this.proCode;
              this.emailAccount.Password = '';
              this.proCode = ''; 
