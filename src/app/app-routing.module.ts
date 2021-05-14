@@ -52,6 +52,14 @@ const routes: Routes = [
     loadChildren: () => import('./public/email-sent/email-sent.module').then( m => m.EmailSentPageModule)
   },
   {
+    path: 'account-link',
+    loadChildren: () => import('./public/account-link/account-link.module').then( m => m.AccountLinkPageModule)
+  },
+  {
+    path: 'account-unlink',
+    loadChildren: () => import('./public/account-unlink/account-unlink.module').then( m => m.AccountUnlinkPageModule)
+  },
+  {
     path: 'forgot-pass',
     loadChildren: () => import('./public/forgot-pass/forgot-pass.module').then( m => m.ForgotPassPageModule)
   },

@@ -60,7 +60,7 @@ export class LinkEmailAcPage implements OnInit {
       this.loading.present('Linking Account.');
       this.google.login({'scopes': 'https://www.googleapis.com/auth/gmail.readonly'})
       .then((res) => {
-
+this.trackService.logError("Email Log - "+JSON.stringify(res),"googleSignin()")
              localStorage.setItem('accessToken',res.accessToken);
              this.emailAccount.Username = res.email;
              this.emailAccount.AuthToken = res.serverAuthCode;

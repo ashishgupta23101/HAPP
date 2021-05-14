@@ -31,9 +31,10 @@ export class AppComponent implements OnInit{
            SessionData.apiURL = aData.apiURL ; 
            SessionData.apiType = aData.apiType; 
           }});
-          this.trackService.GenerateDeviceID();
+          
 if (this.platform.is('cordova')) {
       this.platform.ready().then(() => {
+        this.trackService.GenerateDeviceID();
         //this.fcm.FirebasenotificationSetup();
       let fixUserId =localStorage.getItem('AuthToken');
       if (fixUserId === null || fixUserId === undefined || fixUserId === '' || fixUserId === 'null'){
@@ -57,7 +58,7 @@ if (this.platform.is('cordova')) {
       this.register();
     }
     }catch(ex){
-     // this.loadingController.presentToast('info', 'errorInTry');
+      this.trackService.logError(JSON.stringify(ex),"Register");
       this.gotoLogin();
     }
 
@@ -85,11 +86,13 @@ if (this.platform.is('cordova')) {
         }
         else {
           //this.loadingController.presentToast('info','inElse');
+          this.trackService.logError(JSON.stringify(data),"Register Invalid response");
           this.gotoLogin();
         }
       },
       error => {
        // this.loadingController.presentToast('info', 'In Error:');
+       this.trackService.logError(JSON.stringify(error),"Register");
         this.gotoLogin();
       });
   }
