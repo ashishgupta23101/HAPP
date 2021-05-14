@@ -17,7 +17,6 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 export class ForgotPassPage implements OnInit {
   loginForm: FormGroup;
   token: string;
-  resetLink = environment.resetLink;
   constructor(
     @Inject(Router) private router: Router,
     @Inject(FormBuilder) public fb: FormBuilder,
@@ -51,12 +50,10 @@ export class ForgotPassPage implements OnInit {
                   this.fun.dismissLoader();
                   return;
                 }
-                if (data && data.ResponseData.ResetToken) {
+                if (data && data.Message === 'Sent') {
                   // store user details and jwt token in local storage to keep user logged in between page refreshes
-                  this.token = data.ResponseData.ResetToken.Token;
-                  this.resetLink = this.resetLink.replace('@rst',this.token);
-                  this.sendMail(form.email);
                   this.fun.dismissLoader();
+                  this.navCtrl.navigateForward('/email-sent');
                 }
                 else {
                   //localStorage.setItem('IsLogin', 'true');
@@ -67,7 +64,6 @@ export class ForgotPassPage implements OnInit {
 
             },
             error => {
-             localStorage.setItem('IsLogin', 'false');
              this.fun.dismissLoader();
              this.trackService.logError(JSON.stringify(error),"forgotPassword");
              this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
@@ -78,30 +74,5 @@ export class ForgotPassPage implements OnInit {
           }
    }
   }
-   sendMail(emailid:string){
-      debugger;
-      try{
-        this.platform.ready().then(()=>{
-          this.emailComposer.isAvailable().then((available: boolean) =>{
-            if(available) {
-              let email = {
-                to: emailid,
-                subject: 'Change Password Link',
-                body: 'Hi ,<br /> Please <a href="'+this.resetLink+'">click here</a> to Reset password! ',
-                isHtml: true
-              }
-              // Send a text message using default options
-              this.emailComposer.open(email).then(data =>{
-                this.navCtrl.navigateForward('/email-sent');
-                
-              }).catch(error=>{
-                this.fun.presentToast('Failed to send mail.try again', true, 'bottom', 2100);
-              });
-            }
-           });
-        });
-      }catch(ex){
-        console.log(JSON.stringify(ex));
-      }
-   }
+
 }
