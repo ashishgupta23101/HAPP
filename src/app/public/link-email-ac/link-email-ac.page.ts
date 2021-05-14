@@ -58,7 +58,8 @@ export class LinkEmailAcPage implements OnInit {
   googleSignIn() {
     this.platform.ready().then(() => {
       this.loading.present('Linking Account.');
-      this.google.login({'scopes': 'https://www.googleapis.com/auth/gmail.readonly'})
+      this.google.login({'scopes': 'https://www.googleapis.com/auth/gmail.readonly',
+      'offline': true,})
       .then((res) => {
 this.trackService.logError("Email Log - "+JSON.stringify(res),"googleSignin()")
              localStorage.setItem('accessToken',res.accessToken);
