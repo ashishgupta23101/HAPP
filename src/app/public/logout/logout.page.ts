@@ -17,7 +17,6 @@ export class LogoutPage implements OnInit {
   ngOnInit() {
   }
   logout(){
-    
     localStorage.setItem('user', 'dummyUser');
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger

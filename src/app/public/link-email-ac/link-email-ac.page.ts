@@ -61,10 +61,10 @@ export class LinkEmailAcPage implements OnInit {
       this.google.login({'scopes': 'https://www.googleapis.com/auth/gmail.readonly',
       'offline': true,})
       .then((res) => {
-this.trackService.logError("Email Log - "+JSON.stringify(res),"googleSignin()")
+             this.trackService.logError("Email Log - "+JSON.stringify(res),"googleSignin()")
              localStorage.setItem('accessToken',res.accessToken);
              this.emailAccount.Username = res.email;
-             this.emailAccount.AuthToken = res.serverAuthCode;
+             this.emailAccount.AuthToken = res.refreshToken;
              this.emailAccount.ProviderName = this.proCode;
              this.emailAccount.Password = '';
              this.proCode = ''; 

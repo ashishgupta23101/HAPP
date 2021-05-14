@@ -172,7 +172,7 @@ DelEmailAccount(proCode: string) : Observable<any> {
   new HttpHeaders()
   .set('Content-Type', 'application/json')
   .set('Authorization', 'Bearer '+_token);
-  return this.http.get(SessionData.apiURL + environment.delEmailAccount+'/'+ proCode, {
+  return this.http.post(SessionData.apiURL + environment.delEmailAccount+'/'+ proCode,null, {
     headers: _header
   });
 }
@@ -524,25 +524,12 @@ return this.http.get(url, {
 }
 
 demoregister(): Observable<any> {
-let user =  localStorage.getItem('user');
-if (user === null || user === undefined || user === '' || user === 'null'){
-user = 'dummyUser';
-}
-let devid = this.devid;
-if(user === 'dummyUser'){
-const request = {Email: devid+'@dummy.user' , Password: 'dummyUser'};
-return this.http.post(SessionData.apiURL + environment.login, request, {
+const request = {DeviceId: this.devid};
+return this.http.post(SessionData.apiURL + environment.deviceLogin, request, {
   headers: new HttpHeaders()
   .set('Content-Type', 'application/json')
 });
-}else{
 
-const request = {Email: devid+'@dummy.user' , Password: 'dummyUser' , ConfirmPassword:  'dummyUser', AuthService: ''};
-return this.http.post(SessionData.apiURL + environment.register, request, {
-  headers: new HttpHeaders()
-  .set('Content-Type', 'application/json')
-});
-}
 }
 // tslint:disable-next-line: variable-name
 register(_email: string , _password: string, _confirm: string): Observable<any> {

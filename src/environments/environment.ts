@@ -18,6 +18,7 @@ export const environment = {
   logErrorMessage: 'LogError',
   tncApi: 'Tracking/Classifier',
   login: 'User/Login',
+  deviceLogin: 'User/Device/AccessToken',
   spendingSummary: 'Reports/CategoryWise',
   register: 'User/Register',
   saveConfiguration: 'Configure/notification',
