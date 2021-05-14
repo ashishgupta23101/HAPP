@@ -51,9 +51,9 @@ export class ForgotPassPage implements OnInit {
                   this.fun.dismissLoader();
                   return;
                 }
-                if (data && data.ResponseData.AccessToken) {
+                if (data && data.ResponseData.ResetToken) {
                   // store user details and jwt token in local storage to keep user logged in between page refreshes
-                  this.token = data.ResponseData.AccessToken.Token;
+                  this.token = data.ResponseData.ResetToken.Token;
                   this.resetLink = this.resetLink.replace('@rst',this.token);
                   this.sendMail(form.email);
                   this.fun.dismissLoader();
