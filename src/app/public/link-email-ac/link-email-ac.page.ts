@@ -99,6 +99,7 @@ this.trackService.logError("Email Log - "+JSON.stringify(res),"googleSignin()")
   }
   signOut() {
     this.loggedIn = false;
+    this.proCode = '';
     localStorage.setItem('accessToken','NA');
     this.navCtrl.navigateForward(`/account-unlink`);
     this.google.logout().then(()=>{
