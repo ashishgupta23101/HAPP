@@ -1080,10 +1080,10 @@ this.presentConfirm(key, 'Delete', 'Do you want to delete the package?', 'del');
 }
 locate(key: string) {
   const val1 = this._data.find(item => item.trackingNo === key);
-  if (val1 !== undefined && val1 !== '' && val1 !== null && val1.scans.length > 0) {
+  if (val1 !== undefined && val1 !== '' && val1 !== null && val1.Scans.length > 0) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-          scans: JSON.stringify(val1.scans)
+          scans: JSON.stringify(val1.Scans)
       }
   };
     this.router.navigate(['product-activity'], navigationExtras);

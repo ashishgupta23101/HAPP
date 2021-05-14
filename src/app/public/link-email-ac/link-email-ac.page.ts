@@ -99,13 +99,21 @@ this.trackService.logError("Email Log - "+JSON.stringify(res),"googleSignin()")
     });
   }
   signOut() {
-    this.loggedIn = false;
-    this.proCode = '';
-    localStorage.setItem('accessToken','NA');
-    this.navCtrl.navigateForward(`/account-unlink`);
-    this.google.logout().then(()=>{
+    this.trackService.DelEmailAccount(this.proCode).subscribe(data => {
+      this.loggedIn = false;
+      this.proCode = '';
       localStorage.setItem('accessToken','NA');
+      this.navCtrl.navigateForward(`/account-unlink`);
+      this.google.logout().then(()=>{
+        localStorage.setItem('accessToken','NA');
+      });
+    },
+    error => {
+      this.loading.dismiss();
+      this.trackService.logError(JSON.stringify(error), 'googleSignIn()');
+      this.loading.presentToast('error', 'Unable to De-link Account.');
     });
+    
     // this.authService.signOut(true).then(data =>{
     //   alert(JSON.stringify(data));
     // }).catch(err =>{

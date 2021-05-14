@@ -81,11 +81,11 @@ ionViewWillEnter(){
 const val = tData.find(item => item.trackingNo === this.trackNo);
 if (val !== undefined && val !== '' && val !== null){
 
-this.trackingScans = val.scans;
+this.trackingScans = val.Scans;
 this.trackingResult = val.ResultData;
-this.trackingheader = val.Trackingheader;
-this.item.TrackingNo = val.Trackingheader.TrackingNo;
-this.item.Carrier = val.Trackingheader.CarrierCode;
+this.trackingheader = val.TrackingHeader;
+this.item.TrackingNo = val.TrackingHeader.TrackingNo;
+this.item.Carrier = val.TrackingHeader.Carrier;
 this.item.Status = val.ResultData.Status;
 this.hasData = true;
 // this.loading.dismiss();
@@ -237,8 +237,8 @@ buttons: [
                           tData.splice(index, 1);
                           this.storage.set('_allPackages', tData).then(() => {
                           const queryParam = new QueryParams();
-                          queryParam.TrackingNo = record.Trackingheader.TrackingNo;
-                          queryParam.Carrier = record.Trackingheader.CarrierCode;
+                          queryParam.TrackingNo = record.TrackingHeader.TrackingNo;
+                          queryParam.Carrier = record.TrackingHeader.Carrier;
                           queryParam.Description = record.ResultData.Description;
                           queryParam.Residential = record.ResultData.Residential;
                           this.trackService.getTrackingDetails(queryParam, 'actpck');

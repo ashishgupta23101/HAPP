@@ -1,6 +1,6 @@
 export class TrackingHeader
 {
-    CarrierCode: string;  
+    Carrier: string;  
     DeliveryCity: string;
     DeliveredDateTime: string;
     DeliveryLocation:string;

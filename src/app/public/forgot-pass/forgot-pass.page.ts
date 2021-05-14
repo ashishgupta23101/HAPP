@@ -46,6 +46,7 @@ export class ForgotPassPage implements OnInit {
               // tslint:disable-next-line: no-debugger
                 if (data.Error === true)
                 { //localStorage.setItem('IsLogin', 'false');
+                  this.trackService.logError(data.Message,"forgotPassword");
                   this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                   return;
@@ -59,6 +60,7 @@ export class ForgotPassPage implements OnInit {
                 }
                 else {
                   //localStorage.setItem('IsLogin', 'true');
+                  this.trackService.logError(JSON.stringify(data),"forgotPassword");
                   this.fun.presentToast('Invalid Email! Please try with valid email.', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                 }
@@ -67,6 +69,7 @@ export class ForgotPassPage implements OnInit {
             error => {
              localStorage.setItem('IsLogin', 'false');
              this.fun.dismissLoader();
+             this.trackService.logError(JSON.stringify(error),"forgotPassword");
              this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
             });
           } else {

@@ -3,7 +3,7 @@ export class TrackingResult
   Archived: string;
   ATrDays: string;
   Billed_Weight: string;
-  CarrierCode: string;
+  Carrier: string;
   Created: string;
   DateDelivered: any;
   DateGuaranteed: string;

@@ -28,6 +28,7 @@ export const environment = {
   saveVendor : 'Vendor/Account/Save',
   getAllProviders : 'EmailProvider/All',
   saveEmailAccount : 'EmailProvider/Account/Save',
+  delEmailAccount : 'EmailProvider/Account/Delete',
   getAllPackages: 'Package/All',
   refreshToken:'User/Password/ResetToken',
   saveSupport:'HelpSupport/LogMessage',

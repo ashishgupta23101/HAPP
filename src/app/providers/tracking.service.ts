@@ -138,14 +138,9 @@ getAllProviders(): Observable<any> {
   });
 }
 refreshToken(email:string): Observable<any> {
-  let _token = localStorage.getItem('AuthToken');
   let _params = new HttpParams().set("username",email);
-  let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
-  new HttpHeaders()
-  .set('Content-Type', 'application/json'):
-  new HttpHeaders()
+  let _header =  new HttpHeaders()
   .set('Content-Type', 'application/json')
-  .set('Authorization', 'Bearer '+_token);
   return this.http.get(SessionData.apiURL + environment.refreshToken , {
     headers: _header,
     params: _params
@@ -166,6 +161,18 @@ saveEmailAccount(emailAccount: EmailAccount) : Observable<any> {
   .set('Content-Type', 'application/json')
   .set('Authorization', 'Bearer '+_token);
   return this.http.post(SessionData.apiURL + environment.saveEmailAccount , emailAccount, {
+    headers: _header
+  });
+}
+DelEmailAccount(proCode: string) : Observable<any> {
+  let _token = localStorage.getItem('AuthToken');
+  let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
+  new HttpHeaders()
+  .set('Content-Type', 'application/json'):
+  new HttpHeaders()
+  .set('Content-Type', 'application/json')
+  .set('Authorization', 'Bearer '+_token);
+  return this.http.get(SessionData.apiURL + environment.delEmailAccount+'/'+ proCode, {
     headers: _header
   });
 }
@@ -302,7 +309,7 @@ setLatestPackages(){
   this.getAllActivePackages().subscribe(data => {
     // tslint:disable-next-line: no-debugger
     data.ResponseData.forEach(element => {
-      let itemKey = element.ResultData.TrackingNo.trim() + '-' + element.ResultData.CarrierCode.trim();
+      let itemKey = element.ResultData.TrackingNo.trim() + '-' + element.ResultData.Carrier.trim();
       const record: any = element;
       if(element.ResultData.Archived === '' || element.ResultData.Archived === null || element.ResultData.Archived === undefined){
           record.trackingNo = itemKey;
@@ -384,19 +391,19 @@ getReportsData(){
 setreport(element: any){
   this.PackageSummary.total ++;
   this.PackagebyCarrier.total ++;
-  if(element.Trackingheader.CarrierCode === 'A'){
+  if(element.TrackingHeader.Carrier === 'A'){
     this.PackagebyCarrier.data[0] ++;
   }
-  else if(element.Trackingheader.CarrierCode === 'U'){
+  else if(element.TrackingHeader.Carrier === 'U'){
     this.PackagebyCarrier.data[1] ++;
   }
-  else if(element.Trackingheader.CarrierCode === 'F' || element.Trackingheader.CarrierCode === 'R'){
+  else if(element.TrackingHeader.Carrier === 'F' || element.TrackingHeader.Carrier === 'R'){
     this.PackagebyCarrier.data[2] ++;
   }
-  else if(element.Trackingheader.CarrierCode === 'S'){
+  else if(element.TrackingHeader.Carrier === 'S'){
     this.PackagebyCarrier.data[3] ++;
   }
-  else if(element.Trackingheader.CarrierCode === 'D'){
+  else if(element.TrackingHeader.Carrier === 'D'){
     this.PackagebyCarrier.data[4] ++;
   }
   else {
@@ -530,7 +537,7 @@ return this.http.post(SessionData.apiURL + environment.login, request, {
 });
 }else{
 
-const request = {Email: devid+'@dummy.user' , Password: 'dummyUser' , ConfirmPassword:  'dummyUser', DeviceId: devid, AuthService: ''};
+const request = {Email: devid+'@dummy.user' , Password: 'dummyUser' , ConfirmPassword:  'dummyUser', AuthService: ''};
 return this.http.post(SessionData.apiURL + environment.register, request, {
   headers: new HttpHeaders()
   .set('Content-Type', 'application/json')
@@ -539,7 +546,7 @@ return this.http.post(SessionData.apiURL + environment.register, request, {
 }
 // tslint:disable-next-line: variable-name
 register(_email: string , _password: string, _confirm: string): Observable<any> {
-const request = {Email: _email , Password: _password , ConfirmPassword: _confirm, DeviceId: this.devid, AuthService: ''};
+const request = {Email: _email , Password: _password , ConfirmPassword: _confirm,AuthService: ''};
 return this.http.post(SessionData.apiURL + environment.register, request, {
   headers: new HttpHeaders()
   .set('Content-Type', 'application/json')
@@ -548,25 +555,11 @@ return this.http.post(SessionData.apiURL + environment.register, request, {
 
 /// save Error
 logError(errormsg: string, errorLoc: string) {
-const errorData = new ErrorDetails();
-this.storage.get('deviceID').then(id => {
-  if (id !== null && id !== undefined && id !== '') {
-    errorData.DeviceId = id;
-  } else {
-    errorData.DeviceId = 'NA';
-  }
+  const errorData = new ErrorDetails();
+  errorData.DeviceId = this.devid;
   errorData.ErrorMessage = errormsg;
   errorData.ErrorLocation = errorLoc;
   this.saveError(errorData).subscribe(data => {}, error => {});
-}).catch(err => {
-errorData.DeviceId = 'NA';
-errorData.ErrorMessage = errormsg;
-errorData.ErrorLocation = errorLoc;
-this.saveError(errorData).subscribe(data => {}, error => {});
-}
-
-);
-
 }
 GenerateDeviceID()
 {
@@ -593,7 +586,7 @@ error => {
 });
 }
 saveError(errorData: ErrorDetails): Observable<any> {
-return this.http.put(SessionData.apiURL + environment.logErrorMessage , errorData, {
+return this.http.post(SessionData.apiURL + environment.logErrorMessage , errorData, {
   headers: new HttpHeaders()
   .set('Content-Type', 'application/json')
 });
@@ -615,7 +608,7 @@ new HttpHeaders()
 new HttpHeaders()
 .set('Content-Type', 'application/json')
 .set('Authorization', 'Bearer '+_token);
-return this.http.put(SessionData.apiURL + environment.saveConfiguration, configDetails, {
+return this.http.post(SessionData.apiURL + environment.saveConfiguration, configDetails, {
 headers: _header
 });
 }
@@ -628,8 +621,7 @@ new HttpHeaders()
 new HttpHeaders()
 .set('Content-Type', 'application/json')
 .set('Authorization', 'Bearer '+_token);
-
-return this.http.put(SessionData.apiURL + environment.saveDeviceID, gsmDetails, {
+return this.http.post(SessionData.apiURL + environment.saveDeviceID, gsmDetails, {
 headers: _header
 });
 }
@@ -707,13 +699,13 @@ setPackagestoSession(tData: any) {
     pack.ProductName = element.ResultData.TrackingNo;
     pack.ProductUrl = '../../../assets/images/default-product-image.png';
     pack.Status = element.ResultData.Status === '' || element.ResultData.Status === null ? 'NA' : element.ResultData.Status;
-    pack.Carrier = element.ResultData.CarrierCode;
-    pack.DateCreated = element.ResultData.Created === '' || element.ResultData.Created === null ? 'NA' : element.ResultData.Created;
+    pack.Carrier = element.ResultData.Carrier;
+    pack.DateCreated = element.ResultData.DateShipped === '' || element.ResultData.DateShipped === null ? 'NA' : element.ResultData.DateShipped;
     debugger;
     if(pack.Status.toLowerCase().includes('deliver')){
       pack.ExpectedDate = element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
     }else{
-      pack.ExpectedDate = element.ResultData.EstDeliveryDate === null ? 'NA' : element.ResultData.EstDeliveryDate;
+      pack.ExpectedDate = element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
     }
 
     
@@ -742,10 +734,10 @@ tData.forEach(element => {
   pack.ProductName = element.ResultData.TrackingNo;
   pack.ProductUrl = '../../../assets/images/default-product-image.png';
   pack.Status = element.ResultData.Status === '' || element.ResultData.Status === null ? 'NA' : element.ResultData.Status;
-  pack.Carrier = element.ResultData.CarrierCode;
-  pack.DateCreated = element.ResultData.Created === '' || element.ResultData.Created === null ? 'NA' : element.ResultData.Created;
-  pack.ExpectedDate = element.Trackingheader.EstDeliveryDate === ''
-    || element.ResultData.EstDeliveryDate === null ? 'NA' : element.Trackingheader.EstDeliveryDate;
+  pack.Carrier = element.ResultData.Carrier;
+  pack.DateCreated = element.ResultData.DateShipped === '' || element.ResultData.DateShipped === null ? 'NA' : element.ResultData.DateShipped;
+  pack.ExpectedDate = element.TrackingHeader.DeliveredDateTime === ''
+    || element.ResultData.DateDelivered === null ? 'NA' : element.TrackingHeader.DeliveredDateTime;
   pack.LastUpdated = element.ResultData.Updated === '' || element.ResultData.Updated === null ? 'NA' : element.ResultData.Updated;
   pack.Key = element.trackingNo;
   pack.ImgUrl = pack.Status.toLowerCase().includes('delivered') ? '../../../assets/slicing/deliveredontime.png' :
