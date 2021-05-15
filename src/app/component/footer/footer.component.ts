@@ -18,7 +18,8 @@ export class FooterComponent implements OnInit {
   username = localStorage.getItem('user');
 
   tabreg: string = (this.username === 'dummyUser' || this.username === null || this.username === 'null' || this.username === undefined || this.username === '') ? 'not-register' : 'welcome';
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.setActiveClass();
   }
   setActiveClass() {

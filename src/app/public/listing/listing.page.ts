@@ -77,18 +77,8 @@ Date = {
   thismonth: false,
   lastmonth: false
 };
-ngOnInit() {
-  const cusHome = localStorage.getItem('cusHome');
-  this.activeItems = [];
-  if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
-    this.segmentModel = 'history';
-   }else{
-     this.segmentModel = 'active';
-   }
-  // this.segmentChanged();
-  
- // this.segmentChanged();
-}
+ngOnInit() {}
+
 
 menu(b){
   if (b === 'c'){
@@ -914,6 +904,16 @@ menuback(){
 }
 ionViewWillEnter(){
  // this.segmentChanged() ;
+ const cusHome = localStorage.getItem('cusHome');
+  this.activeItems = [];
+  if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
+    this.segmentModel = 'history';
+   }else{
+     this.segmentModel = 'active';
+   }
+  // this.segmentChanged();
+  
+ // this.segmentChanged();
 }
 doRefresh(event) {
   if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){

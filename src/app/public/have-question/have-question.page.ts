@@ -27,7 +27,8 @@ export class HaveQuestionPage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.loginForm = this.fb.group({
       name: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),

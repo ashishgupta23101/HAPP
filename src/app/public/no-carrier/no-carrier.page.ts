@@ -15,7 +15,8 @@ export class NoCarrierPage implements OnInit {
    
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.carrier = this.params.get('carrier');
     this.trackingNo = this.params.get('trackingNo');
   }

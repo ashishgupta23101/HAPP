@@ -111,14 +111,14 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
-    this.fillIntentValue();
+    //this.fillIntentValue();
   }
   fillIntentValue() {
     this.trackNo = localStorage.getItem('intent');
     const cusHome = localStorage.getItem('cusHome');
 
    // alert(this.trackNo);
-    if (this.trackNo !== null && this.trackNo !== undefined && this.trackNo !== '') {
+    if (this.trackNo !== null && this.trackNo !== undefined && this.trackNo !== ''  && this.trackNo !== 'SHIPMATRIX') {
       // alert(this.trackNo);
 
       this.trackNo = this.trackNo.replace('\u001d', '');
@@ -134,7 +134,7 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // this.fillIntentValue();
+    this.fillIntentValue();
     //this.googleSDK();
     this.clearTrack();
     const isLastScanned = localStorage.getItem('isScanned');

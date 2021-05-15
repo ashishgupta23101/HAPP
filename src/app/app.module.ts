@@ -67,3 +67,4 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+//cordova plugin add cordova-plugin-openwith-ios --variable IOS_URL_SCHEME=EZTShareExt

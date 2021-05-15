@@ -26,7 +26,8 @@ export class ETReportsPage implements OnInit {
   pop_status: any;
   pop_value: any;
   colorArray: any
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.trackService.getReportsData();
    this.reportData = this.trackService.PackageSummary;
 

@@ -22,7 +22,8 @@ export class ForgotPassPage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.loginForm = this.fb.group({
       email: new FormControl('', Validators.required)
     });

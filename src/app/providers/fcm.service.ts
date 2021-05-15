@@ -58,7 +58,11 @@ token: any;
         
           public FirebasenotificationSetup() {
             this.platform.ready().then(() => {
-
+              this.storage.get('apiData').then(aData => {
+                if (aData !== null && aData !== undefined) {
+                   SessionData.apiURL = aData.apiURL ; 
+                   SessionData.apiType = aData.apiType; 
+                  }});
               if (this.platform.is('cordova')) {
             this.getToken();
             this.refreshToken().subscribe(token => {
@@ -68,13 +72,10 @@ token: any;
             this.subscribetoMessage(this.token);
                
             this.onNotifications().subscribe(msg => {
-        
+              this.trackService.logError(JSON.stringify(msg),'onNotifications()');
                   if (this.platform.is('ios')) {
-                    this.storage.get('apiData').then(aData => {
-                      if (aData !== null && aData !== undefined) {
-                         SessionData.apiURL = aData.apiURL ; 
-                         SessionData.apiType = aData.apiType; 
-                        }});
+                    
+
                     let notification : string;
                     notification = msg.aps.alert.body;
                     let message = notification.split(',');

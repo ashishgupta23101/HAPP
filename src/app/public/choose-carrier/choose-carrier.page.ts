@@ -40,7 +40,8 @@ export class ChooseCarrierPage implements OnInit {
       this.loadingController.presentToast('Error', JSON.stringify(Exception));
     }
   }
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.route.queryParams.subscribe(params => {
       this.trackingNo = JSON.parse(params.TrackingNo);
       this.carrier = JSON.parse(params.Carrier);

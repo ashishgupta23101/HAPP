@@ -42,7 +42,8 @@ export class LinkEmailAcPage implements OnInit {
       this.goBack();
     });
   }
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.loading.present('Fetching Accounts..');
     this.getallProviders();
   }
@@ -63,13 +64,14 @@ export class LinkEmailAcPage implements OnInit {
       this.google.login({'scopes': 'https://www.googleapis.com/auth/gmail.readonly',
       'offline': true,})
       .then((res) => {
-             this.trackService.logError("Email Log - "+JSON.stringify(res),"googleSignin()")
+  
              localStorage.setItem('accessToken',res.accessToken);
              this.emailAccount.Username = res.email;
              this.emailAccount.AuthToken = res.refreshToken;
              this.emailAccount.ProviderName = this.proCode;
              this.emailAccount.Password = '';
              this.proCode = ''; 
+             this.trackService.logError("Email Log - "+JSON.stringify(this.emailAccount),"googleSignin()")
              this.LinkAccount(this.emailAccount);
              //this.loading.presentToast('info','Successfully linked with '+res.user.displayName);
              

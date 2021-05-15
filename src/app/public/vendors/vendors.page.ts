@@ -35,7 +35,8 @@ selectedVendors : VendorAccount;
       this.loadingController.presentToast('error', 'Unable to fetch Vendors');
     });
   }
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
     this.loadingController.present('Fetching Retailers..');
     this.getAllVendors();
     this.selectedVendors = new VendorAccount();

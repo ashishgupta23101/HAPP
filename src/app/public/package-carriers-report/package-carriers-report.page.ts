@@ -36,7 +36,8 @@ export class PackageCarriersReportPage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter() {
    this.reportData = this.trackService.PackagebyCarrier;
 
    this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092','#452092'];
