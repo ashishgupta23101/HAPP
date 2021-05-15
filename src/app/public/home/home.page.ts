@@ -1,7 +1,7 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { IonSelect, ModalController, NavController, Platform } from '@ionic/angular';
+import { NavigationExtras, Router } from '@angular/router';
+import { IonSelect, NavController } from '@ionic/angular';
 import { QueryParams } from 'src/app/models/QueryParams';
 import {
   BarcodeScannerOptions,
@@ -11,9 +11,7 @@ import { FilteringDates, SessionData } from 'src/app/models/active-packages';
 import * as moment from 'moment';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { LoaderService } from 'src/app/providers/loader.service';
-import { Storage } from '@ionic/storage';
 import { TrackingService } from 'src/app/providers/tracking.service';
-import { FcmService } from 'src/app/providers/fcm.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -34,6 +32,7 @@ export class HomePage implements OnInit {
   @ViewChild('carrierList') carrierSelectRef: IonSelect;
   // tslint:disable-next-line: max-line-length
   constructor(@Inject(BarcodeScanner) private barcodeScanner: BarcodeScanner,
+              @Inject(SplashScreen) private splashScreen: SplashScreen,
               @Inject(Router) private router: Router,
               @Inject(FormBuilder) public formBuilder: FormBuilder,
               @Inject(LoaderService) public loadingController: LoaderService,

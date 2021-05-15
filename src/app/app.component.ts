@@ -25,7 +25,45 @@ export class AppComponent implements OnInit{
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
    ){
-     try{
+
+
+  }
+  register(){
+
+    this.trackService.demoregister().subscribe(data => {
+      // tslint:disable-next-line: no-debugger
+      //this.loadingController.presentToast('info', 'AfterDemoRegistering');
+        if (data == null || data.Error === true)
+        { 
+          //this.loadingController.presentToast('info','inNULLData');
+          this.gotoLogin();
+          
+        }
+        if (data && data.ResponseData.AccessToken) {
+         // this.loadingController.presentToast('info','InIf');
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
+          localStorage.setItem('user', 'dummyUser');
+          localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
+          localStorage.setItem('IsLogin', 'true');
+          this.initializeApp();
+          this.trackService.setLatestPackages();
+        }
+        else {
+          //this.loadingController.presentToast('info','inElse');
+          this.trackService.logError(JSON.stringify(data),"Register Invalid response");
+          this.gotoLogin();
+        }
+      },
+      error => {
+       // this.loadingController.presentToast('info', 'In Error:');
+       this.trackService.logError(JSON.stringify(error),"Register");
+        this.gotoLogin();
+      });
+  }
+  ngOnInit() {
+    try{
+      this.splashScreen.show();
       this.storage.get('apiData').then(aData => {
         if (aData !== null && aData !== undefined) {
            SessionData.apiURL = aData.apiURL ; 
@@ -61,42 +99,6 @@ if (this.platform.is('cordova')) {
       this.trackService.logError(JSON.stringify(ex),"Register");
       this.gotoLogin();
     }
-
-  }
-  register(){
-    this.splashScreen.show();
-    this.trackService.demoregister().subscribe(data => {
-      // tslint:disable-next-line: no-debugger
-      //this.loadingController.presentToast('info', 'AfterDemoRegistering');
-        if (data == null || data.Error === true)
-        { 
-          //this.loadingController.presentToast('info','inNULLData');
-          this.gotoLogin();
-          
-        }
-        if (data && data.ResponseData.AccessToken) {
-         // this.loadingController.presentToast('info','InIf');
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-          localStorage.setItem('user', 'dummyUser');
-          localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
-          localStorage.setItem('IsLogin', 'true');
-          this.initializeApp();
-          this.trackService.setLatestPackages();
-        }
-        else {
-          //this.loadingController.presentToast('info','inElse');
-          this.trackService.logError(JSON.stringify(data),"Register Invalid response");
-          this.gotoLogin();
-        }
-      },
-      error => {
-       // this.loadingController.presentToast('info', 'In Error:');
-       this.trackService.logError(JSON.stringify(error),"Register");
-        this.gotoLogin();
-      });
-  }
-  ngOnInit() {
   }
   gotoLogin(){
     this.initializeApp();
