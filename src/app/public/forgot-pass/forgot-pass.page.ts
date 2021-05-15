@@ -1,13 +1,8 @@
-import { Component, Inject, NgZone, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
-import { User } from 'src/app/models/user';
-import { FcmService } from 'src/app/providers/fcm.service';
-import { environment } from 'src/environments/environment';
+import { NavController } from '@ionic/angular';
 import { FunctionsService } from 'src/app/providers/functions.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @Component({
   selector: 'app-forgot-pass',
@@ -18,25 +13,23 @@ export class ForgotPassPage implements OnInit {
   loginForm: FormGroup;
   token: string;
   constructor(
-    @Inject(Router) private router: Router,
     @Inject(FormBuilder) public fb: FormBuilder,
-    @Inject(Platform) private platform: Platform,
     @Inject(FunctionsService) public fun: FunctionsService,
     @Inject(TrackingService) public trackService: TrackingService,
-    @Inject(NavController) private navCtrl: NavController,
-    @Inject(EmailComposer) private emailComposer: EmailComposer) {
-    this.loginForm = this.fb.group({
-      email: new FormControl('', Validators.required)
-    });
+    @Inject(NavController) private navCtrl: NavController) {
+   
    }
   goBack() {
     this.navCtrl.back();
   }
   ngOnInit() {
-    
+    this.loginForm = this.fb.group({
+      email: new FormControl('', Validators.required)
+    });
   }
   login(form: any){
     if (!this.loginForm.valid) {
+      this.fun.presentToast('Please fill value!', true, 'bottom', 2100);
       return false;
     } else {
       this.fun.showloader('Verifying User...');

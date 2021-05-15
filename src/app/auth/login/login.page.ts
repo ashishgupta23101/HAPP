@@ -40,6 +40,7 @@ export class LoginPage implements OnInit {
 
   login(form: any){
     if (!this.loginForm.valid) {
+      this.fun.presentToast('Please fill credentials!', true, 'bottom', 2100);
       return false;
     } else {
       const usr = new User();

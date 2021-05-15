@@ -25,10 +25,7 @@ export class ChooseCarrierPage implements OnInit {
     @Inject(NavController) private navCtrl: NavController,
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(ActivatedRoute) private route: ActivatedRoute) {
-      this.route.queryParams.subscribe(params => {
-        this.trackingNo = JSON.parse(params.TrackingNo);
-        this.carrier = JSON.parse(params.Carrier);
-      });
+      
   }
   doTrack(value) {
     try {
@@ -44,6 +41,10 @@ export class ChooseCarrierPage implements OnInit {
     }
   }
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.trackingNo = JSON.parse(params.TrackingNo);
+      this.carrier = JSON.parse(params.Carrier);
+    });
     this.track_Form = this.formBuilder.group({
       Carrier: new FormControl(''),
       Optional: new FormControl('')

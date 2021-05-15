@@ -29,13 +29,7 @@ constructor(
         // tslint:disable-next-line: no-debugger
      // tslint:disable-next-line: only-arrow-functions
      
-     const cusHome = localStorage.getItem('cusHome');
-     if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
-       this.segmentModel = 'history';
-      }else{
-        this.segmentModel = 'active';
-      }
-     // this.segmentChanged();
+    
   }
   defaultSelectedRadio = "radio_2";
   //Get value on ionChange on IonRadioGroup
@@ -84,7 +78,15 @@ Date = {
   lastmonth: false
 };
 ngOnInit() {
+  const cusHome = localStorage.getItem('cusHome');
   this.activeItems = [];
+  if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
+    this.segmentModel = 'history';
+   }else{
+     this.segmentModel = 'active';
+   }
+  // this.segmentChanged();
+  
  // this.segmentChanged();
 }
 

@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
 export class PkgAddSuccessPage implements OnInit {
   trackNo: any ;
   constructor(@Inject(ActivatedRoute) private route: ActivatedRoute, @Inject(NavController) private navCtrl: NavController) {
-    this.trackNo = this.route.snapshot.paramMap.get('any');
+    
    }
   goBack() {
     this.navCtrl.back();
@@ -21,6 +21,7 @@ export class PkgAddSuccessPage implements OnInit {
    // wait 2 seconds
   }
   ngOnInit() {
+    this.trackNo = this.route.snapshot.paramMap.get('any');
   }
 gotodetail(){
   this.navCtrl.navigateForward(`/list-detail/${this.trackNo}`);

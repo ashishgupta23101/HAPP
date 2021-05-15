@@ -329,7 +329,6 @@ setLatestPackages(){
   },error => { 
     this.gotocustomePAGE();
     this.logError('Error - ' + JSON.stringify(error), 'getAllActivePackage()');
-    this.loadingController.presentToast('alert', 'Unable to fetch record');
   });
 }
 gotocustomePAGE(){

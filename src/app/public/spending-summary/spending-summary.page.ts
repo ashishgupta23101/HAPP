@@ -1,13 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { NavController, AlertController, MenuController, ModalController } from '@ionic/angular';
+import { NavController, AlertController, ModalController } from '@ionic/angular';
 import { Report } from 'src/app/models/active-packages';
-import { LoaderService } from 'src/app/providers/loader.service';
-import { Router } from '@angular/router';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import { Chart } from 'chart.js';
 import { InfoModelComponent } from 'src/app/component/info-model/info-model.component';
-declare var $: any;
 @Component({
   selector: 'app-spending-summary',
   templateUrl: './spending-summary.page.html',
@@ -16,13 +12,9 @@ declare var $: any;
 export class SpendingSummaryPage implements OnInit {
 
   constructor(@Inject(TrackingService) private trackService: TrackingService,
-  @Inject(Router) private router: Router,
   @Inject(ModalController) private modalController: ModalController,
-  @Inject(LoaderService) private loading: LoaderService,
   @Inject(AlertController) public alertController: AlertController,
-  @Inject(NavController) private navCtrl: NavController ,
-  @Inject(MenuController) private menuCtrl: MenuController,
-  @Inject(Storage) private storage: Storage) { }
+  @Inject(NavController) private navCtrl: NavController) { }
   reportData : Report;
 
   @ViewChild('pieChart') pieChart;
@@ -142,13 +134,11 @@ export class SpendingSummaryPage implements OnInit {
 onComplete () {
 const chartInstance = this.chart;
 const ctx = chartInstance.ctx;
-const dataset = this.data.datasets[0];
 const meta = chartInstance.controller.getDatasetMeta(0);
 
 Chart.helpers.each(meta.data.forEach((bar, index) => {
 const label = this.data.labels[index];
 const labelPositionX = 20;
-const labelWidth = ctx.measureText(label).width + labelPositionX;
 
 ctx.textBaseline = 'middle';
 ctx.textAlign = 'left';
@@ -158,7 +148,6 @@ ctx.fillText(label, labelPositionX, bar._model.y);
 }
 },
         onClick: (c, i) => {
-          let e = i[0];
 
         },
         layout: {

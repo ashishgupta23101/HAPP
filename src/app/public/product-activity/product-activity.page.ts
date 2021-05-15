@@ -27,12 +27,7 @@ export class ProductActivityPage implements OnInit {
     @Inject(TrackingService) private trackService: TrackingService ,
     @Inject(NativeGeocoder) public nativeGeocoder: NativeGeocoder) {
 
-        this.route.queryParams.subscribe(params => {
-        this.trackingScans = JSON.parse(params.scans);
-        this.item = JSON.parse(params.item);
-        this.height = platform.height() - 56;
-        this.getLocations();
-      });
+       
     }
 
   @ViewChild('map')
@@ -50,6 +45,12 @@ export class ProductActivityPage implements OnInit {
   markersArray = [];
 
   ngOnInit()    {
+    this.route.queryParams.subscribe(params => {
+      this.trackingScans = JSON.parse(params.scans);
+      this.item = JSON.parse(params.item);
+      this.height = this.platform.height() - 56;
+      this.getLocations();
+    });
     // tslint:disable-next-line: only-arrow-functions
     $(document).ready(function(){
       // tslint:disable-next-line: only-arrow-functions

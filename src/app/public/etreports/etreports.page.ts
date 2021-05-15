@@ -1,11 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { formatDate } from '@angular/common';
-import { NavController, AlertController, MenuController, ModalController } from '@ionic/angular';
-import { ActivePackages, Report, SessionData } from 'src/app/models/active-packages';
-import { LoaderService } from 'src/app/providers/loader.service';
-import { NavigationExtras, Router } from '@angular/router';
-import { QueryParams } from 'src/app/models/QueryParams';
+import { AlertController, ModalController } from '@ionic/angular';
+import { Report } from 'src/app/models/active-packages';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import * as $ from 'jquery';
 import { Chart } from 'chart.js';
@@ -19,14 +14,9 @@ declare var $: any;
 export class ETReportsPage implements OnInit {
 
   constructor(@Inject(TrackingService) private trackService: TrackingService,
-  @Inject(Router) private router: Router,
   @Inject(ModalController) private modalController: ModalController,
-  @Inject(LoaderService) private loading: LoaderService,
-  @Inject(AlertController) public alertController: AlertController,
-  @Inject(NavController) private navCtrl: NavController ,
-  @Inject(MenuController) private menuCtrl: MenuController,
-  @Inject(Storage) private storage: Storage) {
-    this.trackService.getReportsData();
+  @Inject(AlertController) public alertController: AlertController) {
+    
    }
   reportData : Report;
 
@@ -37,7 +27,7 @@ export class ETReportsPage implements OnInit {
   pop_value: any;
   colorArray: any
   ngOnInit() {
-    debugger;
+    this.trackService.getReportsData();
    this.reportData = this.trackService.PackageSummary;
 
    this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092'];

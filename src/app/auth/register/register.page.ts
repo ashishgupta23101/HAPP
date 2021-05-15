@@ -34,6 +34,7 @@ export class RegisterPage implements OnInit {
   }
   register(form: any){
     if (!this.registerForm.valid) {
+      this.fun.presentToast('Please fill all value!', true, 'bottom', 2100);
       return false;
     } else {
       if(form.confirm !== form.password){

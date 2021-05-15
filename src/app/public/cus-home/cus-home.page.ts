@@ -17,7 +17,7 @@ cusHome: string;
   constructor(@Inject(NavController) private navCtrl: NavController,
               @Inject(LoaderService) public loadingController: LoaderService ) {
    // alert(localStorage.getItem('cusHome'));
-    this.setPage(localStorage.getItem('cusHome'), true);
+
    }
    setPage(cusHm: string , flag: boolean = false){
 
@@ -87,6 +87,7 @@ cusHome: string;
     this.navCtrl.back();
   }
   ngOnInit() {
+    this.setPage(localStorage.getItem('cusHome'), true);
   }
   chooseHome(event: any, cpage: string){
     this.setPage(cpage);

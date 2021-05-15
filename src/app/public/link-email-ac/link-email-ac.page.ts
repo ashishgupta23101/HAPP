@@ -21,8 +21,8 @@ export class LinkEmailAcPage implements OnInit {
   @Inject(TrackingService) public trackService: TrackingService,
   @Inject(GooglePlus) private google:GooglePlus,
   @Inject(Platform) private platform: Platform) {
-    this.loading.present('Fetching Accounts..');
-    this.getallProviders();
+    
+    
    }
   goBack() {
     this.navCtrl.back();
@@ -36,13 +36,15 @@ export class LinkEmailAcPage implements OnInit {
     },
     error => {
       this.proCode ='';
+      this.trackService.logError(JSON.stringify(error),'getallProviders');
       this.loading.presentToast('error', 'No Account Available.');
       this.loading.dismiss();
       this.goBack();
     });
   }
   ngOnInit() {
-    
+    this.loading.present('Fetching Accounts..');
+    this.getallProviders();
   }
   proChange(){
     if(this.providers.filter(item => {return item.ProviderName === this.proCode && item.IsLinked === true}).length > 0){

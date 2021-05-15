@@ -12,11 +12,12 @@ export class NoCarrierPage implements OnInit {
   trackingNo = '';
 
   constructor(private modalController: ModalController, private params: NavParams) {
-    this.carrier = params.get('carrier');
-    this.trackingNo = params.get('trackingNo');
+   
   }
 
   ngOnInit() {
+    this.carrier = this.params.get('carrier');
+    this.trackingNo = this.params.get('trackingNo');
   }
 
   dismiss() {
