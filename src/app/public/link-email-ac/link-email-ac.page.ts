@@ -96,6 +96,7 @@ export class LinkEmailAcPage implements OnInit {
     error => {
       this.loading.dismiss();
       this.proCode = '';
+      this.loggedIn = false;
       this.trackService.logError(JSON.stringify(error), 'googleSignIn()');
       this.loading.presentToast('error', 'Unable to link Account.');
     });
@@ -111,28 +112,10 @@ export class LinkEmailAcPage implements OnInit {
       });
     },
     error => {
+      this.loggedIn = true;
       this.loading.dismiss();
       this.trackService.logError(JSON.stringify(error), 'googleSignIn()');
       this.loading.presentToast('error', 'Unable to De-link Account.');
     });
-    
-    // this.authService.signOut(true).then(data =>{
-    //   alert(JSON.stringify(data));
-    // }).catch(err =>{
-    //   console.log(JSON.stringify(err));
-    //   this.loading.presentToast('error','Unable to De-Link Account!')
-    // });
-    //localStorage.setItem('accessId','0');
   }
-  // onLoginSuccess(accessToken, accessSecret) {
-  //   const credential = accessSecret ? firebase.auth.GoogleAuthProvider
-  //       .credential(accessToken, accessSecret) : firebase.auth.GoogleAuthProvider
-  //           .credential(accessToken);
-  //   this.fireAuth.authState.signInWithCredential(credential)
-  //     .then((response) => {
-  //       //this.router.navigate(["/profile"]);
-  //       //this.loading.dismiss();
-  //     })
-
-  // }
 }
