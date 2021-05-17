@@ -22,18 +22,20 @@ export class HaveQuestionPage implements OnInit {
     @Inject(FunctionsService) public fun: FunctionsService,
     @Inject(TrackingService) public trackService: TrackingService,
     @Inject(NavController) private navCtrl: NavController) {
- 
+      this.loginForm = this.fb.group({
+        name: new FormControl('', Validators.required),
+        email: new FormControl('', Validators.required),
+        message: new FormControl('', Validators.required)
+      });
    }
   goBack() {
     this.navCtrl.back();
   }
-  ngOnInit() {}
-  ionViewWillEnter() {
-    this.loginForm = this.fb.group({
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      message: new FormControl('', Validators.required)
-    });
+  ngOnInit() {
+    
+  }
+  ionViewDidEnter() {
+   this.loginForm.reset();
   }
   login(form: any){
     if (!this.loginForm.valid) {

@@ -77,7 +77,15 @@ Date = {
   thismonth: false,
   lastmonth: false
 };
-ngOnInit() {}
+ngOnInit() {
+  const cusHome = localStorage.getItem('cusHome');
+  this.activeItems = [];
+  if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
+    this.segmentModel = 'history';
+   }else{
+     this.segmentModel = 'active';
+   }
+}
 
 
 menu(b){
@@ -902,18 +910,10 @@ menuback(){
   this.statusMenu = false;
   this.dateMenu = false;
 }
-ionViewWillEnter(){
+ionViewDidEnter(){
  // this.segmentChanged() ;
- const cusHome = localStorage.getItem('cusHome');
-  this.activeItems = [];
-  if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
-    this.segmentModel = 'history';
-   }else{
-     this.segmentModel = 'active';
-   }
-  // this.segmentChanged();
-  
- // this.segmentChanged();
+ 
+  this.segmentChanged();
 }
 doRefresh(event) {
   if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){
@@ -964,9 +964,7 @@ refreshList(showLoader: boolean = false) {
     this.loading.dismiss();
  }, 800);
 }
-ionViewDidEnter(){
-  this.segmentChanged();
-}
+
 segmentChanged() {
   SessionData.packages = new  Packages();
   this._data =[];
@@ -1082,10 +1080,10 @@ this.presentConfirm(key, 'Delete', 'Do you want to delete the package?', 'del');
 }
 locate(key: string) {
   const val1 = this._data.find(item => item.trackingNo === key);
-  if (val1 !== undefined && val1 !== '' && val1 !== null && val1.Scans.length > 0) {
+  if (val1 !== undefined && val1 !== '' && val1 !== null && val1.scans.length > 0) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-          scans: JSON.stringify(val1.Scans)
+          scans: JSON.stringify(val1.scans)
       }
   };
     this.router.navigate(['product-activity'], navigationExtras);

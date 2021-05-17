@@ -70,9 +70,6 @@ selectedData: any;
 ngOnInit() {
   // tslint:disable-next-line: no-debugger
   this.trackNo = this.route.snapshot.paramMap.get('any');
-}
-ionViewWillEnter(){
-  // this.loading.present('Loading Details.');
   this.item = new ActivePackages();
   this.trackingheader = new TrackingHeader();
   this.trackingResult = new TrackingResult();
@@ -81,12 +78,13 @@ ionViewWillEnter(){
 const val = tData.find(item => item.trackingNo === this.trackNo);
 if (val !== undefined && val !== '' && val !== null){
 
-this.trackingScans = val.Scans;
+this.trackingScans = val.scans;
 this.trackingResult = val.ResultData;
 this.trackingheader = val.TrackingHeader;
 this.item.TrackingNo = val.TrackingHeader.TrackingNo;
 this.item.Carrier = val.TrackingHeader.Carrier;
 this.item.Status = val.ResultData.Status;
+//this.item.ExpectedDate = val.ResultData.DateDelivered;
 this.hasData = true;
 // this.loading.dismiss();
 } else{

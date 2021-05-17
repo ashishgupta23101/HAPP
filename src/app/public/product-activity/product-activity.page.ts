@@ -44,8 +44,7 @@ export class ProductActivityPage implements OnInit {
 
   markersArray = [];
 
-  ngOnInit() {}
-  ionViewWillEnter() {
+  ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.trackingScans = JSON.parse(params.scans);
       this.item = JSON.parse(params.item);

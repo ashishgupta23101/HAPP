@@ -14,8 +14,7 @@ export class ActivityPage implements OnInit {
     @Inject(NavParams) private navParams: NavParams
   ) { }
  
-  ngOnInit() {}
-  ionViewWillEnter() {
+  ngOnInit() {
     this.trackNo = this.navParams.data.trackNo;
     this.pop = this.navParams.data.Popover;
   }

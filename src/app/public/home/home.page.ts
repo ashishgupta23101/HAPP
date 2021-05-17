@@ -108,11 +108,6 @@ export class HomePage implements OnInit {
    help() {
     this.navCtrl.navigateForward(`/help`);
   }
-
-  ngOnInit() {
-
-    //this.fillIntentValue();
-  }
   fillIntentValue() {
     this.trackNo = localStorage.getItem('intent');
     const cusHome = localStorage.getItem('cusHome');
@@ -133,7 +128,8 @@ export class HomePage implements OnInit {
     }
   }
 
-  ionViewWillEnter() {
+  ngOnInit() {
+
     this.fillIntentValue();
     //this.googleSDK();
     this.clearTrack();

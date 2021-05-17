@@ -43,7 +43,7 @@ export class LinkEmailAcPage implements OnInit {
     });
   }
   ngOnInit() {}
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.loading.present('Fetching Accounts..');
     this.getallProviders();
   }

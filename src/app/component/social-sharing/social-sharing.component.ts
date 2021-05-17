@@ -20,7 +20,7 @@ export class SocialSharingComponent implements OnInit {
     @Inject(SocialSharingService) public social: SocialSharingService,
     @Inject(HelperService) public helper: HelperService) { }
     ngOnInit() {}
-    ionViewWillEnter() {
+    ionViewDidEnter() {
     const carrierName = this.helper.GetCarrierName(this.Key.Carrier);
     this.url = '';
     this.image = '';

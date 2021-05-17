@@ -14,8 +14,7 @@ export class NotRegisterPage implements OnInit {
 
   username ='Not Available';
 
-  ngOnInit() {}
-  ionViewWillEnter() {
+  ngOnInit() {
     this.username = localStorage.getItem('user');
     if (this.username === null || this.username === 'null' || this.username === undefined || this.username === '') {
       this.username = "Not Available";

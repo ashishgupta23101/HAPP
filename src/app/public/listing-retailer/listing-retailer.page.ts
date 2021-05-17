@@ -29,8 +29,7 @@ export class ListingRetailerPage implements OnInit {
     this.mailData = item;
     $('#modelopen1').click();
   }
-  ngOnInit() {}
-  ionViewWillEnter() {
+  ngOnInit() {
     this.lastMailData = [];
     this.trackService.getMessages(localStorage.getItem('accessToken')).subscribe(data => {
       // tslint:disable-next-line: no-debugger

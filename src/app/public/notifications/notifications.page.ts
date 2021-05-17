@@ -26,8 +26,6 @@ export class NotificationsPage implements OnInit {
     this.navCtrl.back();
   }
   ngOnInit() {
-  }
-  ionViewWillEnter() {
     this.fillForm();
   }
   saveSettings(value){

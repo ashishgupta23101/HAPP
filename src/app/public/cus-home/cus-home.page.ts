@@ -86,8 +86,7 @@ cusHome: string;
   goBack() {
     this.navCtrl.back();
   }
-  ngOnInit() {}
-  ionViewWillEnter() {
+  ngOnInit() {
     this.setPage(localStorage.getItem('cusHome'), true);
   }
   chooseHome(event: any, cpage: string){

@@ -15,7 +15,7 @@ export class PkgAddSuccessPage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
-  ionViewWillEnter(){
+  ionViewDidEnter(){
      setTimeout(() => { this.navCtrl.navigateForward(`/list-detail/${this.trackNo}`);
    }, 2000);
    // wait 2 seconds

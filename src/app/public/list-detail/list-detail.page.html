@@ -27,20 +27,20 @@
             'inTransit' : trackingResult?.Status.toLowerCase().includes('transit') 
         }">{{trackingResult?.Status}}</span></p> 
           <p class="Tracking">Tracking #: <span>{{trackingResult?.TrackingNo}} </span></p>
-          <p class="ExDate">Expected: {{trackingheader?.DeliveredDateTime}} </p> 
+          <p class="ExDate">Expected: {{trackingResult?.DateDelivered}} </p> 
         </div> 
 
         <div class="partnerLogo">
           <ion-row>
             <ion-col size="6" class="text-left">
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'F' || trackingheader?.Carrier === 'R'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/fedex_logo.png"></a>
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'D'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/dhl_logo.png"></a>
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'O'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/ontrac_logo.png"></a>
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'P'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/purolator_logo.png"></a>
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'S'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/usps_logo.png"></a>
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'U'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/ups_logo.png"></a>
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'L'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/lso_logo.png"></a>
-              <a href="javaScript:void(0)" *ngIf="trackingheader?.Carrier === 'C'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/canpar_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'F' || trackingResult?.Carrier === 'R'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/fedex_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'D'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/dhl_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'O'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/ontrac_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'P'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/purolator_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'S'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/usps_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'U'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/ups_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'L'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/lso_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="trackingResult?.Carrier === 'C'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/canpar_logo.png"></a>
 
             </ion-col>
              <ion-col size="6" class="text-left">

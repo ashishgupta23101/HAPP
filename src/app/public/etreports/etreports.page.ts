@@ -26,14 +26,13 @@ export class ETReportsPage implements OnInit {
   pop_status: any;
   pop_value: any;
   colorArray: any
-  ngOnInit() {}
-  ionViewWillEnter() {
+  ngOnInit() {  
     this.trackService.getReportsData();
-   this.reportData = this.trackService.PackageSummary;
-
+    this.reportData = this.trackService.PackageSummary;
+ 
+    // this.generateColorArray(5);
    this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092'];
-   // this.generateColorArray(5);
-   Chart.pluginService.register({
+    Chart.pluginService.register({
 		beforeDraw: function (chart) {
 			if (chart.config.options.elements.center) {
         //Get ctx from string
@@ -74,10 +73,10 @@ export class ETReportsPage implements OnInit {
 			}
     }
 
-	});
-
-  }
+	});}
   ionViewDidEnter() {
+  
+
     if(this.reportData.total > 0){
       this.createBarChart();}
   }

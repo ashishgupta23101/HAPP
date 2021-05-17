@@ -17,16 +17,18 @@ export class ForgotPassPage implements OnInit {
     @Inject(FunctionsService) public fun: FunctionsService,
     @Inject(TrackingService) public trackService: TrackingService,
     @Inject(NavController) private navCtrl: NavController) {
-   
+      this.loginForm = this.fb.group({
+        email: new FormControl('', Validators.required)
+      });
    }
   goBack() {
     this.navCtrl.back();
   }
-  ngOnInit() {}
-  ionViewWillEnter() {
-    this.loginForm = this.fb.group({
-      email: new FormControl('', Validators.required)
-    });
+  ngOnInit() {
+    
+  }
+  ionViewDidEnter() {
+   this.loginForm.reset();
   }
   login(form: any){
     if (!this.loginForm.valid) {
@@ -60,7 +62,7 @@ export class ForgotPassPage implements OnInit {
             error => {
              this.fun.dismissLoader();
              this.trackService.logError(JSON.stringify(error),"forgotPassword");
-             this.fun.presentToast('Invalid Login data!', true, 'bottom', 2100);
+             this.fun.presentToast('Invalid Email! Please try with valid email.!', true, 'bottom', 2100);
             });
           } else {
             this.fun.dismissLoader();

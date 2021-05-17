@@ -36,7 +36,7 @@ selectedVendors : VendorAccount;
     });
   }
   ngOnInit() {}
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.loadingController.present('Fetching Retailers..');
     this.getAllVendors();
     this.selectedVendors = new VendorAccount();
