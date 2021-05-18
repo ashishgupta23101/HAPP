@@ -78,6 +78,7 @@ Date = {
   lastmonth: false
 };
 ngOnInit() {
+  this.loading.present("Loading Packages");
   const cusHome = localStorage.getItem('cusHome');
   this.activeItems = [];
   if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
@@ -911,9 +912,8 @@ menuback(){
   this.dateMenu = false;
 }
 ionViewDidEnter(){
- // this.segmentChanged() ;
- 
-  this.segmentChanged();
+  this.loading.present("Loading Packages");
+  this.segmentChanged() ;
 }
 doRefresh(event) {
   if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){
@@ -954,14 +954,13 @@ searchPackages() {
 }
 
 refreshList(showLoader: boolean = false) {
-  this.loading.dismiss();
-  if (showLoader) { this.loading.present('Refreshing...'); }
+
+  if (showLoader) {   this.loading.dismiss();this.loading.present('Refreshing...'); }
   // tslint:disable-next-line: only-arrow-functions
   this.searchTerm = '';
   this.dateSelected = formatDate(new Date(), 'MM/dd/yyyy', 'en');
   setTimeout(() => {
     this.segmentChanged();
-    this.loading.dismiss();
  }, 800);
 }
 
@@ -981,6 +980,7 @@ segmentChanged() {
           this.trackService.setarchivePackagestoSession(this._data);
           break;
       }
+      
     this.sessionData = SessionData;
     if(this.IsFilter){
       this.apply();
@@ -989,6 +989,8 @@ segmentChanged() {
     }
     this.sortedBy();
     }
+    debugger;
+    this.loading.dismiss();
     this.readyToLoad = true;
  });
 }
@@ -1037,8 +1039,16 @@ filterBy() {
         break;
   }
 }
-showDetail(key: any){
-  this.navCtrl.navigateForward(`/list-detail/${key}`);
+showDetail(item: any){
+  const val1 = this._data.find(elem => elem.trackingNo === item.Key);
+  let scans = val1 != undefined && val1.scans != null ? val1.scans : [];
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+        scans: JSON.stringify(scans),
+        item: JSON.stringify(item)
+    }
+    };
+    this.router.navigate(['list-detail'], navigationExtras);
 }
 sortByDates() {
   switch (this.sortBy) {
@@ -1137,14 +1147,16 @@ const alert = await this.alertController.create({
                     this.refreshList();
                      },
                       error => {
+                        this.loading.dismiss();
                         this.loading.presentToast('error', 'Unable to Archive!');
+                        this.trackService.logError(JSON.stringify(error),"Archive");
                       });
                     
                   }
                 });
               break;
               case 'undo':
-                this.loading.present('undo...');
+                this.loading.present('Undo...');
                 this.storage.get('_allPackages').then(tData => {
                     if (tData == null) {
                     tData = []; }
@@ -1163,6 +1175,7 @@ const alert = await this.alertController.create({
                         error => {
                           this.loading.dismiss();
                           this.loading.presentToast('error', 'Unable to undo Archived package!');
+                          this.trackService.logError(JSON.stringify(error),"Undo");
                         });
                       
                     }
@@ -1180,12 +1193,14 @@ const alert = await this.alertController.create({
                         tData.splice(index, 1);
                         this.storage.set('_allPackages', tData).then(() => {
                           // this.loading.dismiss();
+                          this.trackService.getReportsData();
                           this.refreshList();
                        });
                       },
                       error => {
                         this.loading.dismiss();
                         this.loading.presentToast('error', 'Unable to delete!');
+                        this.trackService.logError(JSON.stringify(error),"Delete");
                       });
                        }
                     });

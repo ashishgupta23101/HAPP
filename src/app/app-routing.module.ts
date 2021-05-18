@@ -32,7 +32,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/link-email-ac/link-email-ac.module').then( m => m.LinkEmailAcPageModule)
   },
   {
-    path: 'pkg-add-success/:any',canActivate: [AuthGuard],
+    path: 'pkg-add-success',canActivate: [AuthGuard],
     loadChildren: () => import('./public/pkg-add-success/pkg-add-success.module').then( m => m.PkgAddSuccessPageModule)
   },
   {
@@ -88,7 +88,7 @@ const routes: Routes = [
     loadChildren: () => import('./public/link-email-fail/link-email-fail.module').then( m => m.LinkEmailFailPageModule)
   },
   {
-    path: 'list-detail/:any',
+    path: 'list-detail',
     loadChildren: () => import('./public/list-detail/list-detail.module').then( m => m.ListDetailPageModule)
   },
   {

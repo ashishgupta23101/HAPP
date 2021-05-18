@@ -26,7 +26,7 @@ export class AppComponent implements OnInit{
     @Inject(Network) private network: Network
    ){
 
-
+    this.splashScreen.show();
   }
   register(){
 
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit{
   }
   ngOnInit() {
     try{
-      this.splashScreen.show();
+      
       this.storage.get('apiData').then(aData => {
         if (aData !== null && aData !== undefined) {
            SessionData.apiURL = aData.apiURL ; 
@@ -102,12 +102,12 @@ if (this.platform.is('cordova')) {
   }
   gotoLogin(){
     this.initializeApp();
-    this.splashScreen.hide();
     localStorage.setItem('AuthToken', null);
     localStorage.setItem('IsLogin', 'false');
     localStorage.setItem('user', null);
     localStorage.setItem('currPage', 'wp');
     this.navCtrl.navigateForward(`/login`);
+    this.splashScreen.hide();
   }
   initializeApp() {
     this.fcm.FirebasenotificationSetup();

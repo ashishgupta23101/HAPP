@@ -49,8 +49,6 @@
           cordova.openwith.addHandler(myHandler);
 
           function myHandler(intent) {
-              console.log('intent received');
-              console.log('  text: ' + intent.text);
               localStorage.setItem("intent", intent.text);
               location.reload();
               //alert(localStorage.getItem("intent"));

@@ -112,10 +112,9 @@ export class HomePage implements OnInit {
     this.trackNo = localStorage.getItem('intent');
     const cusHome = localStorage.getItem('cusHome');
 
-   // alert(this.trackNo);
     if (this.trackNo !== null && this.trackNo !== undefined && this.trackNo !== ''  && this.trackNo !== 'SHIPMATRIX') {
       // alert(this.trackNo);
-
+      this.loadingController.presentToast('warn',"Start tracking for : "+ this.trackNo);
       this.trackNo = this.trackNo.replace('\u001d', '');
       this.GetCarrierByTNC(this.trackNo);
       localStorage.setItem('intent', '');
@@ -129,7 +128,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.splashScreen.hide();
     this.fillIntentValue();
     //this.googleSDK();
     this.clearTrack();
@@ -137,9 +136,7 @@ export class HomePage implements OnInit {
     if ( isLastScanned === 'true'){
       this.scanPGCode();
     }
-    if (this.trackNo === 'SHIPMATRIX'){
-      this.fillIntentValue();
-    }
+  
     this.setfilteringDatestoSession();
     localStorage.setItem('isScanned', 'false');
   }

@@ -74,8 +74,6 @@ token: any;
             this.onNotifications().subscribe(msg => {
               this.trackService.logError(JSON.stringify(msg),'onNotifications()');
                   if (this.platform.is('ios')) {
-                    
-
                     let notification : string;
                     notification = msg.aps.alert.body;
                     let message = notification.split(',');
@@ -84,7 +82,6 @@ token: any;
                     let trackingNo = trackingNoMessage[1].trim();
                     let carrier = carrierMessage[1].trim();
                     //let recordKey = trackingNo + '-' + carrier;
-        
                     try {
                       this.queryParam = new QueryParams();
                       this.queryParam.TrackingNo = trackingNo;

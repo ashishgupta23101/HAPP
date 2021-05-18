@@ -24,6 +24,7 @@ export class ReportOtpPage implements OnInit {
   @ViewChild('pieChart') pieChart;
   bars: any;
   pop_img : string;
+  _data : Array<any>;
   pop_status: any;
   pop_value: any;
   colorArray: any
@@ -1110,10 +1111,12 @@ export class ReportOtpPage implements OnInit {
    }, 800);
   }
   segmentChanged() {
+    this._data =[];
     this.activeItems = [];
     this.storage.get('_allPackages').then((value) => {
       if (value !== '' && value !== undefined && value !== null){
       value = value.filter(val => val.ResultData.Status.toLowerCase().includes('return'));
+      this._data = value;
       this.trackService.setPackagestoSession(value);
       this.sessionData = SessionData;
       this.activeItems = SessionData.packages.All;
@@ -1168,9 +1171,17 @@ export class ReportOtpPage implements OnInit {
            break;
      }
    }
-   showDetail(key: any){
-     this.navCtrl.navigateForward(`/list-detail/${key}`);
-   }
+   showDetail(item: any){
+    const val1 = this._data.find(elem => elem.trackingNo === item.Key);
+    let scans = val1 != undefined && val1.scans != null ? val1.scans : [];
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          scans: JSON.stringify(scans),
+          item: JSON.stringify(item)
+      }
+      };
+      this.router.navigate(['list-detail'], navigationExtras);
+  }
    sortByDates() {
      switch (this.sortBy) {
        case '1':

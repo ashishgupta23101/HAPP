@@ -1,9 +1,6 @@
-import { Component, Inject, NgZone, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
-import { User } from 'src/app/models/user';
-import { FcmService } from 'src/app/providers/fcm.service';
 import { FunctionsService } from 'src/app/providers/functions.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
 
@@ -16,9 +13,7 @@ export class HaveQuestionPage implements OnInit {
   loginForm: FormGroup;
   token: string;
   constructor(
-    @Inject(Router) private router: Router,
     @Inject(FormBuilder) public fb: FormBuilder,
-    @Inject(Platform) private platform: Platform,
     @Inject(FunctionsService) public fun: FunctionsService,
     @Inject(TrackingService) public trackService: TrackingService,
     @Inject(NavController) private navCtrl: NavController) {
@@ -61,7 +56,7 @@ export class HaveQuestionPage implements OnInit {
                   this.fun.dismissLoader();
                   this.navCtrl.navigateForward('/helpconfirm');
             },
-            error => {
+            () => {
              this.fun.dismissLoader();
             });
           } else {

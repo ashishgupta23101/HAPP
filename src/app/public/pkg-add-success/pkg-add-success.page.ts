@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { ActivePackages } from 'src/app/models/active-packages';
+import { TrackingScans } from 'src/app/models/TrackingScans';
 
 @Component({
   selector: 'app-pkg-add-success',
@@ -8,22 +10,34 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./pkg-add-success.page.scss'],
 })
 export class PkgAddSuccessPage implements OnInit {
-  trackNo: any ;
-  constructor(@Inject(ActivatedRoute) private route: ActivatedRoute, @Inject(NavController) private navCtrl: NavController) {
+  item: ActivePackages;
+  trackingScans: Array<TrackingScans> = [];
+  constructor(@Inject(ActivatedRoute) private route: ActivatedRoute,
+  @Inject(Router) private router: Router,
+   @Inject(NavController) private navCtrl: NavController) {
     
    }
   goBack() {
     this.navCtrl.back();
   }
   ionViewDidEnter(){
-     setTimeout(() => { this.navCtrl.navigateForward(`/list-detail/${this.trackNo}`);
+     setTimeout(() => { this.gotodetail();
    }, 2000);
    // wait 2 seconds
   }
   ngOnInit() {
-    this.trackNo = this.route.snapshot.paramMap.get('any');
+    this.route.queryParams.subscribe(params => {
+      this.trackingScans = JSON.parse(params.scans);
+      this.item = JSON.parse(params.item);
+    });
   }
 gotodetail(){
-  this.navCtrl.navigateForward(`/list-detail/${this.trackNo}`);
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+        scans: JSON.stringify(this.trackingScans),
+        item: JSON.stringify(this.item)
+    }
+    };
+    this.router.navigate(['list-detail'], navigationExtras);
 }
 }

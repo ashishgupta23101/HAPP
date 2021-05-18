@@ -1,11 +1,11 @@
-import { TrackingHeader } from "./TrackingHeader";
+import { Trackingheader } from "./Trackingheader";
 import { TrackingScans } from "./TrackingScans";
-import { TrackingResult } from "./TrackingResult";
+import { ResultData } from "./ResultData";
 
 export class TrackingDetails
 {
-    TrackingResult: TrackingResult;
-    TrackingHeader: TrackingHeader;
+    ResultData: ResultData;
+    Trackingheader: Trackingheader;
     TrackingScans: Array<TrackingScans> = [];
     isPickUpscan = true;
     isOutforDelivery = true;

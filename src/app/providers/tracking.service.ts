@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid';
 import { Storage } from '@ionic/storage';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { formatDate } from '@angular/common';
-import { EditPackage } from 'src/app/models/EditPackage';
 import { environment } from 'src/environments/environment';
 import { ActivePackages, SessionData, Packages, CusDates, Report } from 'src/app/models/active-packages';
 import { NavController, Platform} from '@ionic/angular';
@@ -19,6 +18,7 @@ import { HelperService } from './helper.service';
 import { EmailAccount } from '../models/Providers';
 import { VendorAccount } from '../models/vendorAccount';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable({
 providedIn: 'root'
@@ -188,6 +188,7 @@ constructor(
   @Inject(Platform) private platform: Platform,
   @Inject(HelperService) private helper: HelperService,
   @Inject(SplashScreen) private splashScreen: SplashScreen,
+  @Inject(Router) private router: Router,
   @Inject(NavController) private navCtrl: NavController) {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
@@ -265,16 +266,42 @@ getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
               record.type = 'act';
               tData.push(record);
               this.storage.set('_allPackages', tData);
+              let pack = new ActivePackages();
+              pack.TrackingNo = record.ResultData.TrackingNo;
+              pack.VendorName = record.ResultData.VendorName;
+              pack.ProductName = record.LineItems[0].ProductName;
+              pack.ProductUrl = record.LineItems[0].ProductImageURL;
+              pack.Category = record.LineItems[0].Category;
+              pack.Status = record.ResultData.Status === '' || record.ResultData.Status === null ? 'NA' : record.ResultData.Status;
+              pack.Carrier = record.ResultData.CarrierCode;
+              pack.DateCreated = record.ResultData.DateShipped === '' || record.ResultData.DateShipped === null ? 'NA' : record.ResultData.DateShipped;
+              if(pack.Status.toLowerCase().includes('deliver')){
+                pack.ExpectedDate = record.ResultData.DateDelivered === ''
+                || record.ResultData.DateDelivered === null ? 'NA' : record.ResultData.DateDelivered;
+              
+              }else{
+                pack.ExpectedDate = record.ResultData.EstDeliveryDate === ''
+                || record.ResultData.EstDeliveryDate === null ? 'NA' : record.ResultData.EstDeliveryDate;
+              }
+
+              
+              pack.LastUpdated = record.ResultData.Updated === '' || record.ResultData.Updated === null ? 'NA' : record.ResultData.Updated;
+              pack.Key = record.trackingNo;
+              pack.ImgUrl = pack.Status.toLowerCase().includes('delivered') ? '../../../assets/slicing/deliveredontime.png' :
+              (pack.Status.toLowerCase().includes('transit') ? '../../../assets/slicing/intransit.png' :
+              (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
+              '../../../assets/slicing/deliveredlate.png'));
+              let scans = record != undefined && record.scans != null ? record.scans : [];
               this.loadingController.dismiss();
               switch (nav) {
                 case 'pkgadded':
-                  this.navCtrl.navigateForward(`/pkg-add-success/${record.trackingNo}`);
+                  this.gotoDetail(pack,scans);
                   break;
                 case 'actpck':
                     this.navCtrl.navigateForward(`/listing`);
                     break;
                     case 'det':
-                      this.navCtrl.navigateForward(`/list-detail/${record.trackingNo}`);
+                      this.gotoDetail(pack,scans);
                       break;
               }
               // this.getReportsData();
@@ -289,7 +316,15 @@ getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
 
 
 }
-
+gotoDetail(item:any,scans:any){
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+        scans: JSON.stringify(scans),
+        item: JSON.stringify(item)
+    }
+    };
+    this.router.navigate(['pkg-add-success'], navigationExtras);
+}
   getAllActivePackages(): Observable<any> {
   let _token = localStorage.getItem('AuthToken');
   let _header =  (_token === null || _token === 'null' || _token === undefined || _token === '') ?
@@ -308,10 +343,10 @@ setLatestPackages(){
   this.allData = [];
   this.getAllActivePackages().subscribe(data => {
     // tslint:disable-next-line: no-debugger
-    data.ResponseData.forEach(element => {
-      let itemKey = element.ResultData.TrackingNo.trim() + '-' + element.ResultData.Carrier.trim();
+    data.objResponse.forEach(element => {
+      let itemKey = element.ResultData.TrackingNo?.trim() + '-' + element.ResultData.CarrierCode?.trim();
       const record: any = element;
-      if(element.ResultData.Archived === '' || element.ResultData.Archived === null || element.ResultData.Archived === undefined){
+      if(element.ResultData.Archived === false || element.ResultData.Archived === '' || element.ResultData.Archived === null || element.ResultData.Archived === undefined){
           record.trackingNo = itemKey;
           record.ResultData.Description = element.ResultData.Description;
           record.ResultData.Residential = 'false';
@@ -336,7 +371,7 @@ gotocustomePAGE(){
   if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
     localStorage.setItem('cusHome', 'tp');
   }
-  this.splashScreen.hide();
+  
   switch (cusHome) {
     case 'tp':
     case 'sp':
@@ -390,19 +425,19 @@ getReportsData(){
 setreport(element: any){
   this.PackageSummary.total ++;
   this.PackagebyCarrier.total ++;
-  if(element.TrackingHeader.Carrier === 'A'){
+  if(element.Trackingheader.CarrierCode === 'A'){
     this.PackagebyCarrier.data[0] ++;
   }
-  else if(element.TrackingHeader.Carrier === 'U'){
+  else if(element.Trackingheader.CarrierCode === 'U'){
     this.PackagebyCarrier.data[1] ++;
   }
-  else if(element.TrackingHeader.Carrier === 'F' || element.TrackingHeader.Carrier === 'R'){
+  else if(element.Trackingheader.CarrierCode === 'F' || element.Trackingheader.CarrierCode === 'R'){
     this.PackagebyCarrier.data[2] ++;
   }
-  else if(element.TrackingHeader.Carrier === 'S'){
+  else if(element.Trackingheader.CarrierCode === 'S'){
     this.PackagebyCarrier.data[3] ++;
   }
-  else if(element.TrackingHeader.Carrier === 'D'){
+  else if(element.Trackingheader.CarrierCode === 'D'){
     this.PackagebyCarrier.data[4] ++;
   }
   else {
@@ -680,18 +715,23 @@ setPackagestoSession(tData: any) {
   let pack: ActivePackages;
   tData.forEach(element => {
     //alert(element.type);
+    element.LineItems.forEach(item => {
     pack = new ActivePackages();
     pack.TrackingNo = element.ResultData.TrackingNo;
-    pack.ProductName = element.ResultData.TrackingNo;
-    pack.ProductUrl = '../../../assets/images/default-product-image.png';
+    pack.VendorName = element.ResultData.VendorName;
+    pack.ProductName = item.ProductName;
+    pack.ProductUrl = item.ProductImageURL;
+    pack.Category = item.Category;
     pack.Status = element.ResultData.Status === '' || element.ResultData.Status === null ? 'NA' : element.ResultData.Status;
-    pack.Carrier = element.ResultData.Carrier;
+    pack.Carrier = element.ResultData.CarrierCode;
     pack.DateCreated = element.ResultData.DateShipped === '' || element.ResultData.DateShipped === null ? 'NA' : element.ResultData.DateShipped;
-    debugger;
     if(pack.Status.toLowerCase().includes('deliver')){
-      pack.ExpectedDate = element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
+      pack.ExpectedDate = element.ResultData.DateDelivered === ''
+      || element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
+     
     }else{
-      pack.ExpectedDate = element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
+      pack.ExpectedDate = element.ResultData.EstDeliveryDate === ''
+      || element.ResultData.EstDeliveryDate === null ? 'NA' : element.ResultData.EstDeliveryDate;
     }
 
     
@@ -702,6 +742,7 @@ setPackagestoSession(tData: any) {
     (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
     '../../../assets/slicing/deliveredlate.png'));
     SessionData.packages.All.push(pack);
+    });
   });
   SessionData.packages.Today = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Today);
   SessionData.packages.Yesterday = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Yesterday);
@@ -715,15 +756,25 @@ setarchivePackagestoSession(tData: any) {
 SessionData.packages = new  Packages();
 let pack: ActivePackages;
 tData.forEach(element => {
+  element.LineItems.forEach(item => {
   pack = new ActivePackages();
   pack.TrackingNo = element.ResultData.TrackingNo;
-  pack.ProductName = element.ResultData.TrackingNo;
-  pack.ProductUrl = '../../../assets/images/default-product-image.png';
+  pack.VendorName = element.ResultData.VendorName;
+  pack.ProductName = item.ProductName;
+  pack.ProductUrl = item.ProductImageURL;
+  pack.Category = item.Category;
   pack.Status = element.ResultData.Status === '' || element.ResultData.Status === null ? 'NA' : element.ResultData.Status;
-  pack.Carrier = element.ResultData.Carrier;
+  pack.Carrier = element.ResultData.CarrierCode;
   pack.DateCreated = element.ResultData.DateShipped === '' || element.ResultData.DateShipped === null ? 'NA' : element.ResultData.DateShipped;
-  pack.ExpectedDate = element.TrackingHeader.DeliveredDateTime === ''
-    || element.ResultData.DateDelivered === null ? 'NA' : element.TrackingHeader.DeliveredDateTime;
+  if(pack.Status.toLowerCase().includes('deliver')){
+    pack.ExpectedDate = element.ResultData.DateDelivered === ''
+    || element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
+  }else{
+    pack.ExpectedDate = element.ResultData.EstDeliveryDate === ''
+    || element.ResultData.EstDeliveryDate === null ? 'NA' : element.ResultData.EstDeliveryDate;
+   
+  }
+
   pack.LastUpdated = element.ResultData.Updated === '' || element.ResultData.Updated === null ? 'NA' : element.ResultData.Updated;
   pack.Key = element.trackingNo;
   pack.ImgUrl = pack.Status.toLowerCase().includes('delivered') ? '../../../assets/slicing/deliveredontime.png' :
@@ -731,6 +782,7 @@ tData.forEach(element => {
   (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
   '../../../assets/slicing/deliveredlate.png'));
   SessionData.packages.All.push(pack);
+});
 });
 SessionData.packages.Today = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Today);
 SessionData.packages.Yesterday = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Yesterday);

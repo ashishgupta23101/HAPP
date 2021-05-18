@@ -61,7 +61,7 @@
 
       <ion-item-sliding *ngFor="let item of activeItems"  class="listingBlock"> 
         <div class="lb_side">
-        <ion-item (click)="showDetail(item.Key)" class="shadowBox">
+        <ion-item (click)="showDetail(item)" class="shadowBox">
           <ion-avatar slot="start">
             <img [src]="item.ProductUrl">
           </ion-avatar>
@@ -79,7 +79,7 @@
         </ion-item> 
 
       
-        <a href="javascript:void(0)" (click)="showDetail(item.Key)" class="listAarrow">
+        <a href="javascript:void(0)" (click)="showDetail(item)" class="listAarrow">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28.88" height="36.559" viewBox="0 0 28.88 36.559">
             <defs>
               <filter id="chevron-down" x="0" y="0" width="28.88" height="36.559" filterUnits="userSpaceOnUse">
