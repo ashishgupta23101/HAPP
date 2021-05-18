@@ -9,7 +9,7 @@ export class AccountUnlinkPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { localStorage.setItem('currPage', 'tp');
   }
 
 }

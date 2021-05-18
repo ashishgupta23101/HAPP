@@ -16,8 +16,8 @@ export class ListDetailPage implements OnInit {
               @Inject(AlertController) public alertController: AlertController,
               @Inject(Router) private router: Router,
               @Inject(NavController) private navCtrl: NavController) {}
-hasData: any = false;
-item: ActivePackages;
+
+item: ActivePackages = new ActivePackages();
 
 trackingScans: Array<TrackingScans> = [];
 trackNo: any ;
@@ -30,14 +30,6 @@ ngOnInit() {
     this.trackingScans = JSON.parse(params.scans);
     this.item = JSON.parse(params.item);
   });
- 
-if (this.trackingScans !== undefined  && this.trackingScans !== null){
-this.hasData = true;
-// this.loading.dismiss();
-} else{
-this.hasData = false;
-// this.loading.dismiss();
-}
 
 }
 share() {

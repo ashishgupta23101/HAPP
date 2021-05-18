@@ -60,10 +60,10 @@ export class RegisterPage implements OnInit {
                   localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
                   localStorage.setItem('user', usr.email);
                   localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
-                  this.fun.dismissLoader();
                   this.fcm.FirebasenotificationSetup();
                   localStorage.setItem('IsLogin', 'true');
-                  this.fun.navigate('welcome', false);
+                  this.fun.dismissLoader();
+                  //this.fun.navigate('welcome', false);
                 }
                 else {
                   this.fun.presentToast('Invalid Credentials! Please try with valid login credentials.', true, 'bottom', 2100);

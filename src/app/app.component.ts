@@ -25,8 +25,6 @@ export class AppComponent implements OnInit{
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
    ){
-
-    this.splashScreen.show();
   }
   register(){
 try{
@@ -86,12 +84,9 @@ if (this.platform.is('cordova')) {
           const exptime = new Date(localStorage.getItem('expires'));
           const curtime = new Date();
           if (curtime <= exptime){
-            
             this.initializeApp();
             this.trackService.setLatestPackages();
           }else{
-          // localStorage.setItem('user', 'dummyUser');
-            //this.loadingController.presentToast('info','Your login expired. Please login.');
             this.register();
           }
       }
@@ -112,10 +107,10 @@ if (this.platform.is('cordova')) {
     localStorage.setItem('user', null);
     localStorage.setItem('currPage', 'wp');
     this.navCtrl.navigateForward(`/login`);
-    this.splashScreen.hide();
+  
   }
   initializeApp() {
-    this.fcm.FirebasenotificationSetup();
+    
     this.statusBar.overlaysWebView(false);
     // set status bar to white
     this.statusBar.styleLightContent();
@@ -145,7 +140,7 @@ if (this.platform.is('cordova')) {
           this.loadingController.presentToast('dark', 'Internet is Now Connected');
         }, 2000);
       });
-      
+      this.fcm.FirebasenotificationSetup();
       this.statusBar.styleDefault();
     
     }else{
@@ -153,7 +148,9 @@ if (this.platform.is('cordova')) {
       
     }
 
-
+    setTimeout(()=>{
+      this.splashScreen.hide();  
+    },4000);
   }
   setPushAlerts() {
     this.storage.get('deviceToken').then(devToken => {

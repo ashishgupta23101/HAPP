@@ -340,7 +340,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 .main-title{color: #452092; margin:4px 0 0 0; font-size:13px;}
 
 .statusBar{
-  height:32px;
+  height:22px;
   background-color: #fff;
   position: fixed;
   top: 0;
@@ -355,7 +355,7 @@ body, h1, h2, h3, h4, h5, h6, p, div, *, *:before, *:after{font-family: Arial, H
 
 .pageSdwStart{
   background: transparent;
-  top: 32px;
+  top: 22px;
   border-radius: 20px 20px 0px 0px;
   box-shadow: none;
   border-top: 1px solid rgba(64, 121, 140, 0.08);
@@ -634,7 +634,7 @@ ion-header ion-toolbar{--background: #f8f7f9;}
     ion-input{padding-right:77px !important;}
 }
 
-ion-header{background-color: #f8f7f9;  padding-top:32px; position: relative;
+ion-header{background-color: #f8f7f9;  padding-top:22px; position: relative;
   ion-segment{background-color:transparent; padding:5px 4px 2px 4px;  z-index: 10;
     position: relative;
     ion-row{width:100%;}
@@ -1519,7 +1519,7 @@ ion-alert{
 
 
 
-@media only screen and (min-height: 738px) { 
+@media only screen and (min-height: 810px) { 
   .statusBar{
     height:40px;
   }

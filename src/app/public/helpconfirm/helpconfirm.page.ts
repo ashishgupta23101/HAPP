@@ -12,7 +12,7 @@ export class HelpconfirmPage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
-  ngOnInit() {
+  ngOnInit() {localStorage.setItem('currPage', 'tp');
   }
 
 }

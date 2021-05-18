@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountForgotPassPage implements OnInit {
 
-  constructor() { }
+  constructor() { localStorage.setItem('currPage', 'tp');}
 
   ngOnInit() {
   }

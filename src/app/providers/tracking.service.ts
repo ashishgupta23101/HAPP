@@ -371,7 +371,7 @@ gotocustomePAGE(){
   if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
     localStorage.setItem('cusHome', 'tp');
   }
-  
+  this.loadingController.dismiss();
   switch (cusHome) {
     case 'tp':
     case 'sp':
@@ -598,9 +598,7 @@ const gsmDetails = {
   DeviceToken: devToken
 };
 this.saveDeviceID(gsmDetails).subscribe(data => {
-  if (data.Error){
-    this.logError('Error - ' + JSON.stringify(data.Message), 'saveDeviceID');
-  }
+    this.logError('Device Data - ' + JSON.stringify(data), 'saveDeviceID');
 },
 error => {
   this.logError('Error - ' + JSON.stringify(error), 'saveDeviceID');

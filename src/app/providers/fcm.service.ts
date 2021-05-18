@@ -6,7 +6,6 @@ import { TrackingService } from './tracking.service';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { SessionData } from 'src/app/models/active-packages';
 import { AuthUser } from '../models/user';
-import { Device } from '@ionic-native/device/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 @Injectable()
 export class FcmService {
@@ -16,7 +15,6 @@ token: any;
   constructor(
               @Inject(TrackingService) private trackService : TrackingService,
               @Inject(FirebaseX) private firebase: FirebaseX,
-              @Inject(Device) private uniqueDeviceID: Device,
               //@Inject(OneSignal) private oneSignal: OneSignal,
               @Inject(Storage) private storage : Storage,
               @Inject(Platform) private platform: Platform
@@ -57,31 +55,25 @@ token: any;
           }
         
           public FirebasenotificationSetup() {
-            this.platform.ready().then(() => {
-              this.storage.get('apiData').then(aData => {
-                if (aData !== null && aData !== undefined) {
-                   SessionData.apiURL = aData.apiURL ; 
-                   SessionData.apiType = aData.apiType; 
-                  }});
-              if (this.platform.is('cordova')) {
+
+
+
             this.getToken();
             this.refreshToken().subscribe(token => {
-              console.log(token);
+              if (!token) return;
+              this.storage.set('deviceToken', token);
+              this.trackService.saveToken(token);
+              this.subscribetoMessage(token);
+              this.unsubscribetoMessage(token);
             });
         
             this.subscribetoMessage(this.token);
                
             this.onNotifications().subscribe(msg => {
-              this.trackService.logError(JSON.stringify(msg),'onNotifications()');
+              //this.trackService.logError(JSON.stringify(msg),'onNotifications()');
                   if (this.platform.is('ios')) {
-                    let notification : string;
-                    notification = msg.aps.alert.body;
-                    let message = notification.split(',');
-                    let trackingNoMessage = message[0].split(':');
-                    let carrierMessage = message[5].split(':');
-                    let trackingNo = trackingNoMessage[1].trim();
-                    let carrier = carrierMessage[1].trim();
-                    //let recordKey = trackingNo + '-' + carrier;
+                    let trackingNo = msg.TrackingNo.trim();
+                    let carrier = msg.Carrier.trim();
                     try {
                       this.queryParam = new QueryParams();
                       this.queryParam.TrackingNo = trackingNo;
@@ -97,7 +89,7 @@ token: any;
               });
         
             this.unsubscribetoMessage(this.token);
-              }});
+
           }
           
           public oneSignalNotificationSetup() {

@@ -1079,7 +1079,7 @@ revert(key: string) {
   this.presentConfirm(key, 'Undo', 'Do you want to undo the package?', 'undo');
   }
 share() {
-  this.social.presentActionSheet2();
+   this.social.presentActionSheet2();
   }
 retrack(key: string) {
   this.presentConfirm(key, 'Re-Track', 'Do you want to Re-Track the package?', 'rtrck');

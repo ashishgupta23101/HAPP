@@ -25,7 +25,7 @@ export class PkgAddSuccessPage implements OnInit {
    }, 2000);
    // wait 2 seconds
   }
-  ngOnInit() {
+  ngOnInit() { 
     this.route.queryParams.subscribe(params => {
       this.trackingScans = JSON.parse(params.scans);
       this.item = JSON.parse(params.item);

@@ -9,7 +9,7 @@
       <path id="reply" d="M83.994,67.533S73.809,22.986,33.642,22.986V4.751L1.6,34.839,33.642,65.462V45.519c21.8-.006,38.982,1.928,50.352,22.017Z" transform="translate(-1.6 -4.751)" fill="#63c9ef"/>
       </svg> 
     </div> 
-    <div class="share_icon fRight" (click)="share()"><app-social-sharing *ngIf="hasData" [Key]="item"></app-social-sharing></div> 
+    <div class="share_icon fRight" (click)="share()"><app-social-sharing *ngIf="item.TrackingNo" [Key]="item"></app-social-sharing></div> 
   </div> 
 </ion-header>
 

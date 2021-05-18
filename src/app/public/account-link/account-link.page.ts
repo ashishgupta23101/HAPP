@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountLinkPage implements OnInit {
 
-  constructor() { }
+  constructor() {  }
 
-  ngOnInit() {
+  ngOnInit() {localStorage.setItem('currPage', 'tp');
   }
 
 }

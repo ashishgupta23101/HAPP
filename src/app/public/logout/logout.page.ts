@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { FcmService } from 'src/app/providers/fcm.service';
+import { LoaderService } from 'src/app/providers/loader.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
 
 @Component({
@@ -9,7 +11,9 @@ import { TrackingService } from 'src/app/providers/tracking.service';
 })
 export class LogoutPage implements OnInit {
 
-  constructor(@Inject(NavController) private navCtrl: NavController,
+  constructor(@Inject(NavController) private navCtrl: NavController,   
+   @Inject(FcmService) private fcm: FcmService,
+   @Inject(LoaderService) public loadingController: LoaderService,
   @Inject(TrackingService) public trackService: TrackingService) { }
   goBack() {
     this.navCtrl.back();
@@ -18,6 +22,7 @@ export class LogoutPage implements OnInit {
   }
   logout(){
     localStorage.setItem('user', 'dummyUser');
+    this.loadingController.present("Logging out...");
     this.trackService.demoregister().subscribe(data => {
       // tslint:disable-next-line: no-debugger
         if (data.Error === true)
@@ -35,6 +40,8 @@ export class LogoutPage implements OnInit {
           localStorage.setItem('user', 'dummyUser');
           localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
           localStorage.setItem('IsLogin', 'true');
+          this.fcm.FirebasenotificationSetup();
+          
           this.trackService.setLatestPackages();
          
         }

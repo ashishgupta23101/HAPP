@@ -141,7 +141,6 @@ export class HomePage implements OnInit {
     localStorage.setItem('isScanned', 'false');
   }
   ionViewDidEnter() {
-    this.splashScreen.hide();
   }
   fillCarrierCode(formVal) {
     this.GetCarrierByTNC(formVal.TrackingNo );
