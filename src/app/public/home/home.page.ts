@@ -128,7 +128,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.splashScreen.hide();
     this.fillIntentValue();
     //this.googleSDK();
     this.clearTrack();
