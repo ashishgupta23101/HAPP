@@ -1,13 +1,8 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { NavController, PopoverController, AlertController } from '@ionic/angular';
-import { Trackingheader } from 'src/app/models/Trackingheader';
+import { NavController, AlertController } from '@ionic/angular';
 import { TrackingScans } from 'src/app/models/TrackingScans';
-import { Storage } from '@ionic/storage';
-import { ResultData } from 'src/app/models/ResultData';
-import { TrackingService } from 'src/app/providers/tracking.service';
 import { LoaderService } from 'src/app/providers/loader.service';
-import { QueryParams } from 'src/app/models/QueryParams';
 import { ActivePackages } from 'src/app/models/active-packages';
 import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
 @Component({
@@ -17,8 +12,6 @@ import { SocialSharingComponent } from 'src/app/component/social-sharing/social-
 })
 export class ListDetailPage implements OnInit {
   constructor(@Inject(ActivatedRoute) private route: ActivatedRoute,
-              @Inject(Storage) private storage: Storage,
-              @Inject(TrackingService) private trackService: TrackingService ,
               @Inject(LoaderService) private loading: LoaderService,
               @Inject(AlertController) public alertController: AlertController,
               @Inject(Router) private router: Router,
@@ -27,8 +20,6 @@ hasData: any = false;
 item: ActivePackages;
 
 trackingScans: Array<TrackingScans> = [];
-resultData: ResultData;
-trackingHeader: Trackingheader;
 trackNo: any ;
 selectedData: any;
 @ViewChild(SocialSharingComponent) social: SocialSharingComponent;

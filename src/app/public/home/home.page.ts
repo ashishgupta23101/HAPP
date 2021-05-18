@@ -128,6 +128,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+   
     this.fillIntentValue();
     //this.googleSDK();
     this.clearTrack();
@@ -138,6 +139,9 @@ export class HomePage implements OnInit {
   
     this.setfilteringDatestoSession();
     localStorage.setItem('isScanned', 'false');
+  }
+  ionViewDidEnter() {
+    this.splashScreen.hide();
   }
   fillCarrierCode(formVal) {
     this.GetCarrierByTNC(formVal.TrackingNo );

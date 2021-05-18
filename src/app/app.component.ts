@@ -24,7 +24,49 @@ export class AppComponent implements OnInit{
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
-   ){  this.splashScreen.show();
+   ){
+
+    this.splashScreen.show();
+  }
+  register(){
+try{
+    this.trackService.demoregister().subscribe(data => {
+      // tslint:disable-next-line: no-debugger
+      //this.loadingController.presentToast('info', 'AfterDemoRegistering');
+        if (data == null || data.Error === true)
+        { 
+          //this.loadingController.presentToast('info','inNULLData');
+          this.gotoLogin();
+          
+        }
+        if (data && data.ResponseData.AccessToken) {
+         // this.loadingController.presentToast('info','InIf');
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
+          localStorage.setItem('user', 'dummyUser');
+          localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
+          localStorage.setItem('IsLogin', 'true');
+          this.initializeApp();
+          this.trackService.setLatestPackages();
+        }
+        else {
+          //this.loadingController.presentToast('info','inElse');
+          this.trackService.logError(JSON.stringify(data),"Register Invalid response");
+          this.gotoLogin();
+        }
+      },
+      error => {
+       // this.loadingController.presentToast('info', 'In Error:');
+       this.trackService.logError(JSON.stringify(error),"Register");
+        this.gotoLogin();
+      });
+    }catch(ex){
+      this.loadingController.presentToast('info','Please check your network connection.');
+      this.trackService.logError(JSON.stringify(ex),"Register");
+      this.gotoLogin();
+    }
+  }
+  ngOnInit() {
     try{
       
       this.storage.get('apiData').then(aData => {
@@ -63,42 +105,6 @@ if (this.platform.is('cordova')) {
       this.gotoLogin();
     }
   }
-  register(){
-
-    this.trackService.demoregister().subscribe(data => {
-      // tslint:disable-next-line: no-debugger
-      //this.loadingController.presentToast('info', 'AfterDemoRegistering');
-        if (data == null || data.Error === true)
-        { 
-          //this.loadingController.presentToast('info','inNULLData');
-          this.gotoLogin();
-          
-        }
-        if (data && data.ResponseData.AccessToken) {
-         // this.loadingController.presentToast('info','InIf');
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
-          localStorage.setItem('user', 'dummyUser');
-          localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
-          localStorage.setItem('IsLogin', 'true');
-          this.initializeApp();
-          this.trackService.setLatestPackages();
-        }
-        else {
-          //this.loadingController.presentToast('info','inElse');
-          this.trackService.logError(JSON.stringify(data),"Register Invalid response");
-          this.gotoLogin();
-        }
-      },
-      error => {
-       // this.loadingController.presentToast('info', 'In Error:');
-       this.trackService.logError(JSON.stringify(error),"Register");
-        this.gotoLogin();
-      });
-  }
-  ngOnInit() {
-
-  }
   gotoLogin(){
     this.initializeApp();
     localStorage.setItem('AuthToken', null);
@@ -106,6 +112,7 @@ if (this.platform.is('cordova')) {
     localStorage.setItem('user', null);
     localStorage.setItem('currPage', 'wp');
     this.navCtrl.navigateForward(`/login`);
+    this.splashScreen.hide();
   }
   initializeApp() {
     this.fcm.FirebasenotificationSetup();
@@ -140,9 +147,8 @@ if (this.platform.is('cordova')) {
       });
       
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+    
     }else{
-      this.splashScreen.hide();
       this.storage.set('deviceID', 'browser');
       
     }
