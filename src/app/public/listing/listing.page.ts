@@ -8,9 +8,8 @@ import { LoaderService } from 'src/app/providers/loader.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { QueryParams } from 'src/app/models/QueryParams';
 import { TrackingService } from 'src/app/providers/tracking.service';
-import * as $ from 'jquery';
-import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
-import { element } from 'protractor';
+import { SocialSharingService } from 'src/app/providers/social-sharing.service';
+import { HelperService } from 'src/app/providers/helper.service';
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.page.html',
@@ -25,6 +24,8 @@ constructor(
   @Inject(AlertController) public alertController: AlertController,
   @Inject(NavController) private navCtrl: NavController ,
   @Inject(MenuController) private menuCtrl: MenuController,
+  @Inject(SocialSharingService) public social: SocialSharingService,
+  @Inject(HelperService) public helper: HelperService,
   @Inject(Storage) private storage: Storage) {
         // tslint:disable-next-line: no-debugger
      // tslint:disable-next-line: only-arrow-functions
@@ -55,7 +56,6 @@ public activeItems: Array<ActivePackages>;
 public searchItems: Array<any>;
 filterName = 'Filter by';
 readyToLoad = false;
-@ViewChild(SocialSharingComponent) social: SocialSharingComponent;
 Carrier = {
   ups: false,
   usps: false,
@@ -1078,8 +1078,18 @@ this.presentConfirm(key, 'Archive', 'Do you want to archive the package?', 'arc'
 revert(key: string) {
   this.presentConfirm(key, 'Undo', 'Do you want to undo the package?', 'undo');
   }
-share() {
-   this.social.presentActionSheet2();
+share(itm: ActivePackages) {
+  const carrierName = this.helper.GetCarrierName(itm.Carrier);
+  let url = '';
+  let image = '';
+  let message = 'Tracking Number: ' + itm.TrackingNo + '\n Carrier: ' + carrierName + '\n Status: ' + itm.Status;
+  let subject = 'Package Status';
+  this.social.share2(
+    message,
+    subject,
+    image,
+    url
+  );
   }
 retrack(key: string) {
   this.presentConfirm(key, 'Re-Track', 'Do you want to Re-Track the package?', 'rtrck');

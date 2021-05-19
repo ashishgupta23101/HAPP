@@ -31,7 +31,8 @@ export class SocialSharingComponent implements OnInit {
   async presentActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Share',
-      buttons: [{
+      buttons: [
+        {
         text: 'Share on Whatsup',
         role: 'destructive',
         cssClass: 'action-whatsup',
@@ -47,7 +48,8 @@ export class SocialSharingComponent implements OnInit {
             this.url
           );
         }
-      }, {
+      }, 
+      {
         text: 'Send an Email',
         role: 'destructive',
         cssClass: 'action-twitter',
@@ -70,6 +72,11 @@ export class SocialSharingComponent implements OnInit {
   }
 
   async presentActionSheet2() {
+    const carrierName = this.helper.GetCarrierName(this.Key.Carrier);
+    this.url = '';
+    this.image = '';
+    this.message = 'Tracking Number: ' + this.Key.TrackingNo + '\n Carrier: ' + carrierName + '\n Status: ' + this.Key.Status;
+    this.subject = 'Package Status';
     this.social.share2(
       this.message,
       this.subject,

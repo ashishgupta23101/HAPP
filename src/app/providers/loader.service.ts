@@ -59,7 +59,7 @@ export class LoaderService {
                               (msgtype.toLowerCase() === 'info' ? 'dark' : 'dark')),
      // position: msgtype.toLowerCase() === 'error' ? 'top' : (msgtype.toLowerCase() === 'warning' ? 'top' : (msgtype.toLowerCase() === 'info' ? 'bottom' : 'bottom')),
       position: 'top',
-      duration: 4000
+      duration: msgtype.toLowerCase() === 'intent' ? 1000 : 4000
     });
     toast.present();
   }

@@ -98,8 +98,8 @@
        </div>
         <ion-item-options side="end">
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="archive(item.Key)"><div class="itemOptionB"><ion-icon title="Archive" name="archive"></ion-icon></div></ion-item-option>
-          <ion-item-option color="light" *ngIf="segmentModel === 'history'" (click)="revert(item.Key)"><ion-icon name="repeat"></ion-icon></ion-item-option>
-          <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="share()" ><app-social-sharing [Key]="item"></app-social-sharing></ion-item-option>
+          <ion-item-option color="light" *ngIf="segmentModel === 'history'" (click)="revert(item.Key)"><div class="itemOptionB"><ion-icon name="repeat"></ion-icon></div></ion-item-option>
+          <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="share(item)" ><div class="itemOptionB"><ion-icon name="share-social-outline"></ion-icon></div></ion-item-option>
           <!-- <ion-item-option color="tertiary" *ngIf="segmentModel === 'active'" (click)="editPackages(item.Key)"><ion-icon  title="Edit"  name="create"></ion-icon></ion-item-option> -->
           <ion-item-option color="light" (click)="delete(item.Key)"><div class="itemOptionB"><ion-icon title="Remove"  name="trash"></ion-icon></div></ion-item-option>
           <ion-item-option color="light" *ngIf="segmentModel === 'active'" (click)="locate(item.Key)"><div class="itemOptionB"><ion-icon title="Locate" name="locate"></ion-icon></div></ion-item-option>

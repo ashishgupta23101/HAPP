@@ -9,7 +9,6 @@ import {
 } from '@ionic-native/barcode-scanner/ngx';
 import { FilteringDates, SessionData } from 'src/app/models/active-packages';
 import * as moment from 'moment';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { TrackingService } from 'src/app/providers/tracking.service';
 @Component({
@@ -32,7 +31,6 @@ export class HomePage implements OnInit {
   @ViewChild('carrierList') carrierSelectRef: IonSelect;
   // tslint:disable-next-line: max-line-length
   constructor(@Inject(BarcodeScanner) private barcodeScanner: BarcodeScanner,
-              @Inject(SplashScreen) private splashScreen: SplashScreen,
               @Inject(Router) private router: Router,
               @Inject(FormBuilder) public formBuilder: FormBuilder,
               @Inject(LoaderService) public loadingController: LoaderService,
@@ -91,9 +89,9 @@ export class HomePage implements OnInit {
   // Phonegap Scanner
   CorrectTrackingNo(trackNo: string) {
     if ((trackNo.length > 20) && trackNo.substring(0, 3) == '420') {
-      this.trackNo = this.trackNo.substring(8);
+        trackNo = trackNo.substring(8);
     }
-    return this.trackNo;
+    return trackNo;
   }
   ValidateTrackNo(trakNo: string)
   {
@@ -105,16 +103,12 @@ export class HomePage implements OnInit {
 
     return true;
   }
-   help() {
-    this.navCtrl.navigateForward(`/help`);
-  }
   fillIntentValue() {
     this.trackNo = localStorage.getItem('intent');
     const cusHome = localStorage.getItem('cusHome');
 
     if (this.trackNo !== null && this.trackNo !== undefined && this.trackNo !== ''  && this.trackNo !== 'SHIPMATRIX') {
-      // alert(this.trackNo);
-      this.loadingController.presentToast('warn',"Start tracking for : "+ this.trackNo);
+      this.loadingController.presentToast('intent',"Start tracking for : "+ this.trackNo);
       this.trackNo = this.trackNo.replace('\u001d', '');
       this.GetCarrierByTNC(this.trackNo);
       localStorage.setItem('intent', '');
@@ -128,8 +122,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-   
-    this.fillIntentValue();
+
     //this.googleSDK();
     this.clearTrack();
     const isLastScanned = localStorage.getItem('isScanned');
@@ -141,6 +134,7 @@ export class HomePage implements OnInit {
     localStorage.setItem('isScanned', 'false');
   }
   ionViewDidEnter() {
+    this.fillIntentValue();
   }
   fillCarrierCode(formVal) {
     this.GetCarrierByTNC(formVal.TrackingNo );

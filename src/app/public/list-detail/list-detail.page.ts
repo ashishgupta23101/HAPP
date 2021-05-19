@@ -4,7 +4,8 @@ import { NavController, AlertController } from '@ionic/angular';
 import { TrackingScans } from 'src/app/models/TrackingScans';
 import { LoaderService } from 'src/app/providers/loader.service';
 import { ActivePackages } from 'src/app/models/active-packages';
-import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
+import { SocialSharingService } from 'src/app/providers/social-sharing.service';
+import { HelperService } from 'src/app/providers/helper.service';
 @Component({
   selector: 'app-list-detail',
   templateUrl: './list-detail.page.html',
@@ -15,6 +16,8 @@ export class ListDetailPage implements OnInit {
               @Inject(LoaderService) private loading: LoaderService,
               @Inject(AlertController) public alertController: AlertController,
               @Inject(Router) private router: Router,
+              @Inject(SocialSharingService) public social: SocialSharingService,
+              @Inject(HelperService) public helper: HelperService,
               @Inject(NavController) private navCtrl: NavController) {}
 
 item: ActivePackages = new ActivePackages();
@@ -22,7 +25,6 @@ item: ActivePackages = new ActivePackages();
 trackingScans: Array<TrackingScans> = [];
 trackNo: any ;
 selectedData: any;
-@ViewChild(SocialSharingComponent) social: SocialSharingComponent;
 
 ngOnInit() {
   // tslint:disable-next-line: no-debugger
@@ -32,9 +34,19 @@ ngOnInit() {
   });
 
 }
-share() {
-this.social.presentActionSheet2();
-}
+share(itm: ActivePackages) {
+  const carrierName = this.helper.GetCarrierName(itm.Carrier);
+  let url = '';
+  let image = '';
+  let message = 'Tracking Number: ' + itm.TrackingNo + '\n Carrier: ' + carrierName + '\n Status: ' + itm.Status;
+  let subject = 'Package Status';
+  this.social.share2(
+    message,
+    subject,
+    image,
+    url
+  );
+  }
 goBack() {
   this.gotoActivePackages();
 }

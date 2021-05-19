@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
-   ){
+   ){this.splashScreen.show();
   }
   register(){
 try{
@@ -117,8 +117,10 @@ if (this.platform.is('cordova')) {
     
       this.platform.resume.subscribe(async () => {
         const trackNo = localStorage.getItem('intent');
+        
         if (trackNo !== null && trackNo !== undefined && trackNo !== '') {
-         // this.navCtrl.navigateForward('/home');
+          localStorage.setItem('currPage', 'tp');
+          this.navCtrl.navigateForward('/home');
         }
       });
       this.platform.pause.subscribe(async () => {
