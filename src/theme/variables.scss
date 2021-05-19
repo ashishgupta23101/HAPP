@@ -1521,12 +1521,12 @@ ion-alert{
 
 @media only screen and (min-height: 810px) { 
   .statusBar{
-    height:40px;
+    height:25px;
   }
   .pageSdwStart{
-    top: 40px;
+    top: 25px;
   }
-  ion-header{padding-top:40px;}
+  ion-header{padding-top:25px;}
 }
 
 @media only screen and (max-height: 737px) { 

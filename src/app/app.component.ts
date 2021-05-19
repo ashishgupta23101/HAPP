@@ -115,13 +115,13 @@ if (this.platform.is('cordova')) {
     // set status bar to white
     this.statusBar.styleLightContent();
     
-      this.platform.resume.subscribe(async () => {
-        const trackNo = localStorage.getItem('intent');
-        if (trackNo !== null && trackNo !== undefined && trackNo !== '') {
-          //localStorage.setItem('currPage', 'tp');
-          //this.navCtrl.navigateForward('/home');
-        }
-      });
+     // this.platform.resume.subscribe(async () => {
+        // const trackNo = localStorage.getItem('intent');
+        // if (trackNo !== null && trackNo !== undefined && trackNo !== '') {
+        //   //localStorage.setItem('currPage', 'tp');
+        //   //this.navCtrl.navigateForward('/home');
+        // }
+     // });
       this.platform.pause.subscribe(async () => {
         localStorage.setItem('currPage', 'tp');
         this.navCtrl.navigateForward('/home');
@@ -151,7 +151,7 @@ if (this.platform.is('cordova')) {
 
     setTimeout(()=>{
       this.splashScreen.hide();  
-    },7000);
+    },9000);
   }
   setPushAlerts() {
     this.storage.get('deviceToken').then(devToken => {

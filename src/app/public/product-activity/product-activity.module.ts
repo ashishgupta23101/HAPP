@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ProductActivityPageRoutingModule } from './product-activity-routing.module';
-import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
 import { ProductActivityPage } from './product-activity.page';
 import { SharedModule } from '../shared/shared.module';
 

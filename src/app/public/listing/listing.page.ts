@@ -180,13 +180,15 @@ openMenu(sm : string){
   }
   this.menuCtrl.toggle();
 }
-apply(){
+apply(check: string = 'pn'){
   this.loading.present('Applying filter..');
   debugger;
   try{
   this.searchItems =[];
   this.menuback();
+  if(check !== 'en'){
   this.menuCtrl.toggle();
+}
  if(!(this.Carrier.dhl || this.Carrier.ups || this.Carrier.usps || this.Carrier.fedex || this.Carrier.ontrack || this.Carrier.purolator))
   { 
     if(!(this.Status.delivered || this.Status.intransit || this.Status.exception))
@@ -982,7 +984,7 @@ segmentChanged() {
       }
     this.sessionData = SessionData;
     if(this.IsFilter){
-      this.apply();
+      this.apply('en');
     }else{
       this.activeItems = SessionData.packages.All;
     }
@@ -1095,12 +1097,13 @@ retrack(key: string) {
 delete(key: string) {
 this.presentConfirm(key, 'Delete', 'Do you want to delete the package?', 'del');
 }
-locate(key: string) {
-  const val1 = this._data.find(item => item.trackingNo === key);
+locate(item: ActivePackages) {
+  const val1 = this._data.find(elem => elem.trackingNo === item.Key);
   if (val1 !== undefined && val1 !== '' && val1 !== null && val1.scans.length > 0) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-          scans: JSON.stringify(val1.scans)
+        scans: JSON.stringify(val1.scans),
+        item: JSON.stringify(item)
       }
   };
     this.router.navigate(['product-activity'], navigationExtras);
