@@ -78,7 +78,7 @@ Date = {
   lastmonth: false
 };
 ngOnInit() {
-  this.loading.present("Loading Packages");
+  //this.loading.present("Loading Packages");
   const cusHome = localStorage.getItem('cusHome');
   this.activeItems = [];
   if (cusHome !== null && cusHome !== 'null' && cusHome !== undefined && cusHome !== ''  && cusHome === 'hp') {
@@ -912,7 +912,7 @@ menuback(){
   this.dateMenu = false;
 }
 ionViewDidEnter(){
-  this.loading.present("Loading Packages");
+ // this.loading.present("Loading Packages");
   this.segmentChanged() ;
 }
 doRefresh(event) {
@@ -980,7 +980,6 @@ segmentChanged() {
           this.trackService.setPackagestoSession(this._data);
           break;
       }
-      
     this.sessionData = SessionData;
     if(this.IsFilter){
       this.apply();
@@ -989,8 +988,6 @@ segmentChanged() {
     }
     this.sortedBy();
     }
-    debugger;
-    this.loading.dismiss();
     this.readyToLoad = true;
  });
 }
