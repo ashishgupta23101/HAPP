@@ -57,14 +57,13 @@ token: any;
           public FirebasenotificationSetup() {
 
 
-
             this.getToken();
             this.refreshToken().subscribe(token => {
-              if (!token) return;
-              this.storage.set('deviceToken', token);
-              this.trackService.saveToken(token);
-              this.subscribetoMessage(token);
-              this.unsubscribetoMessage(token);
+              // if (!token) return;
+              // this.storage.set('deviceToken', token);
+              // this.trackService.saveToken(token);
+              // this.subscribetoMessage(token);
+              // this.unsubscribetoMessage(token);
             });
         
             this.subscribetoMessage(this.token);

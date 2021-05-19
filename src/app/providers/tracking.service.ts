@@ -312,9 +312,6 @@ getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
           this.loadingController.presentToast('error', 'Could not be tracked by '+ this.helper.GetCarrierName(queryParam.Carrier));
           this.logError('Error - ' + JSON.stringify(error), 'Tracking');
         });
-
-
-
 }
 gotoDetail(item:any,scans:any){
   const navigationExtras: NavigationExtras = {
@@ -346,16 +343,16 @@ setLatestPackages(){
     data.objResponse.forEach(element => {
       let itemKey = element.ResultData.TrackingNo?.trim() + '-' + element.ResultData.CarrierCode?.trim();
       const record: any = element;
-      if(element.ResultData.Archived === false || element.ResultData.Archived === '' || element.ResultData.Archived === null || element.ResultData.Archived === undefined){
-          record.trackingNo = itemKey;
-          record.ResultData.Description = element.ResultData.Description;
-          record.ResultData.Residential = 'false';
-          record.type = 'act';
-      }else{
+      if(element.ResultData.Archived === true || element.ResultData.Archived === 'true' ){
           record.trackingNo = itemKey;
           record.ResultData.Description = element.ResultData.Description;
           record.ResultData.Residential = 'false';
           record.type = 'arc';
+      }else{
+          record.trackingNo = itemKey;
+          record.ResultData.Description = element.ResultData.Description;
+          record.ResultData.Residential = 'false';
+          record.type = 'act';
       }
       this.allData.push(record);
     });
@@ -598,7 +595,7 @@ const gsmDetails = {
   DeviceToken: devToken
 };
 this.saveDeviceID(gsmDetails).subscribe(data => {
-    this.logError('Device Data - ' + JSON.stringify(data), 'saveDeviceID');
+    //this.logError('Device Data - ' + JSON.stringify(data), 'saveDeviceID');
 },
 error => {
   this.logError('Error - ' + JSON.stringify(error), 'saveDeviceID');
@@ -749,50 +746,5 @@ setPackagestoSession(tData: any) {
   SessionData.packages.ThisMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisMonth);
   SessionData.packages.LastMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastMonth);
 }
-/// set archive package data in sessions
-setarchivePackagestoSession(tData: any) {
-SessionData.packages = new  Packages();
-let pack: ActivePackages;
-tData.forEach(element => {
-  element.LineItems.forEach(item => {
-  pack = new ActivePackages();
-  pack.TrackingNo = element.ResultData.TrackingNo;
-  pack.VendorName = element.ResultData.VendorName;
-  pack.ProductName = item.ProductName;
-  pack.ProductUrl = item.ProductImageURL;
-  pack.Category = item.Category;
-  pack.Status = element.ResultData.Status === '' || element.ResultData.Status === null ? 'NA' : element.ResultData.Status;
-  pack.Carrier = element.ResultData.CarrierCode;
-  pack.DateCreated = element.ResultData.DateShipped === '' || element.ResultData.DateShipped === null ? 'NA' : element.ResultData.DateShipped;
-  if(pack.Status.toLowerCase().includes('deliver')){
-    pack.ExpectedDate = element.ResultData.DateDelivered === ''
-    || element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
-  }else{
-    pack.ExpectedDate = element.ResultData.EstDeliveryDate === ''
-    || element.ResultData.EstDeliveryDate === null ? 'NA' : element.ResultData.EstDeliveryDate;
-   
-  }
-
-  pack.LastUpdated = element.ResultData.Updated === '' || element.ResultData.Updated === null ? 'NA' : element.ResultData.Updated;
-  pack.Key = element.trackingNo;
-  pack.ImgUrl = pack.Status.toLowerCase().includes('delivered') ? '../../../assets/slicing/deliveredontime.png' :
-  (pack.Status.toLowerCase().includes('transit') ? '../../../assets/slicing/intransit.png' :
-  (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
-  '../../../assets/slicing/deliveredlate.png'));
-  SessionData.packages.All.push(pack);
-});
-});
-SessionData.packages.Today = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Today);
-SessionData.packages.Yesterday = this.filterDatewise(SessionData.packages.All, SessionData.filteringDates.Yesterday);
-SessionData.packages.ThisWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisWeek);
-SessionData.packages.LastWeek = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastWeek);
-SessionData.packages.ThisMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.ThisMonth);
-SessionData.packages.LastMonth = this.filterWeekwise(SessionData.packages.All, SessionData.filteringDates.LastMonth);
-
-}
-
-
-  
-/// Save device id
 
 }

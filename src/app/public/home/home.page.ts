@@ -106,10 +106,13 @@ export class HomePage implements OnInit {
   fillIntentValue() {
     this.trackNo = localStorage.getItem('intent');
     const cusHome = localStorage.getItem('cusHome');
-
+    
     if (this.trackNo !== null && this.trackNo !== undefined && this.trackNo !== ''  && this.trackNo !== 'SHIPMATRIX') {
       this.loadingController.presentToast('intent',"Start tracking for : "+ this.trackNo);
       this.trackNo = this.trackNo.replace('\u001d', '');
+      this.track_Form = this.formBuilder.group({
+        TrackingNo: new FormControl(this.trackNo)
+      });
       this.GetCarrierByTNC(this.trackNo);
       localStorage.setItem('intent', '');
       // alert('end' + this.trackNo);

@@ -977,7 +977,7 @@ segmentChanged() {
           break;
         case 'history':
           this._data = value.filter(u =>u.type === 'arc');
-          this.trackService.setarchivePackagestoSession(this._data);
+          this.trackService.setPackagestoSession(this._data);
           break;
       }
       

@@ -8,8 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { TrackingService } from 'src/app/providers/tracking.service';
 import * as $ from 'jquery';
-import { SocialSharingComponent } from 'src/app/component/social-sharing/social-sharing.component';
 import { ActivePackages } from 'src/app/models/active-packages';
+import { SocialSharingService } from 'src/app/providers/social-sharing.service';
+import { HelperService } from 'src/app/providers/helper.service';
 declare var google;
 @Component({
   selector: 'app-product-activity',
@@ -18,12 +19,13 @@ declare var google;
 })
 export class ProductActivityPage implements OnInit {
   latlngbounds: any ;
-  @ViewChild(SocialSharingComponent) social: SocialSharingComponent;
   constructor(
     @Inject(ActivatedRoute) private route: ActivatedRoute,
     @Inject(NavController) private navCtrl: NavController,
     @Inject(Platform) public platform: Platform,
     @Inject(LoaderService) public loading: LoaderService,
+    @Inject(SocialSharingService) public social: SocialSharingService,
+    @Inject(HelperService) public helper: HelperService,
     @Inject(TrackingService) private trackService: TrackingService ,
     @Inject(NativeGeocoder) public nativeGeocoder: NativeGeocoder) {
 
@@ -106,8 +108,18 @@ export class ProductActivityPage implements OnInit {
     // this.loading.dismiss();
   }
   share() {
-    this.social.presentActionSheet2();
-    }
+    const carrierName = this.helper.GetCarrierName(this.item.Carrier);
+    let url = '';
+    let image = '';
+    let message = 'Tracking Number: ' + this.item.TrackingNo + '\n Carrier: ' + carrierName + '\n Status: ' + this.item.Status;
+    let subject = 'Package Status';
+    this.social.share2(
+      message,
+      subject,
+      image,
+      url
+    )
+  }
   getLocations() {
 
     try{

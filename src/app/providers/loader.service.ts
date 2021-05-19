@@ -13,7 +13,6 @@ export class LoaderService {
               @Inject(AlertController) private alertController: AlertController) { }
 
   async present(msgdata: string) {
-    this.dismiss();
     this.isLoading = true;
     return await this.loadingController.create({
       message: msgdata
@@ -28,10 +27,8 @@ export class LoaderService {
   }
 
   async dismiss() {
-    if(this.isLoading == true){
       this.isLoading = false;
       return await this.loadingController.dismiss().then(() => console.log('dismissed'));
-    }
   }
 
   waitLoader(msgdata: string , waitTime: number) {

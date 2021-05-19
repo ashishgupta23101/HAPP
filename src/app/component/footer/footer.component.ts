@@ -58,7 +58,6 @@ export class FooterComponent implements OnInit {
     }
   }
   NavMethod(nav: string) {
-    debugger;
     switch(nav) {
           case 'home':
             localStorage.setItem('currPage', 'tp');
