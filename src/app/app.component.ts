@@ -151,7 +151,7 @@ if (this.platform.is('cordova')) {
 
     setTimeout(()=>{
       this.splashScreen.hide();  
-    },9000);
+    },7000);
   }
   setPushAlerts() {
     this.storage.get('deviceToken').then(devToken => {
