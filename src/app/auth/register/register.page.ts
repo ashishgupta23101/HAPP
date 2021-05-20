@@ -51,7 +51,7 @@ export class RegisterPage implements OnInit {
               this.zone.run(() => {
                 if (data.Error === true)
                 { //localStorage.setItem('IsLogin', 'false');
-                  this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
+                  this.fun.presentToast('Invalid Request or User already exist.', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                   return;
                 }
@@ -60,10 +60,10 @@ export class RegisterPage implements OnInit {
                   localStorage.setItem('AuthToken', data.ResponseData.AccessToken.Token);
                   localStorage.setItem('user', usr.email);
                   localStorage.setItem('expires', data.ResponseData.AccessToken.Expires);
-                  this.fcm.FirebasenotificationSetup();
-                  localStorage.setItem('IsLogin', 'true');
                   this.fun.dismissLoader();
-                  //this.fun.navigate('welcome', false);
+                  this.fcm.FirebasenotificationSetup();
+                  this.trackService.setLatestPackages();
+                  localStorage.setItem('IsLogin', 'true');
                 }
                 else {
                   this.fun.presentToast('Invalid Credentials! Please try with valid login credentials.', true, 'bottom', 2100);

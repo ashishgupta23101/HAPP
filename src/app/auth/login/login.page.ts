@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
               this.zone.run(() => {
                 if (data.Error === true)
                 { //localStorage.setItem('IsLogin', 'false');
-                  this.fun.presentToast('Something went wrong!', true, 'bottom', 2100);
+                  this.fun.presentToast('Invalid Credentials! Please try with valid login credentials.', true, 'bottom', 2100);
                   this.fun.dismissLoader();
                   return;
                 }

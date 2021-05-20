@@ -368,6 +368,9 @@ gotocustomePAGE(){
   if (cusHome === null || cusHome === 'null' || cusHome === undefined || cusHome === '') {
     localStorage.setItem('cusHome', 'tp');
   }
+  setTimeout(()=>{
+    this.splashScreen.hide();  
+  },3000);
   this.loadingController.dismiss();
   switch (cusHome) {
     case 'tp':

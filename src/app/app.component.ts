@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(FcmService) private fcm: FcmService,
     @Inject(Network) private network: Network
-   ){this.splashScreen.show();
+   ){
   }
   register(){
 try{
@@ -75,6 +75,7 @@ try{
           
 if (this.platform.is('cordova')) {
       this.platform.ready().then(() => {
+        this.splashScreen.show();
         this.trackService.GenerateDeviceID();
         //this.fcm.FirebasenotificationSetup();
       let fixUserId =localStorage.getItem('AuthToken');
@@ -102,6 +103,9 @@ if (this.platform.is('cordova')) {
   }
   gotoLogin(){
     this.initializeApp();
+    setTimeout(()=>{
+      this.splashScreen.hide();  
+    },7000);
     localStorage.setItem('AuthToken', null);
     localStorage.setItem('IsLogin', 'false');
     localStorage.setItem('user', null);
@@ -149,9 +153,6 @@ if (this.platform.is('cordova')) {
       
     }
 
-    setTimeout(()=>{
-      this.splashScreen.hide();  
-    },9000);
   }
   setPushAlerts() {
     this.storage.get('deviceToken').then(devToken => {

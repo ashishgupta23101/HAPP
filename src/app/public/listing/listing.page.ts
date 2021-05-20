@@ -990,6 +990,7 @@ segmentChanged() {
     }
     this.sortedBy();
     }
+    this.loading.dismiss();
     this.readyToLoad = true;
  });
 }
