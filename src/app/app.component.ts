@@ -8,6 +8,7 @@ import { LoaderService } from './providers/loader.service';
 import { TrackingService } from './providers/tracking.service';
 import { FcmService } from './providers/fcm.service';
 import { SessionData } from './models/active-packages';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit{
     @Inject(StatusBar) private statusBar: StatusBar,
     @Inject(LoaderService) public loadingController: LoaderService,
     @Inject(Storage) private storage: Storage,
+    @Inject(Location) private _location: Location,
     @Inject(Platform) private platform: Platform,
     @Inject(TrackingService) private trackService: TrackingService,
     @Inject(FcmService) private fcm: FcmService,
@@ -126,6 +128,14 @@ if (this.platform.is('cordova')) {
         //   //this.navCtrl.navigateForward('/home');
         // }
      // });
+     this.platform.backButton.subscribe(() => {
+        if (this._location.isCurrentPathEqualTo('/home')) {
+          navigator['app'].exitApp();
+        } else{
+          this._location.back();
+        }
+      });
+
       this.platform.pause.subscribe(async () => {
         localStorage.setItem('currPage', 'tp');
         this.navCtrl.navigateForward('/home');

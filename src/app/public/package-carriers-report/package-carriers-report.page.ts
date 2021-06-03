@@ -38,7 +38,7 @@ export class PackageCarriersReportPage implements OnInit {
   }
   ngOnInit() {  
   this.reportData = this.trackService.PackagebyCarrier;
-  this.colorArray = ['#ffffff','#d7ccef','#b09cda','#795db5','#452092','#452092'];
+  this.colorArray = ['#FFB950','#C6AE95','#FFA163','#A2BDD3','#F7E28E','#B492EE'];
   Chart.pluginService.register({
    beforeDraw: function (chart) {
      if (chart.config.options.elements.center) {
@@ -167,7 +167,7 @@ ctx.fillText(label, labelPositionX, bar._model.y);
           this.pop_status === 'ShippingError'?'help_with_circle_icon':
           this.pop_status === 'InTransit'?'track_icon':'cycle_icon';
           this.pop_value = this.reportData.data[e._index];
-          this.navCtrl.navigateForward('listing');
+          //this.navCtrl.navigateForward('listing');
         },
         layout: {
           padding: {

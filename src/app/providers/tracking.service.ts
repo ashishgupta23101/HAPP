@@ -247,7 +247,7 @@ getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
           if (data.Error === true) {
             this.logError('Error - ' + JSON.stringify(data.Message), 'getTrackingDetails');
             this.loadingController.dismiss();
-            this.loadingController.presentToast('Error', 'Invalid Response.');
+            this.loadingController.presentToast('Error', 'Incorrect or outdated tracking number.');
             return false;
           }
           // Tracking Response
@@ -293,11 +293,14 @@ getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
               '../../../assets/slicing/deliveredlate.png'));
               let scans = record != undefined && record.scans != null ? record.scans : [];
               this.loadingController.dismiss();
+              this.loadingController.present('Fetching Details..');
               switch (nav) {
                 case 'pkgadded':
+                  
                   this.gotoDetail(pack,scans);
                   break;
                 case 'actpck':
+                  this.loadingController.dismiss();
                     this.navCtrl.navigateForward(`/listing`);
                     break;
                     case 'det':
@@ -320,6 +323,7 @@ gotoDetail(item:any,scans:any){
         item: JSON.stringify(item)
     }
     };
+    this.loadingController.dismiss();
     this.router.navigate(['pkg-add-success'], navigationExtras);
 }
   getAllActivePackages(): Observable<any> {
