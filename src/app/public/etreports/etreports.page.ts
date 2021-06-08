@@ -139,9 +139,16 @@ export class ETReportsPage implements OnInit {
           sidePadding: 15 //Default 20 (as a percentage)
         }
       },
-        legend: {
-          display: false
-        },
+      legend: {
+        display: true,
+        position: "bottom",
+        labels: {
+          fontFamily: "Verdana",
+          boxWidth: 7,
+          boxHeight: 1.5,
+          fontSize : 9
+
+        }},
         scales: {
           xAxes: [{
             display: false,
