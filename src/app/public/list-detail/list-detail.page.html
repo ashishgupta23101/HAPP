@@ -27,7 +27,7 @@
             'inTransit' : item.Status.toLowerCase().includes('transit') 
         }">{{item.Status}}</span></p> 
           <p class="Tracking">Tracking #: <span>{{item.TrackingNo}} </span></p>
-          <p class="ExDate">Expected: {{item.ExpectedDate}} </p> 
+          <p class="ExDate">{{item.DeliveredDate === 'NA' ? 'Expected' : 'Delivered'}} : {{item.DeliveredDate === 'NA' ? item.ExpectedDate : item.DeliveredDate}} </p> 
         </div> 
 
         <div class="partnerLogo">

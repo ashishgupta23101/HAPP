@@ -9,6 +9,7 @@ export class ActivePackages {
     ProductUrl: string;
     DateCreated: string;
     ExpectedDate: string;
+    DeliveredDate: string;
     LastUpdated: string;
     VendorName: string;
     Key: any;

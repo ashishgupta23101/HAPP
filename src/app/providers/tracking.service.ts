@@ -210,20 +210,23 @@ constructor(
     });
   }
   filterDatewise(items: any , searchDate: Date) {
-    if (searchDate === null || searchDate === undefined) {
+    if (searchDate === null || searchDate === undefined || searchDate.toString() === 'NA' || searchDate.toString() === 'pending' ) {
       return items;
     }
     return items.filter(item => {
+      if (item.DateCreated !== null && item.DateCreated !== '' && item.DateCreated !== 'NA' && item.DateCreated !== 'pending') {
       return formatDate(item.DateCreated, 'MM/dd/yyyy', 'en') === formatDate(new Date(searchDate), 'MM/dd/yyyy', 'en');
-    });
+     } });
   }
   filterWeekwise(items: any , range: any) {
     if (range === null || range === undefined) {
       return items;
     }
     return items.filter(item => {
+      if (item.DateCreated !== null && item.DateCreated !== '' && item.DateCreated !== 'NA' && item.DateCreated !== 'pending') {
       return ((new Date(item.DateCreated) >= new Date(range.firstDate)) && (new Date(item.DateCreated) <= new Date(range.lastDate)));
-    });
+     }
+     });
   }
   /// get week day
   getFirstLastDayOfWeek(curr: Date) {
@@ -276,12 +279,14 @@ getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
               pack.Carrier = record.ResultData.CarrierCode;
               pack.DateCreated = record.ResultData.DateShipped === '' || record.ResultData.DateShipped === null ? 'NA' : record.ResultData.DateShipped;
               if(pack.Status.toLowerCase().includes('deliver')){
+                
                 pack.ExpectedDate = record.ResultData.DateDelivered === ''
-                || record.ResultData.DateDelivered === null ? 'NA' : record.ResultData.DateDelivered;
-              
+                || record.ResultData.DateDelivered === null ? 'pending' : record.ResultData.DateDelivered;
+                pack.DeliveredDate = pack.ExpectedDate;
               }else{
                 pack.ExpectedDate = record.ResultData.EstDeliveryDate === ''
-                || record.ResultData.EstDeliveryDate === null ? 'NA' : record.ResultData.EstDeliveryDate;
+                || record.ResultData.EstDeliveryDate === null ? 'pending' : record.ResultData.EstDeliveryDate;
+                pack.DeliveredDate = 'NA';
               }
 
               
@@ -729,11 +734,12 @@ setPackagestoSession(tData: any) {
     pack.DateCreated = element.ResultData.DateShipped === '' || element.ResultData.DateShipped === null ? 'NA' : element.ResultData.DateShipped;
     if(pack.Status.toLowerCase().includes('deliver')){
       pack.ExpectedDate = element.ResultData.DateDelivered === ''
-      || element.ResultData.DateDelivered === null ? 'NA' : element.ResultData.DateDelivered;
-     
+      || element.ResultData.DateDelivered === null ? 'pending' : element.ResultData.DateDelivered;
+      pack.DeliveredDate = pack.ExpectedDate;
     }else{
       pack.ExpectedDate = element.ResultData.EstDeliveryDate === ''
-      || element.ResultData.EstDeliveryDate === null ? 'NA' : element.ResultData.EstDeliveryDate;
+      || element.ResultData.EstDeliveryDate === null ? 'pending' : element.ResultData.EstDeliveryDate;
+      pack.DeliveredDate = 'NA';
     }
 
     

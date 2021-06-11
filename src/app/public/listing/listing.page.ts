@@ -967,6 +967,7 @@ refreshList(showLoader: boolean = false) {
 }
 
 segmentChanged() {
+  debugger;
   SessionData.packages = new  Packages();
   this._data =[];
   this.activeItems = [];

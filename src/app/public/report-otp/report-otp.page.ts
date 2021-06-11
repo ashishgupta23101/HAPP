@@ -1122,7 +1122,18 @@ export class ReportOtpPage implements OnInit {
     this.activeItems = [];
     this.storage.get('_allPackages').then((value) => {
       if (value !== '' && value !== undefined && value !== null){
-      value = value.filter(val => val.ResultData.Status.toLowerCase().includes('return'));
+      value = value.filter(val => ((val.ResultData.RefundStatus ==='Eligible' || 
+        val.ResultData.RefundStatus==='Web-Confirmed' || 
+        val.ResultData.RefundStatus=== 'Web-Denied' || 
+        val.ResultData.RefundStatus === 'Web-Error' || 
+        val.ResultData.RefundStatus==='manifest error' ) && 
+        (val.ResultData.CarrierCode ==='U' || 
+        val.ResultData.CarrierCode ==='D' || 
+        val.ResultData.CarrierCode ==='P' || 
+        val.ResultData.CarrierCode ==='O') || 
+        (val.ResultData.RefundStatus==='Eligible'  && 
+        (val.ResultData.InvoiceNo === undefined || val.ResultData.InvoiceNo ==='' || val.ResultData.InvoiceNo === null || val.ResultData.Status ==='Manifest Error') &&
+        (val.ResultData.CarrierCode ==='F' || val.ResultData.CarrierCode ==='R'))));
       this._data = value;
       this.trackService.setPackagestoSession(value);
       this.sessionData = SessionData;
