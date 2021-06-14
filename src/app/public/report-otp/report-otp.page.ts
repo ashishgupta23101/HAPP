@@ -80,7 +80,6 @@ export class ReportOtpPage implements OnInit {
          },
          options: {
            onClick: (c, i) => {
-            
              let e = i[0];
              this.pop_status = this.reportData.labels[e._index];
              this.pop_img = this.pop_status === 'Delivered'?'box2_icon':

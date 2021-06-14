@@ -20,7 +20,7 @@
           <img [src]="item.ProductUrl">
         </ion-avatar>
         <div class="listDContent text-center">
-          <h2>{{item.ProductName}}</h2>
+          <h2>{{item.ProductName === 'Not Available' ? item.TrackingNo :item.ProductName}}</h2>
           <p class="status">Status: <span *ngIf="item.Status" [ngClass]="{
             'delivered': item.Status.toLowerCase().includes('deliver'),
             'exception': item.Status.toLowerCase().includes('exception') ,
@@ -41,11 +41,12 @@
               <a href="javaScript:void(0)" *ngIf="item.Carrier === 'U'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/ups_logo.png"></a>
               <a href="javaScript:void(0)" *ngIf="item.Carrier === 'L'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/lso_logo.png"></a>
               <a href="javaScript:void(0)" *ngIf="item.Carrier === 'C'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/carrier_logo/canpar_logo.png"></a>
+              <a href="javaScript:void(0)" *ngIf="item.Carrier === 'A'" [routerLink]="['/pkgshipinfo2']" routerDirection="backward"><img src="../../../assets/images/amazon_logo.png"></a>
 
             </ion-col>
-             <ion-col size="12" *ngIf="resultData?.VendorName === 'Amazon'" class="text-center">
+             <!-- <ion-col size="12" *ngIf="resultData?.VendorName === 'Amazon'" class="text-center">
              <a href="javaScript:void(0)"  [routerLink]="['/pkgshipinfo']" routerDirection="backward"><img src="../assets/images/amazon_logo.png"  class="LDAmzon_icon"></a>
-            </ion-col> 
+            </ion-col>  -->
           </ion-row>
         </div>
 

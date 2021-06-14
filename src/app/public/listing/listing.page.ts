@@ -29,7 +29,7 @@ constructor(
   @Inject(Storage) private storage: Storage) {
         // tslint:disable-next-line: no-debugger
      // tslint:disable-next-line: only-arrow-functions
-     
+     this.segmentChanged() ;
     
   }
   defaultSelectedRadio = "radio_2";
@@ -44,7 +44,6 @@ _data : Array<any>;
 carrierMenu = false;
 statusMenu = false;
 dateMenu = false;
-IsFilter = false;
 public sortbyDate = 'Date Created';
 public sessionData: any;
 public filtBy: string;
@@ -126,7 +125,6 @@ radio_list = [
  // {name:'Category',value:'cate'}
 ]
 clearall(){
-  this.IsFilter = false;
   this.activeItems = SessionData.packages.All;
   this.Carrier = {
     ups: false,
@@ -884,10 +882,7 @@ apply(check: string = 'pn'){
     }}
   }
 }
-  if(this.searchItems.length == 0){
-    //this.activeItems = SessionData.packages.All;
-    this.IsFilter = false;
-  }else{
+  if(this.searchItems.length > 0){
     this.activeItems =[];
     this.searchItems.forEach(arry=>{
       if(arry.length >0){
@@ -896,8 +891,9 @@ apply(check: string = 'pn'){
         });
       }
     });
-    
-    this.IsFilter = true;
+
+  }else{
+    this.loading.presentToast('info','No Matched Packages found for applied filters.');
   }
   this.readyToLoad = true;
   this.loading.dismiss();
@@ -915,7 +911,7 @@ menuback(){
 }
 ionViewDidEnter(){
  // this.loading.present("Loading Packages");
-  this.segmentChanged() ;
+  //this.segmentChanged() ;
 }
 doRefresh(event) {
   if (this.sessionData !== '' && this.sessionData !== undefined && this.sessionData !== null){
@@ -984,11 +980,8 @@ segmentChanged() {
           break;
       }
     this.sessionData = SessionData;
-    if(this.IsFilter){
-      this.apply('en');
-    }else{
-      this.activeItems = SessionData.packages.All;
-    }
+    this.activeItems = SessionData.packages.All;
+    //this.apply('en');
     this.sortedBy();
     }
     this.loading.dismiss();
