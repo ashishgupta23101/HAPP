@@ -297,8 +297,7 @@ getTrackingDetails(queryParam: QueryParams, nav: string = 'det') {
               (pack.Status.toLowerCase().includes('invalid') ? '../../../assets/slicing/exception.png' :
               '../../../assets/slicing/deliveredlate.png'));
               let scans = record != undefined && record.scans != null ? record.scans : [];
-              this.loadingController.dismiss();
-              this.loadingController.present('Fetching Details..');
+
               switch (nav) {
                 case 'pkgadded':
                   
@@ -328,7 +327,7 @@ gotoDetail(item:any,scans:any){
         item: JSON.stringify(item)
     }
     };
-    this.loadingController.dismiss();
+    
     this.router.navigate(['pkg-add-success'], navigationExtras);
 }
   getAllActivePackages(): Observable<any> {

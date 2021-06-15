@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ActivePackages } from 'src/app/models/active-packages';
 import { TrackingScans } from 'src/app/models/TrackingScans';
+import { LoaderService } from 'src/app/providers/loader.service';
 
 @Component({
   selector: 'app-pkg-add-success',
@@ -14,7 +15,8 @@ export class PkgAddSuccessPage implements OnInit {
   trackingScans: Array<TrackingScans> = [];
   constructor(@Inject(ActivatedRoute) private route: ActivatedRoute,
   @Inject(Router) private router: Router,
-   @Inject(NavController) private navCtrl: NavController) {
+  @Inject(LoaderService) public loadingController: LoaderService,
+  @Inject(NavController) private navCtrl: NavController) {
     
    }
   goBack() {
@@ -26,6 +28,7 @@ export class PkgAddSuccessPage implements OnInit {
    // wait 2 seconds
   }
   ngOnInit() { 
+    this.loadingController.dismiss();
     this.route.queryParams.subscribe(params => {
       this.trackingScans = JSON.parse(params.scans);
       this.item = JSON.parse(params.item);
