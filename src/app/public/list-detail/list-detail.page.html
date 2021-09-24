@@ -21,12 +21,20 @@
         </ion-avatar>
         <div class="listDContent text-center">
           <h2>{{item.ProductName === 'Not Available' ? item.TrackingNo :item.ProductName}}</h2>
-          <p class="status">Status: <span *ngIf="item.Status" [ngClass]="{
+          <!-- <p class="status">Status: <span *ngIf="item.Status" [ngClass]="{
             'delivered': item.Status.toLowerCase().includes('deliver'),
             'exception': item.Status.toLowerCase().includes('exception') ,
             'inTransit' : item.Status.toLowerCase().includes('transit') 
-        }">{{item.Status}}</span></p> 
+        }">{{item.Status}}</span></p>  -->
+        <p class="status">Status: <span [ngClass]="{
+          'delivered': item?.Status?.toLowerCase().includes('deliver'),
+          'exception': item?.Status?.toLowerCase().includes('exception') ,
+          'inTransit' : item?.Status?.toLowerCase().includes('transit') 
+      }" >{{item.Status}}</span></p>
           <p class="Tracking">Tracking #: <span>{{item.TrackingNo}} </span></p>
+
+          <ng-template [ngIf]="item.ProductName === 'Not Available'"><p class="Tracking">Carrier: <span> {{ helper.GetCarrierName(item.Carrier)}} </span></p></ng-template>
+
           <p class="ExDate">{{item.DeliveredDate === 'NA' ? 'Expected' : 'Delivered'}} : {{item.DeliveredDate === 'NA' ? item.ExpectedDate : item.DeliveredDate}} </p> 
         </div> 
 
