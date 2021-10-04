@@ -72,7 +72,7 @@
               'exception': item?.Status?.toLowerCase().includes('exception') ,
               'inTransit' : item?.Status?.toLowerCase().includes('transit') 
           }" >{{item.Status}}</span></p>
-            <br>
+          <ng-template [ngIf]="item.ProductName === 'Not Available'"><p class="Tracking">Carrier: <span> {{ helper.GetCarrierName(item.Carrier)}} </span></p></ng-template>
             <p class="Tracking">Tracking #: <span>{{item.TrackingNo}} </span></p>
             <p class="ExDate">{{item.DeliveredDate === 'NA' ? 'Expected' : 'Delivered'}} : {{item.DeliveredDate === 'NA' ? item.ExpectedDate : item.DeliveredDate}} </p> 
           </ion-label>

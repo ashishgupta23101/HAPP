@@ -33,8 +33,6 @@
       }" >{{item.Status}}</span></p>
           <p class="Tracking">Tracking #: <span>{{item.TrackingNo}} </span></p>
 
-          <ng-template [ngIf]="item.ProductName === 'Not Available'"><p class="Tracking">Carrier: <span> {{ helper.GetCarrierName(item.Carrier)}} </span></p></ng-template>
-
           <p class="ExDate">{{item.DeliveredDate === 'NA' ? 'Expected' : 'Delivered'}} : {{item.DeliveredDate === 'NA' ? item.ExpectedDate : item.DeliveredDate}} </p> 
         </div> 
 
